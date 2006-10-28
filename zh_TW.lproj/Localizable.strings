@@ -1,0 +1,6 @@
+chmox.drawerToggle = "抽屜";
+chmox.smallerText = "縮小字級";
+chmox.biggerText = "加大字級";
+chmox.history = "返回/往前";
+chmox.search = "搜尋";
+chmox.bookmarks = "書籤";
