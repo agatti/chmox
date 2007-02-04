@@ -3,11 +3,16 @@
         {CLASS = CHMDocument; LANGUAGE = ObjC; SUPERCLASS = NSDocument; }, 
         {
             ACTIONS = {
+                addBookmark = id; 
                 changeTopicToNextInHistory = id; 
                 changeTopicToPreviousInHistory = id; 
                 changeTopicWithSelectedRow = id; 
+                loadBookmark = id; 
                 makeTextBigger = id; 
                 makeTextSmaller = id; 
+                removeBookmark = id; 
+                search = id; 
+                searchResultSelected = id; 
                 toggleDrawer = id; 
             }; 
             CLASS = CHMWindowController; 
@@ -19,6 +24,9 @@
                 "_favoritesView" = NSTableView; 
                 "_historyToolbarItemView" = id; 
                 "_tocView" = NSOutlineView; 
+                favoritesView = NSTableView; 
+                searchField = NSSearchField; 
+                searchResultsView = NSTableView; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 

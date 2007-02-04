@@ -1,6 +1,6 @@
 //
 // Chmox a CHM file viewer for Mac OS X
-// Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2004 Stphane Boisson.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -97,11 +97,11 @@ static NSMutableDictionary *_baseURLs = nil;
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
     if( [self canHandleURL:[request URL]] ) {
-	return YES;
+		return YES;
     }
     else {
-	NSLog( @"CHMURLProtocol cannot handle %@", request );
-	return NO;
+	//NSLog( @"CHMURLProtocol cannot handle %@", request );
+		return NO;
     }
 }
 
@@ -114,42 +114,27 @@ static NSMutableDictionary *_baseURLs = nil;
 
 -(void)startLoading
 {
-    DEBUG_OUTPUT( @"CHMURLProtocol:startLoading %@", [self request] );
+    //DEBUG_OUTPUT( @"CHMURLProtocol:startLoading %@", [self request] );
 
     NSURL *url = [[self request] URL];
-
-/*
- NSString *rawPath = [[[self request] URL] path];
- NSLog( @"rawPath: %@", rawPath );
- NSRange separator = [rawPath rangeOfString:@"::/"];
- NSString *containerPath = [rawPath substringToIndex:separator.location];
- NSString *contentsPath = [rawPath substringFromIndex:( separator.location + 2 )];
-   
- NSLog( @"containerPath: %@", containerPath );
- NSLog( @"contentsPath: %@", contentsPath );
-   
- CHMContainer *container = [CHMContainer containerWithContentsOfFile:containerPath];
- */
-
     CHMContainer *container = [CHMURLProtocol containerForUniqueId:[url host]];
 	    
     if( !container ) {
-	[[self client] URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:nil]];
-	return;
+		[[self client] URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:nil]];
+		return;
     }
 
     NSData *data;
     
     if( [url parameterString] ) {
         data = [container dataWithContentsOfObject:[NSString stringWithFormat:@"%@;%@", [url path], [url parameterString]] ];
-    }
-    else {
+    } else {
         data = [container dataWithContentsOfObject:[url path]];
     }
     
     if( !data ) {
-	[[self client] URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:nil]];
-	return;
+		[[self client] URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:nil]];
+		return;
     }
     
     NSURLResponse *response = [[NSURLResponse alloc] initWithURL: [[self request] URL]
