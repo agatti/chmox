@@ -1,0 +1,53 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {checkForUpdates = id; }; 
+            CLASS = CHMApplication; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {changePreference = id; checkForUpdates = id; closeWindow = id; update = id; }; 
+            CLASS = CHMVersionChecker; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                checkAutomaticallyButton = NSButton; 
+                updateDescriptionTextField = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            ACTIONS = {
+                displayTopic = id; 
+                goBack = id; 
+                goForward = id; 
+                makeTextLarger = id; 
+                makeTextSmaller = id; 
+                toggleDrawer = id; 
+            }; 
+            CLASS = CHMWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_contentsView" = WebView; 
+                "_drawer" = NSDrawer; 
+                "_drawerView" = NSTabView; 
+                "_favoritesView" = NSTableView; 
+                "_tocView" = NSOutlineView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            ACTIONS = {
+                changeTopicToNextInHistory = id; 
+                changeTopicToPreviousInHistory = id; 
+                makeTextBigger = id; 
+                makeTextSmaller = id; 
+                toggleDrawer = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

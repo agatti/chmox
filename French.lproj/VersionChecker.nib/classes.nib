@@ -1,0 +1,22 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {changePreference = id; closeWindow = id; update = id; }; 
+            CLASS = CHMVersionChecker; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_cannotCheckWindow" = NSPanel; 
+                "_preferenceButton1" = NSButton; 
+                "_preferenceButton2" = NSButton; 
+                "_preferenceButton3" = NSButton; 
+                "_upToDateWindow" = NSPanel; 
+                "_updateAvailableWindow" = NSPanel; 
+                "_updateDescriptionTextField" = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = "java.lang.Object"; LANGUAGE = Java; }
+    ); 
+    IBVersion = 1; 
+}
