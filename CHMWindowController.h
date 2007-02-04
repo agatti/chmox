@@ -1,6 +1,6 @@
 //
 // Chmox a CHM file viewer for Mac OS X
-// Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2004 Stphane Boisson.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -20,17 +20,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CHMDocument.h"
 
 @class WebView;
 
 @interface CHMWindowController : NSWindowController
 {
-    IBOutlet WebView *_contentsView;
-    IBOutlet NSDrawer *_drawer;
-    IBOutlet NSOutlineView *_tocView;
-    IBOutlet NSTableView *_favoritesView;
-    IBOutlet NSTabView *_drawerView;
-    IBOutlet id _historyToolbarItemView;
+    IBOutlet WebView		*_contentsView;
+    IBOutlet NSDrawer		*_drawer;
+    IBOutlet NSOutlineView	*_tocView;
+    IBOutlet NSTableView	*_favoritesView;
+    IBOutlet NSTabView		*_drawerView;
+    IBOutlet id				_historyToolbarItemView;
+    IBOutlet NSTableView	*searchResultsView;
+    IBOutlet NSTableView	*favoritesView;
+    IBOutlet NSSearchField	*searchField;
 }
 
 - (void)setupToolbar;
@@ -42,6 +46,11 @@
 - (IBAction)changeTopicToNextInHistory:(id)sender;
 - (IBAction)makeTextSmaller:(id)sender;
 - (IBAction)makeTextBigger:(id)sender;
+- (IBAction)search:(id)sender;
+- (IBAction)searchResultSelected:(id)sender;
+- (IBAction)addBookmark:(id)sender;
+- (IBAction)removeBookmark:(id)sender;
+- (IBAction)loadBookmark:(id)sender;
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar;
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar;

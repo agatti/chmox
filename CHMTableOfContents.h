@@ -1,6 +1,6 @@
 //
 // Chmox a CHM file viewer for Mac OS X
-// Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2004 Stphane Boisson.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -25,10 +25,11 @@
 @class CHMContainer;
 
 @interface CHMTableOfContents : NSObject {
-    NSMutableArray *_rootTopics;
+    NSMutableArray *rootTopics;
 }
 
 - (id)initWithContainer:(CHMContainer *)container;
 - (void)addRootTopic:(CHMTopic *)topic;
+- (NSArray *)rootTopics;
 
 @end

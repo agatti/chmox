@@ -1,6 +1,6 @@
 //
 // Chmox a CHM file viewer for Mac OS X
-// Copyright (c) 2004 StŽphane Boisson.
+// Copyright (c) 2004 Stphane Boisson.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -82,7 +82,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 #pragma mark Activation
 
 - (void)checkForNewVersion {
-    NSLog(@"CHMVersionChecker :: checkForNewVersion");
+    //NSLog(@"CHMVersionChecker :: checkForNewVersion");
     
     @synchronized( self ) {
 	_isAutomaticCheck = FALSE;
@@ -91,7 +91,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 }
 
 - (void)automaticallyCheckForNewVersion {
-    NSLog(@"CHMVersionChecker :: automaticallyCheckForNewVersion");
+    //NSLog(@"CHMVersionChecker :: automaticallyCheckForNewVersion");
 
     @synchronized( self ) {
 
@@ -137,7 +137,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 - (void)macPADErrorOccurred:(NSNotification *)notification
 {
-    NSLog( @"Error while checking for new version: %@", [[notification userInfo] objectForKey:MacPADErrorMessage]);
+    //NSLog( @"Error while checking for new version: %@", [[notification userInfo] objectForKey:MacPADErrorMessage]);
 
     if( [self shouldNotifyLackOfNewVersion] ) {
 	[NSApp runModalForWindow:_cannotCheckWindow];
@@ -195,7 +195,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
     
     if( [prefs boolForKey:AUTOMATIC_CHECK_PREF] ) {
 	int daysSinceLastCheck = -[[prefs objectForKey:LAST_CHECK_DATE_PREF] timeIntervalSinceNow] / ( 60 * 60 * 24 );
-	NSLog( @"CHMVersionChecker: %d days since last time", daysSinceLastCheck );
+	//NSLog( @"CHMVersionChecker: %d days since last time", daysSinceLastCheck );
 	
 	return ( daysSinceLastCheck >= [prefs integerForKey:DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF] );
     }
