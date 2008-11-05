@@ -1,10 +1,10 @@
-/* $Id: chm_lib.h,v 1.2 2005/09/15 18:17:17 sboisson Exp $ */
+/* $Id: chm_lib.h,v 1.10 2002/10/09 01:16:33 jedwin Exp $ */
 /***************************************************************************
  *             chm_lib.h - CHM archive manipulation routines               *
  *                           -------------------                           *
  *                                                                         *
  *  author:     Jed Wing <jedwin@ugcs.caltech.edu>                         *
- *  version:    0.3                                                        *
+ *  version:    0.39                                                       *
  *  notes:      These routines are meant for the manipulation of microsoft *
  *              .chm (compiled html help) files, but may likely be used    *
  *              for the manipulation of any ITSS archive, if ever ITSS     *
@@ -52,6 +52,9 @@ extern "C" {
 #endif
 
 #ifdef WIN32
+#ifdef __MINGW32__
+#define __int64 long long
+#endif
 typedef unsigned __int64 LONGUINT64;
 typedef __int64          LONGINT64;
 #else

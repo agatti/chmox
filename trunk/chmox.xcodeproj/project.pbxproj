@@ -93,7 +93,7 @@
 		4492A06907BF989E007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Farsi; path = Farsi.lproj/VersionChecker.nib; sourceTree = "<group>"; };
 		4492A06A07BF98B1007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Farsi; path = Farsi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		44949779073D406800D8BC20 /* MacPAD.url */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MacPAD.url; sourceTree = "<group>"; };
-		44949839073D56ED00D8BC20 /* MacPAD.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MacPAD.plist; sourceTree = SOURCE_ROOT; };
+		44949839073D56ED00D8BC20 /* MacPAD.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacPAD.plist; sourceTree = SOURCE_ROOT; };
 		4494984C073D5A1700D8BC20 /* MacPADSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacPADSocket.h; sourceTree = "<group>"; };
 		4494984D073D5A1700D8BC20 /* MacPADSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacPADSocket.m; sourceTree = "<group>"; };
 		44A2655E080EEB5800273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = zh_TW; path = zh_TW.lproj/Credits.rtf; sourceTree = "<group>"; };
@@ -314,6 +314,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 44F062640AF411D000B95F3E /* Build configuration list for PBXProject "chmox" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -327,6 +328,7 @@
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Chmox */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Chmox */,
 			);
@@ -491,7 +493,6 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-DDEBUG_MODE";
 				OTHER_LDFLAGS = (
 					"-lxml2",
