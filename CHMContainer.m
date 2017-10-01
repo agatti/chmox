@@ -1,7 +1,7 @@
 //
 // Chmox a CHM file viewer for Mac OS X
 // Copyright (c) 2004 Stéphane Boisson.
-// Copyright (c) 2017 Alessandro Gatti
+// Copyright (c) 2017 Alessandro Gatti.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -12,7 +12,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -41,7 +41,7 @@
 	_handle = chm_open( [chmFilePath fileSystemRepresentation] );
 	if( !_handle ) return nil;
 	
-	_path = [chmFilePath retain];
+        _path = chmFilePath;
 	
 	_uniqueId = nil;
 	_title = nil;
@@ -59,40 +59,10 @@
 - (void) dealloc
 {
     NSLog(@"deallocating %@",self);
-    [_path release];
 
     if( _handle ) {
         chm_close( _handle );
     }
-
-    [_uniqueId release];
-    [_title release];
-    [_homePath release];
-    [_tocPath release];
-    [_indexPath release];
-}
-
-
-#pragma mark Accessors
-
-- (NSString *)homePath
-{
-    return _homePath;
-}
-
-- (NSString *)title
-{
-    return _title;
-}
-
-- (NSString *)uniqueId 
-{
-    return _uniqueId;
-}
-
-- (NSString *)tocPath
-{
-    return _tocPath;
 }
 
 #pragma mark Basic CHM reading operations

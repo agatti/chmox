@@ -25,6 +25,12 @@
 #import "CHMTableOfContents.h"
 #import "CHMURLProtocol.h"
 
+@interface CHMDocument ()
+
+@property (strong, nonatomic) CHMContainer *container;
+
+@end
+
 @implementation CHMDocument
 
 #pragma mark NSObject
@@ -41,10 +47,8 @@
 
 - (void) dealloc
 {
-    if( _container ) {
-	[CHMURLProtocol unregisterContainer:_container];
-	[_tableOfContents release];
-	[_container release];
+    if( self.container ) {
+	[CHMURLProtocol unregisterContainer:self.container];
     }
     
     [super dealloc];
@@ -54,20 +58,20 @@
 
 - (void)makeWindowControllers
 {
-    _windowController = [[CHMWindowController alloc] initWithWindowNibName:@"CHMDocument"];
-    [self addWindowController:_windowController];
-    [_windowController release];
+    [self addWindowController:[[CHMWindowController alloc] initWithWindowNibName:@"CHMDocument"]];
 }
 
 
 - (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)docType {
     NSLog( @"CHMDocument:readFromFile:%@", fileName );
-    
-    _container = [CHMContainer containerWithContentsOfFile:fileName];
-    if( !_container ) return NO;
 
-    [CHMURLProtocol registerContainer:_container];
-    _tableOfContents = [[CHMTableOfContents alloc] initWithContainer:_container];
+    self.container = [CHMContainer containerWithContentsOfFile:fileName];
+    if (self.container == nil) {
+        return NO;
+    }
+
+    [CHMURLProtocol registerContainer:self.container];
+    self.tableOfContents = [[CHMTableOfContents alloc] initWithContainer:self.container];
 
     return YES;
 }
@@ -82,24 +86,17 @@
 
 - (NSString *)title
 {
-    return [_container title];
+    return self.container.title;
 }
 
 - (NSURL *)currentLocation
 {
-    return [CHMURLProtocol URLWithPath:[_container homePath] inContainer:_container];
-}
-
-- (CHMTableOfContents *)tableOfContents
-{
-    return _tableOfContents;
+    return [CHMURLProtocol URLWithPath:self.container.homePath inContainer:self.container];
 }
 
 - (NSString *)uniqueId
 {
-    return [_container uniqueId];
+    return self.container.uniqueId;
 }
-
-
 
 @end

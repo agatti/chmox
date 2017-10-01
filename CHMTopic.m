@@ -1,6 +1,7 @@
 //
 // Chmox a CHM file viewer for Mac OS X
 // Copyright (c) 2004 StŽphane Boisson.
+// Copyright (c) 2017 Alessandro Gatti.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -11,16 +12,19 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// $Revision: 1.4 $
-//
 
 #import "CHMTopic.h"
 
+@interface CHMTopic ()
+
+@property (strong, nonatomic) NSMutableArray *subTopics;
+
+@end
 
 @implementation CHMTopic
 
@@ -29,9 +33,9 @@
 - (id)initWithName:(NSString *)topicName location:(NSURL *)topicLocation
 {
     if( self = [super init] ) {
-        _name = [topicName retain];
-        _location = [topicLocation retain];
-	_subTopics = nil;
+        _name = topicName;
+        _location = topicLocation;
+        _subTopics = nil;
     }
     
     return self;
@@ -40,7 +44,7 @@
 - copyWithZone:(NSZone *)zone {
     CHMTopic *other = [[CHMTopic allocWithZone: zone] initWithName:_name location:_location];
 
-    if( _subTopics ) {
+    if(self.subTopics ) {
 	other->_subTopics = [_subTopics retain];
     }
     
@@ -49,9 +53,6 @@
 
 - (void) dealloc
 {
-    [_name release];
-    [_location release];
-    
     if( _subTopics ) {
 	[_subTopics release];
     }
@@ -67,17 +68,6 @@
     return [NSString stringWithFormat:@"<CHMTopic:'%@',%@>", _name, _location];
 }
 
-
-- (NSString *)name
-{
-    return _name;
-}
-
-- (NSURL *)location
-{
-    return _location;
-}
-
 - (unsigned int)countOfSubTopics
 {
     return _subTopics? [_subTopics count] : 0;
@@ -90,22 +80,6 @@
 }
 
 #pragma mark Mutators
-
-- (void)setName:(NSString *)text
-{
-    if( _name != text ) {
-	[_name release];
-	_name = [text retain];
-    }
-}
-
-- (void)setLocation:(NSURL *)URL
-{
-    if( _location != URL ) {
-	[_location release];
-	_location = [URL retain];
-    }
-}
 
 - (void)addObject:(CHMTopic *)topic
 {

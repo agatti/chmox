@@ -1,6 +1,7 @@
 //
 // Chmox a CHM file viewer for Mac OS X
 // Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2017 Alessandro Gatti.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -11,28 +12,25 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
-// $Revision: 1.3 $
 //
 
 #import <Foundation/Foundation.h>
 
 struct chmFile;
 
-@interface CHMContainer : NSObject {
-    struct chmFile *_handle;
-    NSString *_uniqueId;
-    
-    NSString *_path;
-    NSString *_title;
-    NSString *_homePath;
-    NSString *_tocPath;
-    NSString *_indexPath;
-}
+@interface CHMContainer : NSObject
+
+@property (assign, nonatomic) struct chmFile *handle;
+@property (strong, nonatomic) NSString *uniqueId;
+@property (strong, nonatomic) NSString *path;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *homePath;
+@property (strong, nonatomic) NSString *tocPath;
+@property (strong, nonatomic) NSString *indexPath;
 
 + (id)containerWithContentsOfFile:(NSString *)path;
 
@@ -45,10 +43,5 @@ struct chmFile;
 
 - (BOOL)loadMetadata;
 - (NSString *)findHomeForPath: (NSString *)basePath;
-
-- (NSString *)title;
-- (NSString *)uniqueId;
-- (NSString *)tocPath;
-- (NSString *)homePath;
 
 @end

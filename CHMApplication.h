@@ -1,6 +1,7 @@
 //
 // Chmox a CHM file viewer for Mac OS X
 // Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2017 Alessandro Gatti.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -19,11 +20,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class CHMVersionChecker;
-
-@interface CHMApplication : NSObject {
-    CHMVersionChecker *_versionChecker;
-}
+@interface CHMApplication : NSObject
 
 - (IBAction) checkForUpdates: (id)sender;
 

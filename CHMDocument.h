@@ -1,6 +1,7 @@
 //
 // Chmox a CHM file viewer for Mac OS X
 // Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2017 Alessandro Gatti.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -16,8 +17,6 @@
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// $Revision: 1.5 $
-//
 
 #import <AppKit/AppKit.h>
 
@@ -26,20 +25,12 @@
 @class CHMTableOfContents;
 @class NSURL;
 
-@interface CHMDocument : NSDocument {
-    @private
-    CHMWindowController *_windowController;
+@interface CHMDocument : NSDocument
 
-    CHMContainer *_container;
-    CHMTableOfContents *_tableOfContents;
-
-    NSMutableArray *_bookmarks;
-    NSMutableArray *_searchResults;
-}
+@property (strong, nonatomic) CHMTableOfContents *tableOfContents;
 
 - (NSString *)title;
 - (NSURL *)currentLocation;
-- (CHMTableOfContents *)tableOfContents;
 - (NSString *)uniqueId;
 
 @end
