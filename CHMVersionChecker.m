@@ -33,23 +33,21 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 #pragma mark Lifecycle
 
 + (void)initialize {
-    [[NSUserDefaults standardUserDefaults] registerDefaults: [NSDictionary dictionaryWithObjectsAndKeys:
-	@"yes",  FIRST_TIME_PREF,
-	@"yes",  AUTOMATIC_CHECK_PREF,
-	@"0",  DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF,
-	@"7",  DAYS_BETWEEN_AUTOMATIC_NORMAL_CHECKS_PREF,
-	@"1",  DAYS_BETWEEN_AUTOMATIC_ALERT_CHECKS_PREF,
-	[NSDate distantPast],  LAST_CHECK_DATE_PREF,
-        nil]
+    [[NSUserDefaults standardUserDefaults] registerDefaults: @{FIRST_TIME_PREF: @"yes",
+    AUTOMATIC_CHECK_PREF: @"yes",
+    DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF: @"0",
+    DAYS_BETWEEN_AUTOMATIC_NORMAL_CHECKS_PREF: @"7",
+    DAYS_BETWEEN_AUTOMATIC_ALERT_CHECKS_PREF: @"1",
+    LAST_CHECK_DATE_PREF: [NSDate distantPast]}
     ];
 }
 
 
--(id) init {
+-(instancetype) init {
     if( self = [super init] ) {
-	[NSBundle loadNibNamed: @"VersionChecker" owner: self];
+    [NSBundle loadNibNamed: @"VersionChecker" owner: self];
 
-	_isAutomaticCheck = FALSE;
+    _isAutomaticCheck = FALSE;
 //        _macPAD = [[MacPADSocket alloc] init];
 //    [_macPAD setDelegate:self];
     }
@@ -61,20 +59,16 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 -(void) awakeFromNib {
     // Update title of windows with application's name
     NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"]; 
-    [_updateAvailableWindow setTitle:[NSString stringWithFormat:[_updateAvailableWindow title], appName]];
-    [_upToDateWindow setTitle:[NSString stringWithFormat:[_upToDateWindow title], appName]];
-    [_cannotCheckWindow setTitle:[NSString stringWithFormat:[_cannotCheckWindow title], appName]];
+    _updateAvailableWindow.title = [NSString stringWithFormat:_updateAvailableWindow.title, appName];
+    _upToDateWindow.title = [NSString stringWithFormat:_upToDateWindow.title, appName];
+    _cannotCheckWindow.title = [NSString stringWithFormat:_cannotCheckWindow.title, appName];
     
     int preferenceState = [[NSUserDefaults standardUserDefaults] boolForKey:AUTOMATIC_CHECK_PREF]? NSOnState : NSOffState;
-    [_preferenceButton1 setState:preferenceState];
-    [_preferenceButton2 setState:preferenceState];
-    [_preferenceButton3 setState:preferenceState];
+    _preferenceButton1.state = preferenceState;
+    _preferenceButton2.state = preferenceState;
+    _preferenceButton3.state = preferenceState;
 }
 
--(void) dealloc {
-//    [_macPAD release];
-    [super dealloc];
-}
 
 #pragma mark Activation
 
@@ -82,7 +76,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
     NSLog(@"CHMVersionChecker :: checkForNewVersion");
     
     @synchronized( self ) {
-	_isAutomaticCheck = FALSE;
+    _isAutomaticCheck = FALSE;
 //    [_macPAD performCheck];
     }
 }
@@ -92,10 +86,10 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
     @synchronized( self ) {
 
-	if( [self shouldAutomaticallyCheckForNewVersion] ) {
-	    _isAutomaticCheck = TRUE;
+    if( [self shouldAutomaticallyCheckForNewVersion] ) {
+        _isAutomaticCheck = TRUE;
 //        [_macPAD performCheck];
-	}
+    }
     }
 }
 
@@ -103,9 +97,9 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 - (IBAction)closeWindow:(id)sender
 {
-    if( [NSApp modalWindow] ) {
-	[[NSApp modalWindow] close];
-	[NSApp abortModal];
+    if( NSApp.modalWindow ) {
+    [NSApp.modalWindow close];
+    [NSApp abortModal];
     }
 }
 
@@ -117,9 +111,9 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 - (IBAction)changePreference:(id)sender {
     int state = [sender state];
-    [_preferenceButton1 setState:state];
-    [_preferenceButton2 setState:state];
-    [_preferenceButton3 setState:state];
+    _preferenceButton1.state = state;
+    _preferenceButton2.state = state;
+    _preferenceButton3.state = state;
     [[NSUserDefaults standardUserDefaults] setBool:(state == NSOnState) forKey:AUTOMATIC_CHECK_PREF];
     [[NSNotificationCenter defaultCenter] postNotificationName:AUTOMATIC_CHECK_PREF object:sender]; 
 }
@@ -176,12 +170,12 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
     [prefs setObject:[NSDate date] forKey:LAST_CHECK_DATE_PREF];
 
     if( isNewVersionAvailable ) {
-	[prefs setInteger:[prefs integerForKey:DAYS_BETWEEN_AUTOMATIC_ALERT_CHECKS_PREF]
-		   forKey:DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF];
+    [prefs setInteger:[prefs integerForKey:DAYS_BETWEEN_AUTOMATIC_ALERT_CHECKS_PREF]
+           forKey:DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF];
     }
     else {
-	[prefs setInteger:[prefs integerForKey:DAYS_BETWEEN_AUTOMATIC_NORMAL_CHECKS_PREF]
-		   forKey:DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF];
+    [prefs setInteger:[prefs integerForKey:DAYS_BETWEEN_AUTOMATIC_NORMAL_CHECKS_PREF]
+           forKey:DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF];
     }
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_TIME_PREF];
@@ -191,10 +185,10 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     if( [prefs boolForKey:AUTOMATIC_CHECK_PREF] ) {
-	int daysSinceLastCheck = -[[prefs objectForKey:LAST_CHECK_DATE_PREF] timeIntervalSinceNow] / ( 60 * 60 * 24 );
-	NSLog( @"CHMVersionChecker: %d days since last time", daysSinceLastCheck );
-	
-	return ( daysSinceLastCheck >= [prefs integerForKey:DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF] );
+    int daysSinceLastCheck = -[[prefs objectForKey:LAST_CHECK_DATE_PREF] timeIntervalSinceNow] / ( 60 * 60 * 24 );
+    NSLog( @"CHMVersionChecker: %d days since last time", daysSinceLastCheck );
+    
+    return ( daysSinceLastCheck >= [prefs integerForKey:DAYS_BETWEEN_AUTOMATIC_CHECKS_PREF] );
     }
 
     return NO;
@@ -202,7 +196,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 - (BOOL)shouldNotifyLackOfNewVersion {
     if( _isAutomaticCheck ) {
-	return [[NSUserDefaults standardUserDefaults] boolForKey:FIRST_TIME_PREF];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:FIRST_TIME_PREF];
     }
     
     return YES;

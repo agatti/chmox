@@ -25,9 +25,9 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSURL *location;
 
-- (id)initWithName:(NSString *)topicName location:(NSURL *)topicLocation;
+- (instancetype)initWithName:(NSString *)topicName location:(NSURL *)topicLocation NS_DESIGNATED_INITIALIZER;
 
-- (unsigned int)countOfSubTopics;
+@property (NS_NONATOMIC_IOSONLY, readonly) unsigned int countOfSubTopics;
 - (CHMTopic *)objectInSubTopicsAtIndex:(unsigned int)index;
 
 - (void)addObject:(CHMTopic *)topic;

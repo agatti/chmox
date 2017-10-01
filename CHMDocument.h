@@ -29,8 +29,8 @@
 
 @property (strong, nonatomic) CHMTableOfContents *tableOfContents;
 
-- (NSString *)title;
-- (NSURL *)currentLocation;
-- (NSString *)uniqueId;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *title;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSURL *currentLocation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *uniqueId;
 
 @end

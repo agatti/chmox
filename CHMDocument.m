@@ -35,7 +35,7 @@
 
 #pragma mark NSObject
 
-- (id) init
+- (instancetype) init
 {
     if( self = [super init] ) {
         _container = nil;
@@ -48,10 +48,9 @@
 - (void) dealloc
 {
     if( self.container ) {
-	[CHMURLProtocol unregisterContainer:self.container];
+    [CHMURLProtocol unregisterContainer:self.container];
     }
     
-    [super dealloc];
 }
 
 #pragma mark NSDocument

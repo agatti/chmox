@@ -27,7 +27,7 @@
     NSMutableArray *_rootTopics;
 }
 
-- (id)initWithContainer:(CHMContainer *)container;
+- (instancetype)initWithContainer:(CHMContainer *)container NS_DESIGNATED_INITIALIZER;
 - (void)addRootTopic:(CHMTopic *)topic;
 
 @end

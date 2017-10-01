@@ -32,16 +32,16 @@ struct chmFile;
 @property (strong, nonatomic) NSString *tocPath;
 @property (strong, nonatomic) NSString *indexPath;
 
-+ (id)containerWithContentsOfFile:(NSString *)path;
++ (instancetype)containerWithContentsOfFile:(NSString *)path;
 
-- (id)initWithContentsOfFile:(NSString *)path;
+- (instancetype)initWithContentsOfFile:(NSString *)path NS_DESIGNATED_INITIALIZER;
 
 - (bool)hasObjectWithPath: (NSString *)path;
 - (NSData *)dataWithContentsOfObject: (NSString *)objectPath;
 - (NSString *)stringWithContentsOfObject: (NSString *)objectPath;
-- (NSData *)dataWithTableOfContents;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *dataWithTableOfContents;
 
-- (BOOL)loadMetadata;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL loadMetadata;
 - (NSString *)findHomeForPath: (NSString *)basePath;
 
 @end

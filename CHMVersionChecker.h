@@ -25,14 +25,14 @@ extern NSString *AUTOMATIC_CHECK_PREF; // Key for user defaults.
 //@class MacPADSocket;
 
 @interface CHMVersionChecker : NSWindowController {
-    IBOutlet	NSPanel *_updateAvailableWindow;
-    IBOutlet	NSPanel *_upToDateWindow;
-    IBOutlet	NSPanel *_cannotCheckWindow;
-    IBOutlet	NSButton *_preferenceButton1;
-    IBOutlet	NSButton *_preferenceButton2;
-    IBOutlet	NSButton *_preferenceButton3;
+    IBOutlet    NSPanel *_updateAvailableWindow;
+    IBOutlet    NSPanel *_upToDateWindow;
+    IBOutlet    NSPanel *_cannotCheckWindow;
+    IBOutlet    NSButton *_preferenceButton1;
+    IBOutlet    NSButton *_preferenceButton2;
+    IBOutlet    NSButton *_preferenceButton3;
     
-    IBOutlet	NSTextField *_updateDescriptionTextField;
+    IBOutlet    NSTextField *_updateDescriptionTextField;
     
     bool _isAutomaticCheck;
 }
@@ -44,8 +44,8 @@ extern NSString *AUTOMATIC_CHECK_PREF; // Key for user defaults.
 - (IBAction)update:(id)sender;
 - (IBAction)changePreference:(id)sender;
 
-- (BOOL)shouldAutomaticallyCheckForNewVersion;
-- (BOOL)shouldNotifyLackOfNewVersion;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldAutomaticallyCheckForNewVersion;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL shouldNotifyLackOfNewVersion;
 - (void)updateNewVersionAvailability:(BOOL)isNewVersionAvailable;
 
 @end

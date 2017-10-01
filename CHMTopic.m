@@ -30,7 +30,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithName:(NSString *)topicName location:(NSURL *)topicLocation
+- (instancetype)initWithName:(NSString *)topicName location:(NSURL *)topicLocation
 {
     if( self = [super init] ) {
         _name = topicName;
@@ -45,20 +45,12 @@
     CHMTopic *other = [[CHMTopic allocWithZone: zone] initWithName:_name location:_location];
 
     if(self.subTopics ) {
-	other->_subTopics = [_subTopics retain];
+    other->_subTopics = _subTopics;
     }
     
     return other;
 }
 
-- (void) dealloc
-{
-    if( _subTopics ) {
-	[_subTopics release];
-    }
-
-    [super dealloc];
-}
 
 
 #pragma mark Accessors
@@ -70,13 +62,13 @@
 
 - (unsigned int)countOfSubTopics
 {
-    return _subTopics? [_subTopics count] : 0;
+    return _subTopics? _subTopics.count : 0;
 }
 
 
 - (CHMTopic *)objectInSubTopicsAtIndex:(unsigned int)theIndex
 {
-    return _subTopics? [_subTopics objectAtIndex:theIndex] : nil;
+    return _subTopics? _subTopics[theIndex] : nil;
 }
 
 #pragma mark Mutators
@@ -102,7 +94,7 @@
 - (void)removeObjectFromSubTopicsAtIndex:(unsigned int)theIndex
 {
     if( _subTopics ) {
-	[_subTopics removeObjectAtIndex:theIndex];
+    [_subTopics removeObjectAtIndex:theIndex];
     }
 }
 

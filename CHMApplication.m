@@ -35,7 +35,7 @@
 
 #pragma mark Startup and Shutdown
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
-    [NSURLProtocol registerClass:[CHMURLProtocol class]];
+    [NSURLProtocol registerClass:CHMURLProtocol.class];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -44,7 +44,7 @@
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    [NSURLProtocol unregisterClass:[CHMURLProtocol class]];
+    [NSURLProtocol unregisterClass:CHMURLProtocol.class];
 }
 
 #pragma mark Menu bar actions

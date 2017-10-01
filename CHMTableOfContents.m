@@ -25,21 +25,29 @@
 
 #import <libxml/HTMLparser.h>
 
+@interface TOCBuilderContext : NSObject
+
+@property (strong, nonatomic) CHMContainer *container;
+@property (strong, nonatomic) CHMTableOfContents *toc;
+@property (strong, nonatomic) NSMutableArray *topicStack;
+@property (strong, nonatomic) CHMTopic *placeholder;
+@property (strong, nonatomic) CHMTopic *lastTopic;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *path;
+
+@end
+
+@implementation TOCBuilderContext
+
+@end
+
+@interface CHMTableOfContents ()
+
+@property (strong, nonatomic) TOCBuilderContext *context;
+
+@end
 
 @implementation CHMTableOfContents
-
-typedef struct {
-    // Context
-    CHMContainer *container;
-    CHMTableOfContents *toc;
-    NSMutableArray *topicStack;
-    CHMTopic *placeholder; 
-    CHMTopic *lastTopic;
-    
-    // Topic properties
-    NSString *name;
-    NSString *path;
-} TOCBuilderContext;
 
 static void createNewTopic( TOCBuilderContext *context );
 static void documentDidStart( TOCBuilderContext *toc );
@@ -78,33 +86,35 @@ static htmlSAXHandler saxHandler = {
 
 #pragma mark Lifecycle
 
-- (id)initWithContainer:(CHMContainer *)container
+- (instancetype)initWithContainer:(CHMContainer *)container
 {
     if( self = [super init] ) {
-	_rootTopics = [[NSMutableArray alloc] init];
+    _rootTopics = [[NSMutableArray alloc] init];
 
-	TOCBuilderContext context = {
-	    container, self, [[NSMutableArray alloc] init],
-            [[CHMTopic alloc] init],
-	    nil, nil, nil
-	};
-	
-	NSData *tocData = [container dataWithTableOfContents];
-	
-	// XML_CHAR_ENCODING_NONE / XML_CHAR_ENCODING_UTF8 / XML_CHAR_ENCODING_8859_1
-	htmlParserCtxtPtr parser = htmlCreatePushParserCtxt( &saxHandler, &context,
-							     [tocData bytes], [tocData length],
-							     NULL, XML_CHAR_ENCODING_8859_1 );
-	htmlParseChunk( parser, [tocData bytes], 0, 1 );
-	[context.topicStack release];
+        _context = [TOCBuilderContext new];
+        _context.container = container;
+        _context.toc = self;
+        _context.topicStack = [NSMutableArray new];
+        _context.placeholder = [CHMTopic new];
+        _context.lastTopic = nil;
+        _context.name = nil;
+        _context.path = nil;
 
-	htmlDocPtr doc = parser->myDoc;
-	htmlFreeParserCtxt( parser );
-	if( doc ) {
-	    xmlFreeDoc( doc );
-	}
+    NSData *tocData = [container dataWithTableOfContents];
+    
+    // XML_CHAR_ENCODING_NONE / XML_CHAR_ENCODING_UTF8 / XML_CHAR_ENCODING_8859_1
+    htmlParserCtxtPtr parser = htmlCreatePushParserCtxt( &saxHandler, &_context,
+                                 tocData.bytes, tocData.length,
+                                 NULL, XML_CHAR_ENCODING_8859_1 );
+    htmlParseChunk( parser, tocData.bytes, 0, 1 );
 
-	DEBUG_OUTPUT( @"Root topics: %@", _rootTopics );
+    htmlDocPtr doc = parser->myDoc;
+    htmlFreeParserCtxt( parser );
+    if( doc ) {
+        xmlFreeDoc( doc );
+    }
+
+    DEBUG_OUTPUT( @"Root topics: %@", _rootTopics );
 
     }
     
@@ -112,11 +122,6 @@ static htmlSAXHandler saxHandler = {
 }
 
 
-- (void) dealloc
-{
-    [_rootTopics release];
-    [super dealloc];
-}
 
 #pragma mark Mutators
 
@@ -144,53 +149,53 @@ static void elementDidStart( TOCBuilderContext *context, const xmlChar *name, co
     if( !strcasecmp( "ul", name ) ) {
 //        DEBUG_OUTPUT( @"Stack BEFORE %@", context->topicStack );
 
-	if( context->name ) {
-	    createNewTopic( context );
-	}
-	
-	if( context->lastTopic ) {
-	    [context->topicStack addObject:context->lastTopic];
-	    context->lastTopic = nil;
-	}
+    if( context.name ) {
+        createNewTopic( context );
+    }
+    
+    if( context.lastTopic ) {
+        [context.topicStack addObject:context.lastTopic];
+        context.lastTopic = nil;
+    }
         else {
-	    [context->topicStack addObject:context->placeholder];
+        [context.topicStack addObject:context.placeholder];
         }
         
 //        DEBUG_OUTPUT( @"Stack AFTER %@", context->topicStack );
     }
     else if( !strcasecmp( "li", name ) ) {
-	// Opening depth level
-	context->name = nil;
-	context->path = nil;
+    // Opening depth level
+    context.name = nil;
+    context.path = nil;
     }
     else if( !strcasecmp( "param", name ) && ( atts != NULL )) {
-	// Topic properties
-	const xmlChar *type = NULL;
-	const xmlChar *value = NULL;
-	
-	for( int i = 0; atts[ i ] != NULL ; i += 2 ) {
-	    if( !strcasecmp( "name", atts[ i ] ) ) {
-		type = atts[ i + 1 ];
-	    }
-	    else if( !strcasecmp( "value", atts[ i ] ) ) {
-		value = atts[ i + 1 ];
-	    }
-	}
-	
-	if( ( type != NULL ) && ( value != NULL ) ) {
-	    if( !strcasecmp( "Name", type ) ) {
-		// Name of the topic
-		context->name = [[NSString alloc] initWithUTF8String:value];
-	    }
-	    else if( !strcasecmp( "Local", type ) ) {
-		// Path of the topic
-		context->path = [[NSString alloc] initWithUTF8String:value];
-	    }
-	    else {
-		// Unsupported topic property
-		//NSLog( @"type=%s  value=%s", type, value );
-	    }
-	}
+    // Topic properties
+    const xmlChar *type = NULL;
+    const xmlChar *value = NULL;
+    
+    for( int i = 0; atts[ i ] != NULL ; i += 2 ) {
+        if( !strcasecmp( "name", atts[ i ] ) ) {
+        type = atts[ i + 1 ];
+        }
+        else if( !strcasecmp( "value", atts[ i ] ) ) {
+        value = atts[ i + 1 ];
+        }
+    }
+    
+    if( ( type != NULL ) && ( value != NULL ) ) {
+        if( !strcasecmp( "Name", type ) ) {
+        // Name of the topic
+        context.name = [[NSString alloc] initWithUTF8String:value];
+        }
+        else if( !strcasecmp( "Local", type ) ) {
+        // Path of the topic
+        context.path = [[NSString alloc] initWithUTF8String:value];
+        }
+        else {
+        // Unsupported topic property
+        //NSLog( @"type=%s  value=%s", type, value );
+        }
+    }
     }
 }
 
@@ -198,24 +203,24 @@ static void elementDidEnd( TOCBuilderContext *context, const xmlChar *name )
 {
 //    DEBUG_OUTPUT( @"SAX:elementDidEnd %s", name );
     
-    if( !strcasecmp( "li", name ) && context->name ) {
-	// New complete topic
-	createNewTopic( context );
+    if( !strcasecmp( "li", name ) && context.name ) {
+    // New complete topic
+    createNewTopic( context );
     }
     else if( !strcasecmp( "ul", name ) ) {
 //        DEBUG_OUTPUT( @"Stack BEFORE %@", context->topicStack );
 
-	// Closing depth level
-	if( [context->topicStack count] > 0 ) {
-            context->lastTopic = [context->topicStack objectAtIndex:[context->topicStack count] - 1];
-	    [context->topicStack removeLastObject];
+    // Closing depth level
+    if( (context.topicStack).count > 0 ) {
+            context.lastTopic = (context.topicStack)[(context.topicStack).count - 1];
+        [context.topicStack removeLastObject];
 
-            if( context->lastTopic == context->placeholder ) {
-                context->lastTopic = nil;
+            if( context.lastTopic == context.placeholder ) {
+                context.lastTopic = nil;
             }
-	}
+    }
         else {
-            context->lastTopic = nil;
+            context.lastTopic = nil;
         }
         
 //        DEBUG_OUTPUT( @"Stack AFTER %@", context->topicStack );
@@ -226,31 +231,31 @@ static void createNewTopic( TOCBuilderContext *context )
 {
     NSURL *location = nil;
     
-    if( context->path ) {
-	location = [CHMURLProtocol URLWithPath:context->path inContainer:context->container];
+    if( context.path ) {
+    location = [CHMURLProtocol URLWithPath:context.path inContainer:context.container];
     }
 
-    context->lastTopic = [[CHMTopic alloc] initWithName:context->name location:location];
-    [context->name release];
-    [context->path release];
-    context->name = nil;
-    context->path = nil;
+    context.lastTopic = [[CHMTopic alloc] initWithName:context.name location:location];
+    context.name;
+    context.path;
+    context.name = nil;
+    context.path = nil;
     
-    int level = [context->topicStack count];
+    int level = (context.topicStack).count;
     
     // Add topic to its parent
     while( --level >= 0 ) {
-        CHMTopic *parent = [context->topicStack objectAtIndex:level];
+        CHMTopic *parent = (context.topicStack)[level];
 
-        if( parent != context->placeholder ) {
-            DEBUG_OUTPUT( @"createNewTopic: %@, %d", context->lastTopic, level );
-            [parent addObject:context->lastTopic];
+        if( parent != context.placeholder ) {
+            DEBUG_OUTPUT( @"createNewTopic: %@, %d", context.lastTopic, level );
+            [parent addObject:context.lastTopic];
             return;
         }
     }
     
-    [context->toc addRootTopic:context->lastTopic];
-    DEBUG_OUTPUT( @"createNewTopic: %@ -root-", context->lastTopic );
+    [context.toc addRootTopic:context.lastTopic];
+    DEBUG_OUTPUT( @"createNewTopic: %@ -root-", context.lastTopic );
 }
 
 
@@ -259,7 +264,7 @@ static void createNewTopic( TOCBuilderContext *context )
 - (int)outlineView:(NSOutlineView *)outlineView
     numberOfChildrenOfItem:(id)item
 {
-    return item? [item countOfSubTopics] : [_rootTopics count];
+    return item? [item countOfSubTopics] : _rootTopics.count;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView
@@ -269,15 +274,15 @@ static void createNewTopic( TOCBuilderContext *context )
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
-	    child:(int)theIndex
-	   ofItem:(id)item
+        child:(int)theIndex
+       ofItem:(id)item
 {
-    return item? [item objectInSubTopicsAtIndex:theIndex] : [_rootTopics objectAtIndex:theIndex];
+    return item? [item objectInSubTopicsAtIndex:theIndex] : _rootTopics[theIndex];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView
     objectValueForTableColumn:(NSTableColumn *)tableColumn
-	   byItem:(id)item
+       byItem:(id)item
 {
     return [item name];
 }
