@@ -16,14 +16,12 @@
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// $Revision: 1.3 $
-//
 
 #import <AppKit/AppKit.h>
 
 extern NSString *AUTOMATIC_CHECK_PREF; // Key for user defaults.
 
-@class MacPADSocket;
+//@class MacPADSocket;
 
 @interface CHMVersionChecker : NSWindowController {
     IBOutlet	NSPanel *_updateAvailableWindow;
@@ -35,7 +33,7 @@ extern NSString *AUTOMATIC_CHECK_PREF; // Key for user defaults.
     
     IBOutlet	NSTextField *_updateDescriptionTextField;
     
-    MacPADSocket *_macPAD;
+//    MacPADSocket *_macPAD;
     bool _isAutomaticCheck;
 }
 

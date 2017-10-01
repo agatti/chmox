@@ -16,11 +16,8 @@
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// $Revision: 1.4 $
-//
 
 #import "CHMVersionChecker.h"
-#import "MacPADSocket.h"
 
 
 @implementation CHMVersionChecker
@@ -53,8 +50,8 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 	[NSBundle loadNibNamed: @"VersionChecker" owner: self];
 
 	_isAutomaticCheck = FALSE;
-    	_macPAD = [[MacPADSocket alloc] init];
-	[_macPAD setDelegate:self];
+//        _macPAD = [[MacPADSocket alloc] init];
+//    [_macPAD setDelegate:self];
     }
     
     return self;
@@ -75,7 +72,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 }
 
 -(void) dealloc {
-    [_macPAD release];
+//    [_macPAD release];
     [super dealloc];
 }
 
@@ -86,7 +83,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
     
     @synchronized( self ) {
 	_isAutomaticCheck = FALSE;
-	[_macPAD performCheck];
+//    [_macPAD performCheck];
     }
 }
 
@@ -97,7 +94,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 	if( [self shouldAutomaticallyCheckForNewVersion] ) {
 	    _isAutomaticCheck = TRUE;
-	    [_macPAD performCheck];
+//        [_macPAD performCheck];
 	}
     }
 }
@@ -114,7 +111,7 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 - (IBAction)update:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[_macPAD productPageURL]]];
+//    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[_macPAD productPageURL]]];
     [self closeWindow:nil];
 }
 
@@ -137,38 +134,38 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 - (void)macPADErrorOccurred:(NSNotification *)notification
 {
-    NSLog( @"Error while checking for new version: %@", [[notification userInfo] objectForKey:MacPADErrorMessage]);
-
-    if( [self shouldNotifyLackOfNewVersion] ) {
-	[NSApp runModalForWindow:_cannotCheckWindow];
-    }
-
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_TIME_PREF];
+//    NSLog( @"Error while checking for new version: %@", [[notification userInfo] objectForKey:MacPADErrorMessage]);
+//
+//    if( [self shouldNotifyLackOfNewVersion] ) {
+//    [NSApp runModalForWindow:_cannotCheckWindow];
+//    }
+//
+//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_TIME_PREF];
 }
 
 
 - (void)macPADCheckFinished:(NSNotification *)notification
 {
-    if( [[[notification userInfo] objectForKey:MacPADNewVersionAvailable] boolValue] ) {
-	// New version available
-	[self updateNewVersionAvailability:YES];
-	
-	NSString *format = [_updateDescriptionTextField stringValue];
-
-	NSString *releaseText = [[_macPAD releaseDate] descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:nil];
-	int releaseAge = -[[_macPAD releaseDate] timeIntervalSinceNow] / 60.0 / 60.0 / 24.0;
-	
-	[_updateDescriptionTextField setStringValue:[NSString stringWithFormat:format,
-	    releaseText, [_macPAD newVersion], releaseAge, [_macPAD currentVersion]]];
-
-	[NSApp runModalForWindow:_updateAvailableWindow];	
-	[_updateDescriptionTextField setStringValue:format];
-    }
-    else if( [self shouldNotifyLackOfNewVersion] ) {
-	// Running version is up to date
-	[self updateNewVersionAvailability:NO];
-	[NSApp runModalForWindow:_upToDateWindow];
-    }
+//    if( [[[notification userInfo] objectForKey:MacPADNewVersionAvailable] boolValue] ) {
+//    // New version available
+//    [self updateNewVersionAvailability:YES];
+//
+//    NSString *format = [_updateDescriptionTextField stringValue];
+//
+//    NSString *releaseText = [[_macPAD releaseDate] descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:nil];
+//    int releaseAge = -[[_macPAD releaseDate] timeIntervalSinceNow] / 60.0 / 60.0 / 24.0;
+//
+//    [_updateDescriptionTextField setStringValue:[NSString stringWithFormat:format,
+//        releaseText, [_macPAD newVersion], releaseAge, [_macPAD currentVersion]]];
+//
+//    [NSApp runModalForWindow:_updateAvailableWindow];
+//    [_updateDescriptionTextField setStringValue:format];
+//    }
+//    else if( [self shouldNotifyLackOfNewVersion] ) {
+//    // Running version is up to date
+//    [self updateNewVersionAvailability:NO];
+//    [NSApp runModalForWindow:_upToDateWindow];
+//    }
 }
 
 #pragma mark Preferences

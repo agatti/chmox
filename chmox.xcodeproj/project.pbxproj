@@ -30,9 +30,6 @@
 		448AF700064AFD3500FA37BD /* lzx.h in Headers */ = {isa = PBXBuildFile; fileRef = 448AF6FC064AFD3500FA37BD /* lzx.h */; };
 		44923A7A072C57E90070AA26 /* CHMApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 44923A78072C57E90070AA26 /* CHMApplication.h */; };
 		44923A7B072C57E90070AA26 /* CHMApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 44923A79072C57E90070AA26 /* CHMApplication.m */; };
-		4494977A073D406800D8BC20 /* MacPAD.url in Resources */ = {isa = PBXBuildFile; fileRef = 44949779073D406800D8BC20 /* MacPAD.url */; };
-		4494984E073D5A1700D8BC20 /* MacPADSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4494984C073D5A1700D8BC20 /* MacPADSocket.h */; };
-		4494984F073D5A1700D8BC20 /* MacPADSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4494984D073D5A1700D8BC20 /* MacPADSocket.m */; };
 		44A2657C080EEB8900273DC8 /* CHMDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 44A2657B080EEB8900273DC8 /* CHMDocument.nib */; };
 		44B501B206A587BA00CE0A8E /* CHMVersionChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B501B006A587BA00CE0A8E /* CHMVersionChecker.h */; };
 		44B501B306A587BA00CE0A8E /* CHMVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B501B106A587BA00CE0A8E /* CHMVersionChecker.m */; };
@@ -92,10 +89,6 @@
 		4492A06707BF988B007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Farsi; path = Farsi.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		4492A06907BF989E007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Farsi; path = Farsi.lproj/VersionChecker.nib; sourceTree = "<group>"; };
 		4492A06A07BF98B1007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Farsi; path = Farsi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		44949779073D406800D8BC20 /* MacPAD.url */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MacPAD.url; sourceTree = "<group>"; };
-		44949839073D56ED00D8BC20 /* MacPAD.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacPAD.plist; sourceTree = SOURCE_ROOT; };
-		4494984C073D5A1700D8BC20 /* MacPADSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacPADSocket.h; sourceTree = "<group>"; };
-		4494984D073D5A1700D8BC20 /* MacPADSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacPADSocket.m; sourceTree = "<group>"; };
 		44A2655E080EEB5800273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = zh_TW; path = zh_TW.lproj/Credits.rtf; sourceTree = "<group>"; };
 		44A2655F080EEB6B00273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		44A2657E080EEBB000273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/VersionChecker.nib; sourceTree = "<group>"; };
@@ -202,7 +195,6 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4494984B073D5A1700D8BC20 /* MacPAD */,
 				44D7FFF0065A9C7B00D2B23E /* prefix.pch */,
 				448AF6EF064AFCD900FA37BD /* chmlib */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
@@ -215,8 +207,6 @@
 			children = (
 				445DEACC07B4086C0008D692 /* Localizable.strings */,
 				443EA40607B2DF6C00C46016 /* application.icns */,
-				44949839073D56ED00D8BC20 /* MacPAD.plist */,
-				44949779073D406800D8BC20 /* MacPAD.url */,
 				44DA07230694985300777FAE /* LICENSE.txt */,
 				448CC7E5068A2ED200F9B0DB /* LGPL.r */,
 				443011D1067E65980054A7C5 /* segment-back.png */,
@@ -255,15 +245,6 @@
 			path = chmlib;
 			sourceTree = "<group>";
 		};
-		4494984B073D5A1700D8BC20 /* MacPAD */ = {
-			isa = PBXGroup;
-			children = (
-				4494984C073D5A1700D8BC20 /* MacPADSocket.h */,
-				4494984D073D5A1700D8BC20 /* MacPADSocket.m */,
-			);
-			path = MacPAD;
-			sourceTree = SOURCE_ROOT;
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -281,7 +262,6 @@
 				44F984FA065774580076336E /* CHMTableOfContents.h in Headers */,
 				44B501B206A587BA00CE0A8E /* CHMVersionChecker.h in Headers */,
 				44923A7A072C57E90070AA26 /* CHMApplication.h in Headers */,
-				4494984E073D5A1700D8BC20 /* MacPADSocket.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +335,6 @@
 				443011D3067E65980054A7C5 /* segment-back.png in Resources */,
 				443011D4067E65980054A7C5 /* segment-forward.png in Resources */,
 				44B501C906A58D3300CE0A8E /* VersionChecker.nib in Resources */,
-				4494977A073D406800D8BC20 /* MacPAD.url in Resources */,
 				443EA40707B2DF6C00C46016 /* application.icns in Resources */,
 				445DEACD07B4086C0008D692 /* Localizable.strings in Resources */,
 			);
@@ -395,7 +374,6 @@
 				44F984FB065774580076336E /* CHMTableOfContents.m in Sources */,
 				44B501B306A587BA00CE0A8E /* CHMVersionChecker.m in Sources */,
 				44923A7B072C57E90070AA26 /* CHMApplication.m in Sources */,
-				4494984F073D5A1700D8BC20 /* MacPADSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
