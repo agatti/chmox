@@ -24,24 +24,25 @@ struct chmFile;
 
 @interface CHMContainer : NSObject
 
-@property (assign, nonatomic) struct chmFile *handle;
-@property (strong, nonatomic) NSString *uniqueId;
-@property (strong, nonatomic) NSString *path;
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *homePath;
-@property (strong, nonatomic) NSString *tocPath;
-@property (strong, nonatomic) NSString *indexPath;
+@property(assign, nonatomic) struct chmFile *handle;
+@property(strong, nonatomic) NSString *uniqueId;
+@property(strong, nonatomic) NSString *path;
+@property(strong, nonatomic) NSString *title;
+@property(strong, nonatomic) NSString *homePath;
+@property(strong, nonatomic) NSString *tocPath;
+@property(strong, nonatomic) NSString *indexPath;
 
 + (instancetype)containerWithContentsOfFile:(NSString *)path;
 
-- (instancetype)initWithContentsOfFile:(NSString *)path NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithContentsOfFile:(NSString *)path
+    NS_DESIGNATED_INITIALIZER;
 
-- (bool)hasObjectWithPath: (NSString *)path;
-- (NSData *)dataWithContentsOfObject: (NSString *)objectPath;
-- (NSString *)stringWithContentsOfObject: (NSString *)objectPath;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSData *dataWithTableOfContents;
+- (bool)hasObjectWithPath:(NSString *)path;
+- (NSData *)dataWithContentsOfObject:(NSString *)objectPath;
+- (NSString *)stringWithContentsOfObject:(NSString *)objectPath;
+@property(NS_NONATOMIC_IOSONLY, readonly, copy) NSData *dataWithTableOfContents;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL loadMetadata;
-- (NSString *)findHomeForPath: (NSString *)basePath;
+@property(NS_NONATOMIC_IOSONLY, readonly) BOOL loadMetadata;
+- (NSString *)findHomeForPath:(NSString *)basePath;
 
 @end

@@ -22,14 +22,13 @@
 
 @class WebView;
 
-@interface CHMWindowController : NSWindowController
-{
-    IBOutlet WebView *_contentsView;
-    IBOutlet NSDrawer *_drawer;
-    IBOutlet NSOutlineView *_tocView;
-    IBOutlet NSTableView *_favoritesView;
-    IBOutlet NSTabView *_drawerView;
-    IBOutlet id _historyToolbarItemView;
+@interface CHMWindowController : NSWindowController {
+  IBOutlet WebView *_contentsView;
+  IBOutlet NSDrawer *_drawer;
+  IBOutlet NSOutlineView *_tocView;
+  IBOutlet NSTableView *_favoritesView;
+  IBOutlet NSTabView *_drawerView;
+  IBOutlet id _historyToolbarItemView;
 }
 
 - (void)setupToolbar;
@@ -44,9 +43,10 @@
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar;
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar;
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag;
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar
+        itemForItemIdentifier:(NSString *)itemIdentifier
+    willBeInsertedIntoToolbar:(BOOL)flag;
 
-- (BOOL)validateMenuItem:(NSMenuItem*)anItem;
-
+- (BOOL)validateMenuItem:(NSMenuItem *)anItem;
 
 @end

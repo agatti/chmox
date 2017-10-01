@@ -22,7 +22,7 @@
 
 @interface CHMTopic ()
 
-@property (strong, nonatomic) NSMutableArray *subTopics;
+@property(strong, nonatomic) NSMutableArray *subTopics;
 
 @end
 
@@ -30,73 +30,65 @@
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithName:(NSString *)topicName location:(NSURL *)topicLocation
-{
-    if( self = [super init] ) {
-        _name = topicName;
-        _location = topicLocation;
-        _subTopics = nil;
-    }
-    
-    return self;
+- (instancetype)initWithName:(NSString *)topicName
+                    location:(NSURL *)topicLocation {
+  if (self = [super init]) {
+    _name = topicName;
+    _location = topicLocation;
+    _subTopics = nil;
+  }
+
+  return self;
 }
 
 - copyWithZone:(NSZone *)zone {
-    CHMTopic *other = [[CHMTopic allocWithZone: zone] initWithName:_name location:_location];
+  CHMTopic *other =
+      [[CHMTopic allocWithZone:zone] initWithName:_name location:_location];
 
-    if(self.subTopics ) {
+  if (self.subTopics) {
     other->_subTopics = _subTopics;
-    }
-    
-    return other;
+  }
+
+  return other;
 }
-
-
 
 #pragma mark Accessors
 
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"<CHMTopic:'%@',%@>", _name, _location];
+- (NSString *)description {
+  return [NSString stringWithFormat:@"<CHMTopic:'%@',%@>", _name, _location];
 }
 
-- (unsigned int)countOfSubTopics
-{
-    return _subTopics? _subTopics.count : 0;
+- (unsigned int)countOfSubTopics {
+  return _subTopics ? _subTopics.count : 0;
 }
 
-
-- (CHMTopic *)objectInSubTopicsAtIndex:(unsigned int)theIndex
-{
-    return _subTopics? _subTopics[theIndex] : nil;
+- (CHMTopic *)objectInSubTopicsAtIndex:(unsigned int)theIndex {
+  return _subTopics ? _subTopics[theIndex] : nil;
 }
 
 #pragma mark Mutators
 
-- (void)addObject:(CHMTopic *)topic
-{
-    if( !_subTopics ) {
-        _subTopics = [[NSMutableArray alloc] init];
-    }
-    
-    [_subTopics addObject:topic];
+- (void)addObject:(CHMTopic *)topic {
+  if (!_subTopics) {
+    _subTopics = [[NSMutableArray alloc] init];
+  }
+
+  [_subTopics addObject:topic];
 }
 
-- (void)insertObject:(CHMTopic *)topic inSubTopicsAtIndex:(unsigned int)theIndex
-{
-    if( !_subTopics ) {
-        _subTopics = [[NSMutableArray alloc] init];
-    }
-    
-    [_subTopics insertObject:topic atIndex:theIndex];
+- (void)insertObject:(CHMTopic *)topic
+    inSubTopicsAtIndex:(unsigned int)theIndex {
+  if (!_subTopics) {
+    _subTopics = [[NSMutableArray alloc] init];
+  }
+
+  [_subTopics insertObject:topic atIndex:theIndex];
 }
 
-- (void)removeObjectFromSubTopicsAtIndex:(unsigned int)theIndex
-{
-    if( _subTopics ) {
+- (void)removeObjectFromSubTopicsAtIndex:(unsigned int)theIndex {
+  if (_subTopics) {
     [_subTopics removeObjectAtIndex:theIndex];
-    }
+  }
 }
-
 
 @end

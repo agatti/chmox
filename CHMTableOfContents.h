@@ -24,10 +24,11 @@
 @class CHMContainer;
 
 @interface CHMTableOfContents : NSObject {
-    NSMutableArray *_rootTopics;
+  NSMutableArray *_rootTopics;
 }
 
-- (instancetype)initWithContainer:(CHMContainer *)container NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithContainer:(CHMContainer *)container
+    NS_DESIGNATED_INITIALIZER;
 - (void)addRootTopic:(CHMTopic *)topic;
 
 @end

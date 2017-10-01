@@ -25,11 +25,12 @@
 
 #pragma mark Lifecycle
 
--(instancetype)initWithRequest:(NSURLRequest *)request
-      cachedResponse:(NSCachedURLResponse *)cachedResponse
-          client:(id <NSURLProtocolClient>)client
-{
-    return [super initWithRequest:request cachedResponse:cachedResponse client:client];
+- (instancetype)initWithRequest:(NSURLRequest *)request
+                 cachedResponse:(NSCachedURLResponse *)cachedResponse
+                         client:(id<NSURLProtocolClient>)client {
+  return [super initWithRequest:request
+                 cachedResponse:cachedResponse
+                         client:client];
 }
 
 #pragma mark CHM URL utils
@@ -37,137 +38,135 @@
 static NSMutableDictionary *_containers = nil;
 static NSMutableDictionary *_baseURLs = nil;
 
-+ (void)registerContainer:(CHMContainer *)container
-{
-    NSString *key = container.uniqueId;
++ (void)registerContainer:(CHMContainer *)container {
+  NSString *key = container.uniqueId;
 
-    if( !_containers ) {
+  if (!_containers) {
     _containers = [[NSMutableDictionary alloc] init];
     _baseURLs = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"chmox-internal://%@/", key]];
-    _containers[key] = container;
-    _baseURLs[key] = baseURL;
+  }
+
+  NSURL *baseURL = [NSURL
+      URLWithString:[NSString stringWithFormat:@"chmox-internal://%@/", key]];
+  _containers[key] = container;
+  _baseURLs[key] = baseURL;
 }
 
-+ (CHMContainer *)containerForUniqueId:(NSString *)uniqueId
-{
-    return _containers? _containers[uniqueId] : nil;
++ (CHMContainer *)containerForUniqueId:(NSString *)uniqueId {
+  return _containers ? _containers[uniqueId] : nil;
 }
 
-+ (void)unregisterContainer:(CHMContainer *)container
-{
-    NSString *key = container.uniqueId;
++ (void)unregisterContainer:(CHMContainer *)container {
+  NSString *key = container.uniqueId;
 
-    [_containers removeObjectForKey:key];
-    [_baseURLs removeObjectForKey:key];
+  [_containers removeObjectForKey:key];
+  [_baseURLs removeObjectForKey:key];
 }
 
-+ (NSURL *)URLWithPath:(NSString *)path inContainer:(CHMContainer *)container
-{
-    NSURL *baseURL = _baseURLs[container.uniqueId];
-    NSURL *url = [NSURL URLWithString:path relativeToURL:baseURL];
-    
-    if( baseURL && url == nil ) {
++ (NSURL *)URLWithPath:(NSString *)path inContainer:(CHMContainer *)container {
+  NSURL *baseURL = _baseURLs[container.uniqueId];
+  NSURL *url = [NSURL URLWithString:path relativeToURL:baseURL];
+
+  if (baseURL && url == nil) {
     // Something is wrong, perhaps path is not well-formed. Try percent-
     // escaping characters. It's not clear what encoding should be used,
     // but for now let's just use Latin1.
     CFStringRef str = CFURLCreateStringByAddingPercentEscapes(
-            nil,                                // allocator
-            (CFStringRef)path,                  // <#CFStringRef originalString#>
-        (CFStringRef)@"%#",                 // <#CFStringRef charactersToLeaveUnescaped#>
-        nil,                                // <#CFStringRef legalURLCharactersToBeEscaped#>,
-        kCFStringEncodingWindowsLatin1      //<#CFStringEncoding encoding#>
-        );
-        
-        url = [NSURL URLWithString:(__bridge NSString*)str relativeToURL:baseURL];
-    }
-    
-    return url;
+        nil,                 // allocator
+        (CFStringRef)path,   // <#CFStringRef originalString#>
+        (CFStringRef) @"%#", // <#CFStringRef charactersToLeaveUnescaped#>
+        nil,                 // <#CFStringRef legalURLCharactersToBeEscaped#>,
+        kCFStringEncodingWindowsLatin1 //<#CFStringEncoding encoding#>
+    );
+
+    url = [NSURL URLWithString:(__bridge NSString *)str relativeToURL:baseURL];
+  }
+
+  return url;
 }
 
-+ (BOOL)canHandleURL:(NSURL *)anURL 
-{
-    return [anURL.scheme isEqualToString:@"chmox-internal"];
++ (BOOL)canHandleURL:(NSURL *)anURL {
+  return [anURL.scheme isEqualToString:@"chmox-internal"];
 }
 
 #pragma mark NSURLProtocol overriding
-+ (BOOL)canInitWithRequest:(NSURLRequest *)request
-{
-    if( [self canHandleURL:request.URL] ) {
++ (BOOL)canInitWithRequest:(NSURLRequest *)request {
+  if ([self canHandleURL:request.URL]) {
     return YES;
-    }
-    else {
-    NSLog( @"CHMURLProtocol cannot handle %@", request );
+  } else {
+    NSLog(@"CHMURLProtocol cannot handle %@", request);
     return NO;
-    }
+  }
 }
 
-
-+ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
-{
-    return request;
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
+  return request;
 }
 
+- (void)startLoading {
+  DEBUG_OUTPUT(@"CHMURLProtocol:startLoading %@", [self request]);
 
--(void)startLoading
-{
-    DEBUG_OUTPUT( @"CHMURLProtocol:startLoading %@", [self request] );
+  NSURL *url = self.request.URL;
 
-    NSURL *url = self.request.URL;
+  /*
+   NSString *rawPath = [[[self request] URL] path];
+   NSLog( @"rawPath: %@", rawPath );
+   NSRange separator = [rawPath rangeOfString:@"::/"];
+   NSString *containerPath = [rawPath substringToIndex:separator.location];
+   NSString *contentsPath = [rawPath substringFromIndex:( separator.location + 2
+   )];
 
-/*
- NSString *rawPath = [[[self request] URL] path];
- NSLog( @"rawPath: %@", rawPath );
- NSRange separator = [rawPath rangeOfString:@"::/"];
- NSString *containerPath = [rawPath substringToIndex:separator.location];
- NSString *contentsPath = [rawPath substringFromIndex:( separator.location + 2 )];
-   
- NSLog( @"containerPath: %@", containerPath );
- NSLog( @"contentsPath: %@", contentsPath );
-   
- CHMContainer *container = [CHMContainer containerWithContentsOfFile:containerPath];
- */
+   NSLog( @"containerPath: %@", containerPath );
+   NSLog( @"contentsPath: %@", contentsPath );
 
-    CHMContainer *container = [CHMURLProtocol containerForUniqueId:url.host];
-        
-    if( !container ) {
-    [self.client URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:nil]];
+   CHMContainer *container = [CHMContainer
+   containerWithContentsOfFile:containerPath];
+   */
+
+  CHMContainer *container = [CHMURLProtocol containerForUniqueId:url.host];
+
+  if (!container) {
+    [self.client URLProtocol:self
+            didFailWithError:[NSError errorWithDomain:NSURLErrorDomain
+                                                 code:0
+                                             userInfo:nil]];
     return;
-    }
+  }
 
-    NSData *data;
-    
-    if( url.parameterString ) {
-        data = [container dataWithContentsOfObject:[NSString stringWithFormat:@"%@;%@", url.path, url.parameterString] ];
-    }
-    else {
-        data = [container dataWithContentsOfObject:url.path];
-    }
-    
-    if( !data ) {
-    [self.client URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:0 userInfo:nil]];
+  NSData *data;
+
+  if (url.parameterString) {
+    data = [container
+        dataWithContentsOfObject:[NSString
+                                     stringWithFormat:@"%@;%@", url.path,
+                                                      url.parameterString]];
+  } else {
+    data = [container dataWithContentsOfObject:url.path];
+  }
+
+  if (!data) {
+    [self.client URLProtocol:self
+            didFailWithError:[NSError errorWithDomain:NSURLErrorDomain
+                                                 code:0
+                                             userInfo:nil]];
     return;
-    }
-    
-    NSURLResponse *response = [[NSURLResponse alloc] initWithURL: self.request.URL
-                            MIMEType:@"application/octet-stream"
-                       expectedContentLength:data.length
+  }
+
+  NSURLResponse *response =
+      [[NSURLResponse alloc] initWithURL:self.request.URL
+                                MIMEType:@"application/octet-stream"
+                   expectedContentLength:data.length
                         textEncodingName:nil];
-    [self.client URLProtocol:self     
-        didReceiveResponse:response 
+  [self.client URLProtocol:self
+        didReceiveResponse:response
         cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-    
-    [self.client URLProtocol:self didLoadData:data];
-    [self.client URLProtocolDidFinishLoading:self];
 
+  [self.client URLProtocol:self didLoadData:data];
+  [self.client URLProtocolDidFinishLoading:self];
 }
 
-
--(void)stopLoading
-{
-//    NSLog( @"CHMURLProtocol:stopLoading" );
+- (void)stopLoading {
+  //    NSLog( @"CHMURLProtocol:stopLoading" );
 }
 
 /*

@@ -12,45 +12,45 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
 #import "CHMApplication.h"
-#import "CHMVersionChecker.h"
 #import "CHMURLProtocol.h"
+#import "CHMVersionChecker.h"
 
 @interface CHMApplication ()
 
-@property (strong, nonatomic) CHMVersionChecker *versionChecker;
+@property(strong, nonatomic) CHMVersionChecker *versionChecker;
 
 @end
 
 @implementation CHMApplication
 
--(void) awakeFromNib {
+- (void)awakeFromNib {
 }
 
 #pragma mark Startup and Shutdown
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
-    [NSURLProtocol registerClass:CHMURLProtocol.class];
+  [NSURLProtocol registerClass:CHMURLProtocol.class];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    self.versionChecker = [CHMVersionChecker new];
-    [self.versionChecker automaticallyCheckForNewVersion];
+  self.versionChecker = [CHMVersionChecker new];
+  [self.versionChecker automaticallyCheckForNewVersion];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    [NSURLProtocol unregisterClass:CHMURLProtocol.class];
+  [NSURLProtocol unregisterClass:CHMURLProtocol.class];
 }
 
 #pragma mark Menu bar actions
 
-- (IBAction) checkForUpdates: (id)sender {
-    [self.versionChecker checkForNewVersion];
+- (IBAction)checkForUpdates:(id)sender {
+  [self.versionChecker checkForNewVersion];
 }
 
 @end

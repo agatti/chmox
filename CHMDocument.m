@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Lesser General Public License
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -20,14 +20,14 @@
 //
 
 #import "CHMDocument.h"
-#import "CHMWindowController.h"
 #import "CHMContainer.h"
 #import "CHMTableOfContents.h"
 #import "CHMURLProtocol.h"
+#import "CHMWindowController.h"
 
 @interface CHMDocument ()
 
-@property (strong, nonatomic) CHMContainer *container;
+@property(strong, nonatomic) CHMContainer *container;
 
 @end
 
@@ -35,67 +35,60 @@
 
 #pragma mark NSObject
 
-- (instancetype) init
-{
-    if( self = [super init] ) {
-        _container = nil;
-    }
-    
-    return self;
+- (instancetype)init {
+  if (self = [super init]) {
+    _container = nil;
+  }
+
+  return self;
 }
 
-
-- (void) dealloc
-{
-    if( self.container ) {
+- (void)dealloc {
+  if (self.container) {
     [CHMURLProtocol unregisterContainer:self.container];
-    }
-    
+  }
 }
 
 #pragma mark NSDocument
 
-- (void)makeWindowControllers
-{
-    [self addWindowController:[[CHMWindowController alloc] initWithWindowNibName:@"CHMDocument"]];
+- (void)makeWindowControllers {
+  [self addWindowController:[[CHMWindowController alloc]
+                                initWithWindowNibName:@"CHMDocument"]];
 }
 
-
 - (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)docType {
-    NSLog( @"CHMDocument:readFromFile:%@", fileName );
+  NSLog(@"CHMDocument:readFromFile:%@", fileName);
 
-    self.container = [CHMContainer containerWithContentsOfFile:fileName];
-    if (self.container == nil) {
-        return NO;
-    }
+  self.container = [CHMContainer containerWithContentsOfFile:fileName];
+  if (self.container == nil) {
+    return NO;
+  }
 
-    [CHMURLProtocol registerContainer:self.container];
-    self.tableOfContents = [[CHMTableOfContents alloc] initWithContainer:self.container];
+  [CHMURLProtocol registerContainer:self.container];
+  self.tableOfContents =
+      [[CHMTableOfContents alloc] initWithContainer:self.container];
 
-    return YES;
+  return YES;
 }
 
 - (NSData *)dataRepresentationOfType:(NSString *)type {
-    // Viewer only
-    return nil;
+  // Viewer only
+  return nil;
 }
-
 
 #pragma mark Accessors
 
-- (NSString *)title
-{
-    return self.container.title;
+- (NSString *)title {
+  return self.container.title;
 }
 
-- (NSURL *)currentLocation
-{
-    return [CHMURLProtocol URLWithPath:self.container.homePath inContainer:self.container];
+- (NSURL *)currentLocation {
+  return [CHMURLProtocol URLWithPath:self.container.homePath
+                         inContainer:self.container];
 }
 
-- (NSString *)uniqueId
-{
-    return self.container.uniqueId;
+- (NSString *)uniqueId {
+  return self.container.uniqueId;
 }
 
 @end

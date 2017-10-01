@@ -22,12 +22,13 @@
 
 @interface CHMTopic : NSObject
 
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSURL *location;
+@property(strong, nonatomic) NSString *name;
+@property(strong, nonatomic) NSURL *location;
 
-- (instancetype)initWithName:(NSString *)topicName location:(NSURL *)topicLocation NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(NSString *)topicName
+                    location:(NSURL *)topicLocation NS_DESIGNATED_INITIALIZER;
 
-@property (NS_NONATOMIC_IOSONLY, readonly) unsigned int countOfSubTopics;
+@property(NS_NONATOMIC_IOSONLY, readonly) unsigned int countOfSubTopics;
 - (CHMTopic *)objectInSubTopicsAtIndex:(unsigned int)index;
 
 - (void)addObject:(CHMTopic *)topic;
