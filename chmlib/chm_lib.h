@@ -4,7 +4,7 @@
  *                           -------------------                           *
  *                                                                         *
  *  author:     Jed Wing <jedwin@ugcs.caltech.edu>                         *
- *  version:    0.39                                                       *
+ *  version:    0.3                                                        *
  *  notes:      These routines are meant for the manipulation of microsoft *
  *              .chm (compiled html help) files, but may likely be used    *
  *              for the manipulation of any ITSS archive, if ever ITSS     *
