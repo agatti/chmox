@@ -25,8 +25,12 @@
 
 @interface CHMTableOfContents : NSObject
 
-- (instancetype)initWithContainer:(CHMContainer *)container
+- (nullable instancetype)init
+    __attribute__((unavailable("You cannot create a foo instance through init "
+                               "- please use initWithContainer:")));
+
+- (nonnull instancetype)initWithContainer:(nonnull CHMContainer *)container
     NS_DESIGNATED_INITIALIZER;
-- (void)addRootTopic:(CHMTopic *)topic;
+- (void)addRootTopic:(nonnull CHMTopic *)topic;
 
 @end

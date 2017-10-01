@@ -76,15 +76,12 @@ static htmlSAXHandler saxHandler = {
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithContainer:(CHMContainer *)container {
+- (nonnull instancetype)initWithContainer:(nonnull CHMContainer *)container {
   if (self = [super init]) {
     _rootTopics = [NSMutableArray new];
     _container = container;
     _topicStack = [NSMutableArray new];
     _placeholder = [CHMTopic new];
-    _lastTopic = nil;
-    _name = nil;
-    _path = nil;
 
     NSData *tocData = [container dataWithTableOfContents];
 
@@ -109,7 +106,7 @@ static htmlSAXHandler saxHandler = {
 
 #pragma mark Mutators
 
-- (void)addRootTopic:(CHMTopic *)topic {
+- (void)addRootTopic:(nonnull CHMTopic *)topic {
   [self.rootTopics addObject:topic];
 }
 
@@ -207,7 +204,7 @@ static void createNewTopic(void *context) {
     location = [CHMURLProtocol URLWithPath:toc.path inContainer:toc.container];
   }
 
-  toc.lastTopic = [[CHMTopic alloc] initWithName:toc.name location:location];
+  toc.lastTopic = [[CHMTopic alloc] initWithName:toc.name andLocation:location];
   toc.name = nil;
   toc.path = nil;
 

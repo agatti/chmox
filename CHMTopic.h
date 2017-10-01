@@ -22,17 +22,22 @@
 
 @interface CHMTopic : NSObject
 
-@property(strong, nonatomic) NSString *name;
-@property(strong, nonatomic) NSURL *location;
+@property(nonnull, strong, nonatomic) NSString *name;
+@property(nonnull, strong, nonatomic) NSURL *location;
 
-- (instancetype)initWithName:(NSString *)topicName
-                    location:(NSURL *)topicLocation NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)init
+    __attribute__((unavailable("You cannot create a foo instance through init "
+                               "- please use initWithName:location:")));
 
-@property(NS_NONATOMIC_IOSONLY, readonly) unsigned int countOfSubTopics;
-- (CHMTopic *)objectInSubTopicsAtIndex:(unsigned int)index;
+- (nonnull instancetype)initWithName:(nonnull NSString *)topicName
+                         andLocation:(nonnull NSURL *)topicLocation
+    NS_DESIGNATED_INITIALIZER;
 
-- (void)addObject:(CHMTopic *)topic;
-- (void)insertObject:(CHMTopic *)topic inSubTopicsAtIndex:(unsigned int)index;
-- (void)removeObjectFromSubTopicsAtIndex:(unsigned int)index;
+@property(nonatomic, readonly) NSUInteger countOfSubTopics;
+- (nonnull CHMTopic *)objectInSubTopicsAtIndex:(NSUInteger)index;
+
+- (void)addObject:(nonnull CHMTopic *)topic;
+- (void)insertObject:(CHMTopic *)topic inSubTopicsAtIndex:(NSUInteger)index;
+- (void)removeObjectFromSubTopicsAtIndex:(NSUInteger)index;
 
 @end

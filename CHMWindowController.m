@@ -261,7 +261,7 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
       [NSPrintOperation printOperationWithView:docView
                                      printInfo:[self.document printInfo]];
 
-  [op setShowPanels:YES];
+  [op setShowsPrintPanel:YES];
 
   // Run operation, which shows the Print panel if showPanels was YES
   [self.document runModalPrintOperation:op

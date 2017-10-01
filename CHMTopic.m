@@ -22,7 +22,7 @@
 
 @interface CHMTopic ()
 
-@property(strong, nonatomic) NSMutableArray *subTopics;
+@property(nonnull, strong, nonatomic) NSMutableArray *subTopics;
 
 @end
 
@@ -30,65 +30,45 @@
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithName:(NSString *)topicName
-                    location:(NSURL *)topicLocation {
+- (nonnull instancetype)initWithName:(nonnull NSString *)name
+                         andLocation:(nonnull NSURL *)location {
   if (self = [super init]) {
-    _name = topicName;
-    _location = topicLocation;
-    _subTopics = nil;
+    _name = name;
+    _location = location;
+    _subTopics = [NSMutableArray new];
   }
 
   return self;
 }
 
-- copyWithZone:(NSZone *)zone {
-  CHMTopic *other =
-      [[CHMTopic allocWithZone:zone] initWithName:_name location:_location];
-
-  if (self.subTopics) {
-    other->_subTopics = _subTopics;
-  }
-
-  return other;
-}
-
 #pragma mark Accessors
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"<CHMTopic:'%@',%@>", _name, _location];
+  return [NSString
+      stringWithFormat:@"<CHMTopic:'%@',%@>", self.name, self.location];
 }
 
-- (unsigned int)countOfSubTopics {
-  return _subTopics ? _subTopics.count : 0;
+- (NSUInteger)countOfSubTopics {
+  return self.subTopics.count;
 }
 
-- (CHMTopic *)objectInSubTopicsAtIndex:(unsigned int)theIndex {
-  return _subTopics ? _subTopics[theIndex] : nil;
+- (nonnull CHMTopic *)objectInSubTopicsAtIndex:(NSUInteger)index {
+  return self.subTopics[index];
 }
 
 #pragma mark Mutators
 
-- (void)addObject:(CHMTopic *)topic {
-  if (!_subTopics) {
-    _subTopics = [[NSMutableArray alloc] init];
-  }
-
-  [_subTopics addObject:topic];
+- (void)addObject:(nonnull CHMTopic *)topic {
+  [self.subTopics addObject:topic];
 }
 
-- (void)insertObject:(CHMTopic *)topic
-    inSubTopicsAtIndex:(unsigned int)theIndex {
-  if (!_subTopics) {
-    _subTopics = [[NSMutableArray alloc] init];
-  }
-
-  [_subTopics insertObject:topic atIndex:theIndex];
+- (void)insertObject:(nonnull CHMTopic *)topic
+    inSubTopicsAtIndex:(NSUInteger)index {
+  [self.subTopics insertObject:topic atIndex:index];
 }
 
-- (void)removeObjectFromSubTopicsAtIndex:(unsigned int)theIndex {
-  if (_subTopics) {
-    [_subTopics removeObjectAtIndex:theIndex];
-  }
+- (void)removeObjectFromSubTopicsAtIndex:(NSUInteger)index {
+  [self.subTopics removeObjectAtIndex:index];
 }
 
 @end

@@ -47,7 +47,9 @@ static NSString *FIRST_TIME_PREF = @"VersionChecker:firstTime";
 
 - (instancetype)init {
   if (self = [super init]) {
-    [NSBundle loadNibNamed:@"VersionChecker" owner:self];
+    [NSBundle.mainBundle loadNibNamed:@"VersionChecker"
+                                owner:self
+                      topLevelObjects:nil];
 
     _isAutomaticCheck = FALSE;
     //        _macPAD = [[MacPADSocket alloc] init];

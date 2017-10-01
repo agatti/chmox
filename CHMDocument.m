@@ -1,6 +1,7 @@
 //
 // Chmox a CHM file viewer for Mac OS X
 // Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2017 Alessandro Gatti.
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -15,8 +16,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
-// $Revision: 1.6 $
 //
 
 #import "CHMDocument.h"
