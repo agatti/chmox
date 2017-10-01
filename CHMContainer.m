@@ -1,6 +1,7 @@
 //
 // Chmox a CHM file viewer for Mac OS X
 // Copyright (c) 2004 Stéphane Boisson.
+// Copyright (c) 2017 Alessandro Gatti
 //
 // Chmox is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License as published
@@ -16,10 +17,9 @@
 // along with Foobar; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// $Revision: 1.8 $
-//
 
-#include <openssl/sha.h>
+#include <CommonCrypto/CommonCrypto.h>
+
 #import "CHMContainer.h"
 #import "chm_lib.h"
 
@@ -294,8 +294,11 @@ static inline NSString * readTrimmedString( NSData *data, unsigned long offset )
     }
 
     //--- Compute unique id ---
-    unsigned char digest[ SHA_DIGEST_LENGTH ];
-    SHA1( [systemData bytes], [systemData length], digest );
+
+
+
+    unsigned char digest[ CC_SHA1_DIGEST_LENGTH ];
+    CC_SHA1(systemData.bytes, systemData.length, digest);
     unsigned int *ptr = (unsigned int *) digest;
     _uniqueId = [[NSString alloc] initWithFormat:@"%x%x%x%x%x", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4]];
     NSLog( @"UniqueId=%@", _uniqueId );
