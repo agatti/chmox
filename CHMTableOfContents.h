@@ -18,14 +18,12 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @class CHMTopic;
 @class CHMContainer;
 
-@interface CHMTableOfContents : NSObject {
-  NSMutableArray *_rootTopics;
-}
+@interface CHMTableOfContents : NSObject
 
 - (instancetype)initWithContainer:(CHMContainer *)container
     NS_DESIGNATED_INITIALIZER;

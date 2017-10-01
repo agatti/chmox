@@ -42,8 +42,8 @@ static NSMutableDictionary *_baseURLs = nil;
   NSString *key = container.uniqueId;
 
   if (!_containers) {
-    _containers = [[NSMutableDictionary alloc] init];
-    _baseURLs = [[NSMutableDictionary alloc] init];
+    _containers = [NSMutableDictionary new];
+    _baseURLs = [NSMutableDictionary new];
   }
 
   NSURL *baseURL = [NSURL
@@ -166,13 +166,6 @@ static NSMutableDictionary *_baseURLs = nil;
 }
 
 - (void)stopLoading {
-  //    NSLog( @"CHMURLProtocol:stopLoading" );
 }
-
-/*
--(NSCachedURLResponse *)cachedResponse
-{
-}
-*/
 
 @end

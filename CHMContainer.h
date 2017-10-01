@@ -18,7 +18,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 struct chmFile;
 
@@ -26,23 +26,24 @@ struct chmFile;
 
 @property(assign, nonatomic) struct chmFile *handle;
 @property(strong, nonatomic) NSString *uniqueId;
-@property(strong, nonatomic) NSString *path;
+@property(strong, nonatomic, nonnull) NSString *path;
 @property(strong, nonatomic) NSString *title;
 @property(strong, nonatomic) NSString *homePath;
 @property(strong, nonatomic) NSString *tocPath;
 @property(strong, nonatomic) NSString *indexPath;
 
-+ (instancetype)containerWithContentsOfFile:(NSString *)path;
+- (instancetype)init
+    __attribute__((unavailable("You cannot create a foo instance through init "
+                               "- please use initWithContentsOfFile:")));
 
-- (instancetype)initWithContentsOfFile:(NSString *)path
-    NS_DESIGNATED_INITIALIZER;
++ (instancetype)containerWithContentsOfFile:(NSString *__nonnull)path;
 
-- (bool)hasObjectWithPath:(NSString *)path;
+- (BOOL)hasObjectWithPath:(NSString *)path;
 - (NSData *)dataWithContentsOfObject:(NSString *)objectPath;
 - (NSString *)stringWithContentsOfObject:(NSString *)objectPath;
+
 @property(NS_NONATOMIC_IOSONLY, readonly, copy) NSData *dataWithTableOfContents;
 
-@property(NS_NONATOMIC_IOSONLY, readonly) BOOL loadMetadata;
-- (NSString *)findHomeForPath:(NSString *)basePath;
+- (NSString *)findHomeForPath:(NSString *__nonnull)basePath;
 
 @end
