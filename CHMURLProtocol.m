@@ -35,51 +35,49 @@
 
 #pragma mark CHM URL utils
 
-static NSMutableDictionary *_containers = nil;
-static NSMutableDictionary *_baseURLs = nil;
+static NSMutableDictionary *kContainers = nil;
+static NSMutableDictionary *kBaseURLs = nil;
 
 + (void)registerContainer:(CHMContainer *)container {
   NSString *key = container.uniqueId;
 
-  if (!_containers) {
-    _containers = [NSMutableDictionary new];
-    _baseURLs = [NSMutableDictionary new];
-  }
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    kContainers = [NSMutableDictionary new];
+    kBaseURLs = [NSMutableDictionary new];
+  });
 
   NSURL *baseURL = [NSURL
       URLWithString:[NSString stringWithFormat:@"chmox-internal://%@/", key]];
-  _containers[key] = container;
-  _baseURLs[key] = baseURL;
+  kContainers[key] = container;
+  kBaseURLs[key] = baseURL;
 }
 
 + (CHMContainer *)containerForUniqueId:(NSString *)uniqueId {
-  return _containers ? _containers[uniqueId] : nil;
+  return kContainers[uniqueId];
 }
 
 + (void)unregisterContainer:(CHMContainer *)container {
   NSString *key = container.uniqueId;
 
-  [_containers removeObjectForKey:key];
-  [_baseURLs removeObjectForKey:key];
+  [kContainers removeObjectForKey:key];
+  [kBaseURLs removeObjectForKey:key];
 }
 
 + (NSURL *)URLWithPath:(NSString *)path inContainer:(CHMContainer *)container {
-  NSURL *baseURL = _baseURLs[container.uniqueId];
+  NSURL *baseURL = kBaseURLs[container.uniqueId];
   NSURL *url = [NSURL URLWithString:path relativeToURL:baseURL];
 
   if (baseURL && url == nil) {
     // Something is wrong, perhaps path is not well-formed. Try percent-
     // escaping characters. It's not clear what encoding should be used,
     // but for now let's just use Latin1.
-    CFStringRef str = CFURLCreateStringByAddingPercentEscapes(
-        nil,                 // allocator
-        (CFStringRef)path,   // <#CFStringRef originalString#>
-        (CFStringRef) @"%#", // <#CFStringRef charactersToLeaveUnescaped#>
-        nil,                 // <#CFStringRef legalURLCharactersToBeEscaped#>,
-        kCFStringEncodingWindowsLatin1 //<#CFStringEncoding encoding#>
-    );
 
-    url = [NSURL URLWithString:(__bridge NSString *)str relativeToURL:baseURL];
+    url = [NSURL
+        URLWithString:[path stringByAddingPercentEncodingWithAllowedCharacters:
+                                [NSCharacterSet
+                                    characterSetWithCharactersInString:@"%#"]]
+        relativeToURL:baseURL];
   }
 
   return url;
@@ -93,10 +91,10 @@ static NSMutableDictionary *_baseURLs = nil;
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
   if ([self canHandleURL:request.URL]) {
     return YES;
-  } else {
-    NSLog(@"CHMURLProtocol cannot handle %@", request);
-    return NO;
   }
+
+  NSLog(@"CHMURLProtocol cannot handle %@", request);
+  return NO;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
