@@ -43,11 +43,6 @@
 
 #pragma mark Accessors
 
-- (NSString *)description {
-  return [NSString
-      stringWithFormat:@"<CHMTopic:'%@',%@>", self.name, self.location];
-}
-
 - (NSUInteger)countOfSubTopics {
   return self.subTopics.count;
 }

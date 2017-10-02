@@ -33,7 +33,6 @@
 @property(strong, nonatomic) CHMTopic *lastTopic;
 @property(strong, nonatomic) NSString *name;
 @property(strong, nonatomic) NSString *path;
-@property(strong, nonatomic) NSMutableArray *rootTopics;
 
 @end
 

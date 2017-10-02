@@ -23,7 +23,9 @@
 @class CHMTopic;
 @class CHMContainer;
 
-@interface CHMTableOfContents : NSObject
+@interface CHMTableOfContents : NSObject <NSOutlineViewDataSource>
+
+@property(strong, nonatomic, nonnull) NSMutableArray *rootTopics;
 
 - (nullable instancetype)init
     __attribute__((unavailable("You cannot create a foo instance through init "

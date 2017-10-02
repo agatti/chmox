@@ -37,7 +37,8 @@
 - (nonnull CHMTopic *)objectInSubTopicsAtIndex:(NSUInteger)index;
 
 - (void)addObject:(nonnull CHMTopic *)topic;
-- (void)insertObject:(CHMTopic *)topic inSubTopicsAtIndex:(NSUInteger)index;
+- (void)insertObject:(nonnull CHMTopic *)topic
+    inSubTopicsAtIndex:(NSUInteger)index;
 - (void)removeObjectFromSubTopicsAtIndex:(NSUInteger)index;
 
 @end

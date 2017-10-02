@@ -18,26 +18,19 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#import <Cocoa/Cocoa.h>
+@import AppKit;
 
 @class WebView;
 
-@interface CHMWindowController : NSWindowController {
+@interface CHMWindowController
+    : NSWindowController <NSOutlineViewDelegate, NSToolbarDelegate> {
   IBOutlet WebView *_contentsView;
-  IBOutlet NSDrawer *_drawer;
-  IBOutlet NSOutlineView *_tocView;
-  IBOutlet NSTableView *_favoritesView;
-  IBOutlet NSTabView *_drawerView;
-  IBOutlet id _historyToolbarItemView;
 }
 
 - (void)setupToolbar;
 - (void)updateToolTipRects;
 
-- (IBAction)toggleDrawer:(id)sender;
 - (IBAction)changeTopicWithSelectedRow:(id)sender;
-- (IBAction)changeTopicToPreviousInHistory:(id)sender;
-- (IBAction)changeTopicToNextInHistory:(id)sender;
 - (IBAction)makeTextSmaller:(id)sender;
 - (IBAction)makeTextBigger:(id)sender;
 

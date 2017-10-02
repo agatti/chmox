@@ -18,56 +18,43 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+@import WebKit;
+
 #import "CHMWindowController.h"
 #import "CHMDocument.h"
+#import "CHMTableOfContents.h"
 #import "CHMTopic.h"
 #import "CHMURLProtocol.h"
-#import "WebKit/WebKit.h"
+
+@interface CHMWindowController ()
+
+@property(weak) IBOutlet NSOutlineView *tableOfContents;
+
+@end
 
 @implementation CHMWindowController
 
-// Tab items
-static NSString *TOC_TAB_ID = @"tocTab";
-static NSString *SEARCH_TAB_ID = @"searchTab";
-static NSString *FAVORITES_TAB_ID = @"favoritesTab";
-
 // Toolbar items
-static NSString *DRAWER_TOGGLE_TOOL_ID = @"chmox.drawerToggle";
 static NSString *SMALLER_TEXT_TOOL_ID = @"chmox.smallerText";
 static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
-static NSString *HISTORY_TOOL_ID = @"chmox.history";
 
 #pragma mark NSWindowController overridden method
 
 - (void)windowDidLoad {
+  CHMDocument *document = (CHMDocument *)self.document;
   NSURLRequest *request =
-      [NSURLRequest requestWithURL:[self.document currentLocation]];
+      [NSURLRequest requestWithURL:document.currentLocation];
   [_contentsView.mainFrame loadRequest:request];
 
-  self.windowFrameAutosaveName = [self.document uniqueId];
+  self.windowFrameAutosaveName = document.uniqueId;
   [self setShouldCloseDocument:YES];
 
-  _tocView.dataSource = [self.document tableOfContents];
-  [_tocView setAutoresizesOutlineColumn:NO];
+  self.tableOfContents.delegate = self;
+  self.tableOfContents.dataSource = document.tableOfContents;
+  self.tableOfContents.autoresizesOutlineColumn = NO;
 
   [self updateToolTipRects];
   [self setupToolbar];
-
-  int tabIndex;
-
-  // Remove Search tab
-  tabIndex = [_drawerView indexOfTabViewItemWithIdentifier:SEARCH_TAB_ID];
-  if (tabIndex != NSNotFound) {
-    [_drawerView removeTabViewItem:[_drawerView tabViewItemAtIndex:tabIndex]];
-  }
-
-  // Remove Favorites tab
-  tabIndex = [_drawerView indexOfTabViewItemWithIdentifier:FAVORITES_TAB_ID];
-  if (tabIndex != NSNotFound) {
-    [_drawerView removeTabViewItem:[_drawerView tabViewItemAtIndex:tabIndex]];
-  }
-
-  [_drawer open];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName {
@@ -132,7 +119,6 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
 - (void)webView:(WebView *)sender
     mouseDidMoveOverElement:(NSDictionary *)elementInformation
               modifierFlags:(unsigned int)modifierFlags {
-  // NSLog( @"mouseDidMoveOverElement: %@", elementInformation );
 }
 
 #pragma mark NSToolTipOwner
@@ -141,11 +127,11 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
     stringForToolTip:(NSToolTipTag)tag
                point:(NSPoint)point
             userData:(void *)userData {
-  if (view == _tocView) {
-    int row = [_tocView rowAtPoint:point];
+  if (view == self.tableOfContents) {
+    int row = [self.tableOfContents rowAtPoint:point];
 
     if (row >= 0) {
-      return [[_tocView itemAtRow:row] name];
+      return [[self.tableOfContents itemAtRow:row] name];
     }
   }
 
@@ -153,21 +139,15 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
 }
 
 - (void)updateToolTipRects {
-  [_tocView removeAllToolTips];
-  NSRange range = [_tocView rowsInRect:_tocView.visibleRect];
+  [self.tableOfContents removeAllToolTips];
+  NSRange range =
+      [self.tableOfContents rowsInRect:self.tableOfContents.visibleRect];
 
   for (int i = range.location; i < NSMaxRange(range); ++i) {
-    [_tocView addToolTipRect:[_tocView rectOfRow:i] owner:self userData:NULL];
+    [self.tableOfContents addToolTipRect:[self.tableOfContents rectOfRow:i]
+                                   owner:self
+                                userData:NULL];
   }
-}
-
-#pragma mark NSOutlineView delegate
-
-- (void)outlineView:(NSOutlineView *)outlineView
-    willDisplayCell:(id)cell
-     forTableColumn:(NSTableColumn *)tableColumn
-               item:(id)item {
-  // TODO: Change icon
 }
 
 #pragma mark Menu Validation
@@ -191,7 +171,6 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
 - (void)keyDown:(NSEvent *)theEvent {
   if (theEvent.modifierFlags & NSCommandKeyMask) {
     NSString *keyString = theEvent.charactersIgnoringModifiers;
-    //    NSLog( @"CHMWindowController:keyDown %@", [keyString description] );
 
     switch ([keyString characterAtIndex:0]) {
     case NSLeftArrowFunctionKey:
@@ -215,16 +194,11 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
 
 #pragma mark Actions
 
-- (IBAction)toggleDrawer:(id)sender {
-  NSLog(@"First responder: %@", self.window.firstResponder);
-  [_drawer toggle:self];
-}
-
 - (IBAction)changeTopicWithSelectedRow:(id)sender {
-  int selectedRow = _tocView.selectedRow;
+  NSInteger selectedRow = self.tableOfContents.selectedRow;
 
   if (selectedRow >= 0) {
-    CHMTopic *topic = [_tocView itemAtRow:selectedRow];
+    CHMTopic *topic = [self.tableOfContents itemAtRow:selectedRow];
     NSURL *location = topic.location;
 
     if (location) {
@@ -283,17 +257,16 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar {
   return @[
-    DRAWER_TOGGLE_TOOL_ID, SMALLER_TEXT_TOOL_ID, BIGGER_TEXT_TOOL_ID,
-    //        HISTORY_TOOL_ID,
-    NSToolbarPrintItemIdentifier, NSToolbarSeparatorItemIdentifier,
-    NSToolbarSpaceItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
+    SMALLER_TEXT_TOOL_ID, BIGGER_TEXT_TOOL_ID, NSToolbarPrintItemIdentifier,
+    NSToolbarSeparatorItemIdentifier, NSToolbarSpaceItemIdentifier,
+    NSToolbarFlexibleSpaceItemIdentifier,
     NSToolbarCustomizeToolbarItemIdentifier
   ];
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar {
   return @[
-    DRAWER_TOGGLE_TOOL_ID, SMALLER_TEXT_TOOL_ID, BIGGER_TEXT_TOOL_ID,
+    SMALLER_TEXT_TOOL_ID, BIGGER_TEXT_TOOL_ID,
     NSToolbarFlexibleSpaceItemIdentifier
   ];
 }
@@ -304,13 +277,7 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
   NSToolbarItem *item =
       [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
 
-  if ([itemIdentifier isEqualToString:DRAWER_TOGGLE_TOOL_ID]) {
-    [item setLabel:NSLocalizedString(DRAWER_TOGGLE_TOOL_ID, nil)];
-    item.paletteLabel = item.label;
-    item.image = [NSImage imageNamed:@"toolbar-drawer"];
-    item.target = self;
-    item.action = @selector(toggleDrawer:);
-  } else if ([itemIdentifier isEqualToString:SMALLER_TEXT_TOOL_ID]) {
+  if ([itemIdentifier isEqualToString:SMALLER_TEXT_TOOL_ID]) {
     [item setLabel:NSLocalizedString(SMALLER_TEXT_TOOL_ID, nil)];
     item.paletteLabel = item.label;
     item.image = [NSImage imageNamed:@"toolbar-smaller"];
@@ -322,17 +289,6 @@ static NSString *HISTORY_TOOL_ID = @"chmox.history";
     item.image = [NSImage imageNamed:@"toolbar-bigger"];
     item.target = self;
     item.action = @selector(makeTextBigger:);
-  } else if ([itemIdentifier isEqualToString:HISTORY_TOOL_ID]) {
-    [_historyToolbarItemView setLabel:nil forSegment:0];
-    [_historyToolbarItemView setLabel:nil forSegment:1];
-    //[_historyToolbarItemView sizeToFit];
-    NSRect frame = [_historyToolbarItemView frame];
-    [item setLabel:NSLocalizedString(HISTORY_TOOL_ID, nil)];
-    item.view = _historyToolbarItemView;
-    item.minSize = frame.size;
-    item.maxSize = frame.size;
-    //        [item setTarget:self];
-    //        [item setAction:@selector(makeTextBigger:)];
   }
 
   return item;

@@ -20,11 +20,8 @@
 
 #import "CHMApplication.h"
 #import "CHMURLProtocol.h"
-#import "CHMVersionChecker.h"
 
 @interface CHMApplication ()
-
-@property(strong, nonatomic) CHMVersionChecker *versionChecker;
 
 @end
 
@@ -39,8 +36,6 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-  self.versionChecker = [CHMVersionChecker new];
-  [self.versionChecker automaticallyCheckForNewVersion];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
@@ -50,7 +45,6 @@
 #pragma mark Menu bar actions
 
 - (IBAction)checkForUpdates:(id)sender {
-  [self.versionChecker checkForNewVersion];
 }
 
 @end

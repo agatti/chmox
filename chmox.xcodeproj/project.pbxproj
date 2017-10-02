@@ -13,10 +13,7 @@
 		442BBA320653ED630041C2A9 /* CHMContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 442BBA300653ED630041C2A9 /* CHMContainer.m */; };
 		442BBB310653F73E0041C2A9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442BBB300653F73E0041C2A9 /* WebKit.framework */; };
 		443011B7067E54140054A7C5 /* toolbar-smaller.png in Resources */ = {isa = PBXBuildFile; fileRef = 443011B4067E54140054A7C5 /* toolbar-smaller.png */; };
-		443011B8067E54140054A7C5 /* toolbar-drawer.png in Resources */ = {isa = PBXBuildFile; fileRef = 443011B5067E54140054A7C5 /* toolbar-drawer.png */; };
 		443011B9067E54140054A7C5 /* toolbar-bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 443011B6067E54140054A7C5 /* toolbar-bigger.png */; };
-		443011D3067E65980054A7C5 /* segment-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 443011D1067E65980054A7C5 /* segment-back.png */; };
-		443011D4067E65980054A7C5 /* segment-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 443011D2067E65980054A7C5 /* segment-forward.png */; };
 		443EA40707B2DF6C00C46016 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 443EA40607B2DF6C00C46016 /* application.icns */; };
 		445DEAC507B408380008D692 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1660FE840EACC02AAC07 /* InfoPlist.strings */; };
 		445DEACD07B4086C0008D692 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 445DEACC07B4086C0008D692 /* Localizable.strings */; };
@@ -31,8 +28,6 @@
 		44923A7A072C57E90070AA26 /* CHMApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 44923A78072C57E90070AA26 /* CHMApplication.h */; };
 		44923A7B072C57E90070AA26 /* CHMApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 44923A79072C57E90070AA26 /* CHMApplication.m */; };
 		44A2657C080EEB8900273DC8 /* CHMDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 44A2657B080EEB8900273DC8 /* CHMDocument.nib */; };
-		44B501B206A587BA00CE0A8E /* CHMVersionChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B501B006A587BA00CE0A8E /* CHMVersionChecker.h */; };
-		44B501B306A587BA00CE0A8E /* CHMVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B501B106A587BA00CE0A8E /* CHMVersionChecker.m */; };
 		44B7AED20675301E00B51920 /* chmdoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 44B7AED10675301E00B51920 /* chmdoc.icns */; };
 		44F984BF06576CA60076336E /* CHMTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 44F984BD06576CA60076336E /* CHMTopic.h */; };
 		44F984C006576CA60076336E /* CHMTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 44F984BE06576CA60076336E /* CHMTopic.m */; };
@@ -61,10 +56,7 @@
 		443011A2067E1E0C0054A7C5 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		443011AC067E2B340054A7C5 /* CHANGES.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGES.txt; sourceTree = "<group>"; };
 		443011B4067E54140054A7C5 /* toolbar-smaller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-smaller.png"; sourceTree = "<group>"; };
-		443011B5067E54140054A7C5 /* toolbar-drawer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-drawer.png"; sourceTree = "<group>"; };
 		443011B6067E54140054A7C5 /* toolbar-bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-bigger.png"; sourceTree = "<group>"; };
-		443011D1067E65980054A7C5 /* segment-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment-back.png"; sourceTree = "<group>"; };
-		443011D2067E65980054A7C5 /* segment-forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment-forward.png"; sourceTree = "<group>"; };
 		443EA40607B2DF6C00C46016 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = application.icns; sourceTree = "<group>"; };
 		445DEACA07B4085C0008D692 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		448AF5A0064AA5E100FA37BD /* CHMDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMDocument.h; sourceTree = "<group>"; };
@@ -78,8 +70,6 @@
 		448CC7E5068A2ED200F9B0DB /* LGPL.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = LGPL.r; sourceTree = "<group>"; };
 		44923A78072C57E90070AA26 /* CHMApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMApplication.h; sourceTree = "<group>"; };
 		44923A79072C57E90070AA26 /* CHMApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMApplication.m; sourceTree = "<group>"; };
-		44B501B006A587BA00CE0A8E /* CHMVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMVersionChecker.h; sourceTree = "<group>"; };
-		44B501B106A587BA00CE0A8E /* CHMVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMVersionChecker.m; sourceTree = "<group>"; };
 		44B7AED10675301E00B51920 /* chmdoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = chmdoc.icns; sourceTree = SOURCE_ROOT; };
 		44D7FFF0065A9C7B00D2B23E /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		44DA07230694985300777FAE /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -149,8 +139,6 @@
 			children = (
 				44923A78072C57E90070AA26 /* CHMApplication.h */,
 				44923A79072C57E90070AA26 /* CHMApplication.m */,
-				44B501B006A587BA00CE0A8E /* CHMVersionChecker.h */,
-				44B501B106A587BA00CE0A8E /* CHMVersionChecker.m */,
 				448AF5A0064AA5E100FA37BD /* CHMDocument.h */,
 				448AF5A1064AA5E100FA37BD /* CHMDocument.m */,
 				448AF5AA064AE52F00FA37BD /* CHMWindowController.h */,
@@ -184,10 +172,7 @@
 				443EA40607B2DF6C00C46016 /* application.icns */,
 				44DA07230694985300777FAE /* LICENSE.txt */,
 				448CC7E5068A2ED200F9B0DB /* LGPL.r */,
-				443011D1067E65980054A7C5 /* segment-back.png */,
-				443011D2067E65980054A7C5 /* segment-forward.png */,
 				443011B4067E54140054A7C5 /* toolbar-smaller.png */,
-				443011B5067E54140054A7C5 /* toolbar-drawer.png */,
 				443011B6067E54140054A7C5 /* toolbar-bigger.png */,
 				44B7AED10675301E00B51920 /* chmdoc.icns */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -234,7 +219,6 @@
 				442BBA310653ED630041C2A9 /* CHMContainer.h in Headers */,
 				44F984BF06576CA60076336E /* CHMTopic.h in Headers */,
 				44F984FA065774580076336E /* CHMTableOfContents.h in Headers */,
-				44B501B206A587BA00CE0A8E /* CHMVersionChecker.h in Headers */,
 				44923A7A072C57E90070AA26 /* CHMApplication.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,10 +282,7 @@
 				445DEAC507B408380008D692 /* InfoPlist.strings in Resources */,
 				44B7AED20675301E00B51920 /* chmdoc.icns in Resources */,
 				443011B7067E54140054A7C5 /* toolbar-smaller.png in Resources */,
-				443011B8067E54140054A7C5 /* toolbar-drawer.png in Resources */,
 				443011B9067E54140054A7C5 /* toolbar-bigger.png in Resources */,
-				443011D3067E65980054A7C5 /* segment-back.png in Resources */,
-				443011D4067E65980054A7C5 /* segment-forward.png in Resources */,
 				443EA40707B2DF6C00C46016 /* application.icns in Resources */,
 				445DEACD07B4086C0008D692 /* Localizable.strings in Resources */,
 			);
@@ -339,7 +320,6 @@
 				442BBA320653ED630041C2A9 /* CHMContainer.m in Sources */,
 				44F984C006576CA60076336E /* CHMTopic.m in Sources */,
 				44F984FB065774580076336E /* CHMTableOfContents.m in Sources */,
-				44B501B306A587BA00CE0A8E /* CHMVersionChecker.m in Sources */,
 				44923A7B072C57E90070AA26 /* CHMApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
