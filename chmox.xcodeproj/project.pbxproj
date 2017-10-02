@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -54,7 +54,6 @@
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4410436C07B4F11900B3D4B9 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = French.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		442BB9D40653EB340041C2A9 /* CHMURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMURLProtocol.h; sourceTree = "<group>"; };
 		442BB9D50653EB340041C2A9 /* CHMURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMURLProtocol.m; sourceTree = "<group>"; };
 		442BBA2F0653ED630041C2A9 /* CHMContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMContainer.h; sourceTree = "<group>"; };
@@ -69,10 +68,6 @@
 		443011D2067E65980054A7C5 /* segment-forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segment-forward.png"; sourceTree = "<group>"; };
 		443EA40607B2DF6C00C46016 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = application.icns; sourceTree = "<group>"; };
 		445DEACA07B4085C0008D692 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		445DEAD907B409900008D692 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
-		445DEAEB07B40A9F0008D692 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
-		445DEAF307B427460008D692 /* German */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = German; path = German.lproj/VersionChecker.nib; sourceTree = "<group>"; };
-		445DEAF907B42BAE0008D692 /* German */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = German; path = German.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		448AF5A0064AA5E100FA37BD /* CHMDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMDocument.h; sourceTree = "<group>"; };
 		448AF5A1064AA5E100FA37BD /* CHMDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMDocument.m; sourceTree = "<group>"; };
 		448AF5AA064AE52F00FA37BD /* CHMWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMWindowController.h; sourceTree = "<group>"; };
@@ -82,30 +77,12 @@
 		448AF6FB064AFD3500FA37BD /* lzx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzx.c; sourceTree = "<group>"; };
 		448AF6FC064AFD3500FA37BD /* lzx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzx.h; sourceTree = "<group>"; };
 		448CC7E5068A2ED200F9B0DB /* LGPL.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = LGPL.r; sourceTree = "<group>"; };
-		44916E9C07B97CED0095F0CE /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Italian; path = Italian.lproj/Credits.rtf; sourceTree = "<group>"; };
 		44923A78072C57E90070AA26 /* CHMApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMApplication.h; sourceTree = "<group>"; };
 		44923A79072C57E90070AA26 /* CHMApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMApplication.m; sourceTree = "<group>"; };
-		4492A06607BF9876007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Farsi; path = Farsi.lproj/Credits.rtf; sourceTree = "<group>"; };
-		4492A06707BF988B007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Farsi; path = Farsi.lproj/MainMenu.nib; sourceTree = "<group>"; };
-		4492A06907BF989E007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Farsi; path = Farsi.lproj/VersionChecker.nib; sourceTree = "<group>"; };
-		4492A06A07BF98B1007B237D /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Farsi; path = Farsi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		44A2655E080EEB5800273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = zh_TW; path = zh_TW.lproj/Credits.rtf; sourceTree = "<group>"; };
-		44A2655F080EEB6B00273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/MainMenu.nib; sourceTree = "<group>"; };
-		44A2657E080EEBB000273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/VersionChecker.nib; sourceTree = "<group>"; };
-		44A2657F080EEBBD00273DC8 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
-		44A67DE00742A04300D4714F /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = French.lproj/VersionChecker.nib; sourceTree = "<group>"; };
 		44B501B006A587BA00CE0A8E /* CHMVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMVersionChecker.h; sourceTree = "<group>"; };
 		44B501B106A587BA00CE0A8E /* CHMVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMVersionChecker.m; sourceTree = "<group>"; };
 		44B501B606A5885E00CE0A8E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/VersionChecker.nib; sourceTree = "<group>"; };
 		44B7AED10675301E00B51920 /* chmdoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = chmdoc.icns; sourceTree = SOURCE_ROOT; };
-		44B8E1B807B8245D002BF574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
-		44C82C27080EEFAE00D34050 /* French */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = French; path = French.lproj/CHMDocument.nib; sourceTree = "<group>"; };
-		44C82C2F080EF05700D34050 /* German */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = German; path = German.lproj/CHMDocument.nib; sourceTree = "<group>"; };
-		44C82C31080EF07F00D34050 /* Farsi */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Farsi; path = Farsi.lproj/CHMDocument.nib; sourceTree = "<group>"; };
-		44C82C32080EF09000D34050 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Italian.lproj/CHMDocument.nib; sourceTree = "<group>"; };
-		44C8E70E07B825EC00F5DADD /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Italian.lproj/MainMenu.nib; sourceTree = "<group>"; };
-		44C8E71807B8267F00F5DADD /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Italian.lproj/VersionChecker.nib; sourceTree = "<group>"; };
-		44D62F6906D94D5500C6711F /* French */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = French; path = French.lproj/Credits.rtf; sourceTree = "<group>"; };
 		44D7FFF0065A9C7B00D2B23E /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		44DA07230694985300777FAE /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		44F984BD06576CA60076336E /* CHMTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMTopic.h; sourceTree = "<group>"; };
@@ -294,21 +271,15 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = CHM;
 				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = 44F062640AF411D000B95F3E /* Build configuration list for PBXProject "chmox" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				Italian,
-				Persian,
-				Farsi,
-				zh_TW,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Chmox */;
 			projectDirPath = "";
@@ -384,11 +355,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				2A37F4B7FDCFA73011CA2CEA /* English */,
-				445DEAF907B42BAE0008D692 /* German */,
-				4410436C07B4F11900B3D4B9 /* French */,
-				44C8E70E07B825EC00F5DADD /* Italian */,
-				4492A06707BF988B007B237D /* Farsi */,
-				44A2655F080EEB6B00273DC8 /* zh_TW */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
@@ -397,10 +363,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				2A37F4BAFDCFA73011CA2CEA /* English */,
-				44D62F6906D94D5500C6711F /* French */,
-				44916E9C07B97CED0095F0CE /* Italian */,
-				4492A06607BF9876007B237D /* Farsi */,
-				44A2655E080EEB5800273DC8 /* zh_TW */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";
@@ -409,11 +371,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				445DEACA07B4085C0008D692 /* English */,
-				445DEAD907B409900008D692 /* French */,
-				445DEAEB07B40A9F0008D692 /* German */,
-				44B8E1B807B8245D002BF574 /* Italian */,
-				4492A06A07BF98B1007B237D /* Farsi */,
-				44A2657F080EEBBD00273DC8 /* zh_TW */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -422,10 +379,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				2A37F4B5FDCFA73011CA2CEA /* English */,
-				44C82C27080EEFAE00D34050 /* French */,
-				44C82C2F080EF05700D34050 /* German */,
-				44C82C31080EF07F00D34050 /* Farsi */,
-				44C82C32080EF09000D34050 /* Italian */,
 			);
 			name = CHMDocument.nib;
 			sourceTree = "<group>";
@@ -434,11 +387,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				44B501B606A5885E00CE0A8E /* English */,
-				44A67DE00742A04300D4714F /* French */,
-				445DEAF307B427460008D692 /* German */,
-				44C8E71807B8267F00F5DADD /* Italian */,
-				4492A06907BF989E007B237D /* Farsi */,
-				44A2657E080EEBB000273DC8 /* zh_TW */,
 			);
 			name = VersionChecker.nib;
 			sourceTree = "<group>";
@@ -605,7 +553,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
 			};
 			name = Development;
 		};
@@ -639,7 +587,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
 			};
 			name = Deployment;
 		};
@@ -673,7 +621,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
 			};
 			name = Default;
 		};
