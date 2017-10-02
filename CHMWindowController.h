@@ -27,19 +27,4 @@
   IBOutlet WebView *_contentsView;
 }
 
-- (void)setupToolbar;
-- (void)updateToolTipRects;
-
-- (IBAction)changeTopicWithSelectedRow:(id)sender;
-- (IBAction)makeTextSmaller:(id)sender;
-- (IBAction)makeTextBigger:(id)sender;
-
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar;
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar;
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar
-        itemForItemIdentifier:(NSString *)itemIdentifier
-    willBeInsertedIntoToolbar:(BOOL)flag;
-
-- (BOOL)validateMenuItem:(NSMenuItem *)anItem;
-
 @end

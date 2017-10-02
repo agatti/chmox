@@ -20,7 +20,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface CHMApplication : NSObject
+@interface CHMApplication : NSObject <NSApplicationDelegate>
 
 - (IBAction)checkForUpdates:(id)sender;
 

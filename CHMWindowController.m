@@ -29,14 +29,24 @@
 @interface CHMWindowController ()
 
 @property(weak) IBOutlet NSOutlineView *tableOfContents;
+@property(weak) IBOutlet NSToolbar *toolbar;
+@property(weak) IBOutlet NSToolbarItem *backToolbarItem;
+@property(weak) IBOutlet NSToolbarItem *forwardToolbarItem;
+@property(weak) IBOutlet NSToolbarItem *smallerFontToolbarItem;
+@property(weak) IBOutlet NSToolbarItem *biggerFontToolbarItem;
+
+- (IBAction)makeTextSmaller:(id)sender;
+- (IBAction)makeTextBigger:(id)sender;
+- (IBAction)changeTopicToPreviousInHistory:(id)sender;
+- (IBAction)changeTopicToNextInHistory:(id)sender;
+- (IBAction)printDocument:(id)sender;
+- (IBAction)changeTopicWithSelectedRow:(id)sender;
+
+- (void)updateToolTipRects;
 
 @end
 
 @implementation CHMWindowController
-
-// Toolbar items
-static NSString *SMALLER_TEXT_TOOL_ID = @"chmox.smallerText";
-static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
 
 #pragma mark NSWindowController overridden method
 
@@ -53,12 +63,16 @@ static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
   self.tableOfContents.dataSource = document.tableOfContents;
   self.tableOfContents.autoresizesOutlineColumn = NO;
 
+  self.backToolbarItem.enabled = NO;
+  self.forwardToolbarItem.enabled = NO;
+
+  self.biggerFontToolbarItem.enabled = _contentsView.canMakeTextLarger;
+  self.smallerFontToolbarItem.enabled = _contentsView.canMakeTextSmaller;
+
   [self updateToolTipRects];
-  [self setupToolbar];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName {
-  // TODO: user preferences to display filename or doc title
   NSString *windowTitle = [self.document title];
   return windowTitle ? windowTitle : displayName;
 }
@@ -128,7 +142,7 @@ static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
                point:(NSPoint)point
             userData:(void *)userData {
   if (view == self.tableOfContents) {
-    int row = [self.tableOfContents rowAtPoint:point];
+    NSInteger row = [self.tableOfContents rowAtPoint:point];
 
     if (row >= 0) {
       return [[self.tableOfContents itemAtRow:row] name];
@@ -143,27 +157,11 @@ static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
   NSRange range =
       [self.tableOfContents rowsInRect:self.tableOfContents.visibleRect];
 
-  for (int i = range.location; i < NSMaxRange(range); ++i) {
+  for (NSInteger i = range.location; i < NSMaxRange(range); ++i) {
     [self.tableOfContents addToolTipRect:[self.tableOfContents rectOfRow:i]
                                    owner:self
                                 userData:NULL];
   }
-}
-
-#pragma mark Menu Validation
-
-- (BOOL)validateMenuItem:(NSMenuItem *)anItem {
-  if (anItem.action == @selector(changeTopicToPreviousInHistory:)) {
-    return _contentsView.canGoBack;
-  } else if (anItem.action == @selector(changeTopicToNextInHistory:)) {
-    return _contentsView.canGoForward;
-  } else if (anItem.action == @selector(makeTextSmaller:)) {
-    return _contentsView.canMakeTextSmaller;
-  } else if (anItem.action == @selector(makeTextBigger:)) {
-    return _contentsView.canMakeTextLarger;
-  }
-
-  return YES;
 }
 
 #pragma mark NSResponder
@@ -176,18 +174,19 @@ static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
     case NSLeftArrowFunctionKey:
       if (_contentsView.canGoBack) {
         [_contentsView goBack];
-        return;
       }
       break;
 
     case NSRightArrowFunctionKey:
       if (_contentsView.canGoForward) {
         [_contentsView goForward];
-        return;
       }
       break;
     }
   }
+
+  self.backToolbarItem.enabled = _contentsView.canGoBack;
+  self.forwardToolbarItem.enabled = _contentsView.canGoForward;
 
   [super keyDown:theEvent];
 }
@@ -204,6 +203,8 @@ static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
     if (location) {
       [_contentsView.mainFrame
           loadRequest:[NSURLRequest requestWithURL:location]];
+      self.backToolbarItem.enabled = _contentsView.canGoBack;
+      self.forwardToolbarItem.enabled = _contentsView.canGoForward;
     }
   }
 
@@ -212,112 +213,43 @@ static NSString *BIGGER_TEXT_TOOL_ID = @"chmox.biggerText";
 
 - (IBAction)makeTextBigger:(id)sender {
   [_contentsView makeTextLarger:sender];
+  self.biggerFontToolbarItem.enabled = _contentsView.canMakeTextLarger;
+  self.smallerFontToolbarItem.enabled = _contentsView.canMakeTextSmaller;
 }
 
 - (IBAction)makeTextSmaller:(id)sender {
   [_contentsView makeTextSmaller:sender];
+  self.biggerFontToolbarItem.enabled = _contentsView.canMakeTextLarger;
+  self.smallerFontToolbarItem.enabled = _contentsView.canMakeTextSmaller;
 }
 
 - (IBAction)changeTopicToPreviousInHistory:(id)sender {
   [_contentsView goBack];
+  self.backToolbarItem.enabled = _contentsView.canGoBack;
+  self.forwardToolbarItem.enabled = _contentsView.canGoForward;
 }
 
 - (IBAction)changeTopicToNextInHistory:(id)sender {
   [_contentsView goForward];
+  self.backToolbarItem.enabled = _contentsView.canGoBack;
+  self.forwardToolbarItem.enabled = _contentsView.canGoForward;
 }
 
-- (void)printDocument:(id)sender {
+- (IBAction)printDocument:(id)sender {
   // Obtain a custom view that will be printed
   NSView *docView = _contentsView.mainFrame.frameView.documentView;
 
   // Construct the print operation and setup Print panel
-  NSPrintOperation *op =
+  NSPrintOperation *operation =
       [NSPrintOperation printOperationWithView:docView
                                      printInfo:[self.document printInfo]];
-
-  [op setShowsPrintPanel:YES];
+  operation.showsPrintPanel = YES;
 
   // Run operation, which shows the Print panel if showPanels was YES
-  [self.document runModalPrintOperation:op
+  [self.document runModalPrintOperation:operation
                                delegate:nil
                          didRunSelector:NULL
                             contextInfo:NULL];
 }
-
-#pragma mark Toolbar related methods
-
-- (void)setupToolbar {
-  NSToolbar *toolbar = [[NSToolbar alloc] initWithIdentifier:@"mainToolbar"];
-
-  toolbar.delegate = self;
-  [toolbar setAllowsUserCustomization:YES];
-  [toolbar setAutosavesConfiguration:YES];
-  self.window.toolbar = toolbar;
-}
-
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar {
-  return @[
-    SMALLER_TEXT_TOOL_ID, BIGGER_TEXT_TOOL_ID, NSToolbarPrintItemIdentifier,
-    NSToolbarSeparatorItemIdentifier, NSToolbarSpaceItemIdentifier,
-    NSToolbarFlexibleSpaceItemIdentifier,
-    NSToolbarCustomizeToolbarItemIdentifier
-  ];
-}
-
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar {
-  return @[
-    SMALLER_TEXT_TOOL_ID, BIGGER_TEXT_TOOL_ID,
-    NSToolbarFlexibleSpaceItemIdentifier
-  ];
-}
-
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar
-        itemForItemIdentifier:(NSString *)itemIdentifier
-    willBeInsertedIntoToolbar:(BOOL)flag {
-  NSToolbarItem *item =
-      [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
-
-  if ([itemIdentifier isEqualToString:SMALLER_TEXT_TOOL_ID]) {
-    [item setLabel:NSLocalizedString(SMALLER_TEXT_TOOL_ID, nil)];
-    item.paletteLabel = item.label;
-    item.image = [NSImage imageNamed:@"toolbar-smaller"];
-    item.target = self;
-    item.action = @selector(makeTextSmaller:);
-  } else if ([itemIdentifier isEqualToString:BIGGER_TEXT_TOOL_ID]) {
-    [item setLabel:NSLocalizedString(BIGGER_TEXT_TOOL_ID, nil)];
-    item.paletteLabel = item.label;
-    item.image = [NSImage imageNamed:@"toolbar-bigger"];
-    item.target = self;
-    item.action = @selector(makeTextBigger:);
-  }
-
-  return item;
-}
-
-- (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem {
-  NSString *itemIdentifier = toolbarItem.itemIdentifier;
-
-  if ([itemIdentifier isEqualToString:SMALLER_TEXT_TOOL_ID]) {
-    return _contentsView.canMakeTextSmaller;
-  } else if ([itemIdentifier isEqualToString:BIGGER_TEXT_TOOL_ID]) {
-    return _contentsView.canMakeTextLarger;
-  }
-
-  return YES;
-}
-
-#ifdef DEBUG_MODEX
-
-- (BOOL)respondsToSelector:(SEL)aSelector {
-  BOOL result = [super respondsToSelector:aSelector];
-
-  if (!result) {
-    NSLog(@"Tested for selector %s", (char *)aSelector);
-  }
-
-  return result;
-}
-
-#endif
 
 @end

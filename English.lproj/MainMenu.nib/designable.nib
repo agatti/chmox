@@ -12,7 +12,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="213" userLabel="CHMApplication" customClass="CHMApplication"/>
+        <customObject id="213" userLabel="Application Delegate" customClass="CHMApplication"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="Chmox" id="56">
