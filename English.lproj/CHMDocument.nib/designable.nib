@@ -31,20 +31,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="bvi-5d-iVf">
-                                <rect key="frame" x="0.0" y="0.0" width="201" height="650"/>
+                                <rect key="frame" x="0.0" y="0.0" width="211" height="650"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="mnc-WF-J5S">
-                                    <rect key="frame" x="1" y="1" width="199" height="648"/>
+                                    <rect key="frame" x="1" y="1" width="209" height="648"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" indentationPerLevel="16" outlineTableColumn="ghe-i3-WPK" id="fCT-nf-hHB">
-                                            <rect key="frame" x="0.0" y="0.0" width="199" height="648"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="209" height="648"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="195.5" minWidth="40" maxWidth="1000" id="ghe-i3-WPK">
+                                                <tableColumn width="206" minWidth="40" maxWidth="1000" id="ghe-i3-WPK">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +65,7 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="5G4-e9-ZZh">
-                                    <rect key="frame" x="1" y="633" width="196.5" height="16"/>
+                                    <rect key="frame" x="1" y="633" width="145" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="har-xg-h0D">
@@ -74,7 +74,7 @@
                                 </scroller>
                             </scrollView>
                             <webView id="93">
-                                <rect key="frame" x="211" y="0.0" width="339" height="650"/>
+                                <rect key="frame" x="221" y="0.0" width="329" height="650"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO" javaScriptEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO">
                                     <nil key="identifier"/>
