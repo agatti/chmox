@@ -33,7 +33,6 @@
 		44A2657C080EEB8900273DC8 /* CHMDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 44A2657B080EEB8900273DC8 /* CHMDocument.nib */; };
 		44B501B206A587BA00CE0A8E /* CHMVersionChecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B501B006A587BA00CE0A8E /* CHMVersionChecker.h */; };
 		44B501B306A587BA00CE0A8E /* CHMVersionChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B501B106A587BA00CE0A8E /* CHMVersionChecker.m */; };
-		44B501C906A58D3300CE0A8E /* VersionChecker.nib in Resources */ = {isa = PBXBuildFile; fileRef = 44B501C806A58D3300CE0A8E /* VersionChecker.nib */; };
 		44B7AED20675301E00B51920 /* chmdoc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 44B7AED10675301E00B51920 /* chmdoc.icns */; };
 		44F984BF06576CA60076336E /* CHMTopic.h in Headers */ = {isa = PBXBuildFile; fileRef = 44F984BD06576CA60076336E /* CHMTopic.h */; };
 		44F984C006576CA60076336E /* CHMTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 44F984BE06576CA60076336E /* CHMTopic.m */; };
@@ -81,7 +80,6 @@
 		44923A79072C57E90070AA26 /* CHMApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMApplication.m; sourceTree = "<group>"; };
 		44B501B006A587BA00CE0A8E /* CHMVersionChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMVersionChecker.h; sourceTree = "<group>"; };
 		44B501B106A587BA00CE0A8E /* CHMVersionChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMVersionChecker.m; sourceTree = "<group>"; };
-		44B501B606A5885E00CE0A8E /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/VersionChecker.nib; sourceTree = "<group>"; };
 		44B7AED10675301E00B51920 /* chmdoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = chmdoc.icns; sourceTree = SOURCE_ROOT; };
 		44D7FFF0065A9C7B00D2B23E /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		44DA07230694985300777FAE /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
 				44A2657B080EEB8900273DC8 /* CHMDocument.nib */,
-				44B501C806A58D3300CE0A8E /* VersionChecker.nib */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C1660FE840EACC02AAC07 /* InfoPlist.strings */,
 			);
@@ -305,7 +302,6 @@
 				443011B9067E54140054A7C5 /* toolbar-bigger.png in Resources */,
 				443011D3067E65980054A7C5 /* segment-back.png in Resources */,
 				443011D4067E65980054A7C5 /* segment-forward.png in Resources */,
-				44B501C906A58D3300CE0A8E /* VersionChecker.nib in Resources */,
 				443EA40707B2DF6C00C46016 /* application.icns in Resources */,
 				445DEACD07B4086C0008D692 /* Localizable.strings in Resources */,
 			);
@@ -381,14 +377,6 @@
 				2A37F4B5FDCFA73011CA2CEA /* English */,
 			);
 			name = CHMDocument.nib;
-			sourceTree = "<group>";
-		};
-		44B501C806A58D3300CE0A8E /* VersionChecker.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				44B501B606A5885E00CE0A8E /* English */,
-			);
-			name = VersionChecker.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
