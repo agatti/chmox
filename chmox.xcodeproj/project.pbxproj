@@ -12,8 +12,6 @@
 		442BBA310653ED630041C2A9 /* CHMContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 442BBA2F0653ED630041C2A9 /* CHMContainer.h */; };
 		442BBA320653ED630041C2A9 /* CHMContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 442BBA300653ED630041C2A9 /* CHMContainer.m */; };
 		442BBB310653F73E0041C2A9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 442BBB300653F73E0041C2A9 /* WebKit.framework */; };
-		443011B7067E54140054A7C5 /* toolbar-smaller.png in Resources */ = {isa = PBXBuildFile; fileRef = 443011B4067E54140054A7C5 /* toolbar-smaller.png */; };
-		443011B9067E54140054A7C5 /* toolbar-bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 443011B6067E54140054A7C5 /* toolbar-bigger.png */; };
 		443EA40707B2DF6C00C46016 /* application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 443EA40607B2DF6C00C46016 /* application.icns */; };
 		445DEAC507B408380008D692 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1660FE840EACC02AAC07 /* InfoPlist.strings */; };
 		448AF5A2064AA5E100FA37BD /* CHMDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 448AF5A0064AA5E100FA37BD /* CHMDocument.h */; };
@@ -52,8 +50,6 @@
 		442BBB300653F73E0041C2A9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		443011A2067E1E0C0054A7C5 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		443011AC067E2B340054A7C5 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		443011B4067E54140054A7C5 /* toolbar-smaller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-smaller.png"; sourceTree = "<group>"; };
-		443011B6067E54140054A7C5 /* toolbar-bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-bigger.png"; sourceTree = "<group>"; };
 		443EA40607B2DF6C00C46016 /* application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = application.icns; sourceTree = "<group>"; };
 		448AF5A0064AA5E100FA37BD /* CHMDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMDocument.h; sourceTree = "<group>"; };
 		448AF5A1064AA5E100FA37BD /* CHMDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMDocument.m; sourceTree = "<group>"; };
@@ -175,8 +171,6 @@
 				443EA40607B2DF6C00C46016 /* application.icns */,
 				44DA07230694985300777FAE /* LICENSE.txt */,
 				448CC7E5068A2ED200F9B0DB /* LGPL.r */,
-				443011B4067E54140054A7C5 /* toolbar-smaller.png */,
-				443011B6067E54140054A7C5 /* toolbar-bigger.png */,
 				44B7AED10675301E00B51920 /* chmdoc.icns */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C1660FE840EACC02AAC07 /* InfoPlist.strings */,
@@ -279,8 +273,6 @@
 				445DEAC507B408380008D692 /* InfoPlist.strings in Resources */,
 				68542D7A1F83269400D6C655 /* Credits.rtf in Resources */,
 				44B7AED20675301E00B51920 /* chmdoc.icns in Resources */,
-				443011B7067E54140054A7C5 /* toolbar-smaller.png in Resources */,
-				443011B9067E54140054A7C5 /* toolbar-bigger.png in Resources */,
 				68542D7B1F83269400D6C655 /* MainMenu.xib in Resources */,
 				68D1B2131F8349BA008BAE0C /* README.md in Resources */,
 				443EA40707B2DF6C00C46016 /* application.icns in Resources */,

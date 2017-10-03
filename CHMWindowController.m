@@ -40,6 +40,8 @@
 @property(strong) IBOutlet NSTouchBar *touchBarObject;
 @property(weak) IBOutlet NSButton *backTouchBarButton;
 @property(weak) IBOutlet NSButton *forwardTouchBarButton;
+@property (weak) IBOutlet NSButton *smallerFontTouchBarButton;
+@property (weak) IBOutlet NSButton *biggerFontTouchBarButton;
 
 - (IBAction)makeTextSmaller:(id)sender;
 - (IBAction)makeTextBigger:(id)sender;
@@ -50,6 +52,7 @@
 
 - (void)updateToolTipRects;
 - (void)updateNavigationButtons;
+- (void)updateFontSizeButtons;
 
 @end
 
@@ -76,8 +79,7 @@
   self.backTouchBarButton.enabled = NO;
   self.forwardTouchBarButton.enabled = NO;
 
-  self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
-  self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
+    [self updateFontSizeButtons];
 
   [self updateToolTipRects];
 }
@@ -209,14 +211,12 @@
 
 - (IBAction)makeTextBigger:(id)sender {
   [self.webView makeTextLarger:sender];
-  self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
-  self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
+    [self updateFontSizeButtons];
 }
 
 - (IBAction)makeTextSmaller:(id)sender {
   [self.webView makeTextSmaller:sender];
-  self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
-  self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
+    [self updateFontSizeButtons];
 }
 
 - (IBAction)changeTopicToPreviousInHistory:(id)sender {
@@ -251,6 +251,13 @@
   self.backTouchBarButton.enabled = self.webView.canGoBack;
   self.forwardToolbarItem.enabled = self.webView.canGoForward;
   self.forwardTouchBarButton.enabled = self.webView.canGoForward;
+}
+
+- (void)updateFontSizeButtons {
+    self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
+    self.biggerFontTouchBarButton.enabled = self.webView.canMakeTextLarger;
+    self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
+    self.smallerFontTouchBarButton.enabled = self.webView.canMakeTextSmaller;
 }
 
 #pragma mark NSTouchBar
