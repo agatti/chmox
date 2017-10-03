@@ -10,9 +10,9 @@ The original code was taken from https://chmox.sourceforge.net/, and it is used 
 LGPL 2.1.  The new code still retains the same licence, and its text is available from the LICENSE.TXT file inside the
 repository.
 
-##Updates made since version 0.4&beta; (unreleased):
+## Updates made since version 0.4&beta; (unreleased):
 
-###Version 0.5
+### Version 0.5
 
 - Chmox has a new home now.
 - Code now builds again.
@@ -24,7 +24,7 @@ repository.
 - Cleaned up code.
 - Added back/forward/print toolbar buttons.
 
-##Further developments
+## Further developments
 
 - (Re-)Inclusion of Chmox in the Homebrew/MacPorts package distributions.
 - TouchBar support.
