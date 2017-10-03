@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
@@ -25,17 +25,16 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="293" y="381" width="550" height="650"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="1178"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <value key="minSize" type="size" width="320" height="200"/>
             <view key="contentView" id="25">
                 <rect key="frame" x="0.0" y="0.0" width="550" height="650"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <splitView misplaced="YES" dividerStyle="paneSplitter" vertical="YES" id="Moe-MW-AhK">
+                    <splitView dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Moe-MW-AhK">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="650"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="bvi-5d-iVf">
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="bvi-5d-iVf">
                                 <rect key="frame" x="0.0" y="0.0" width="211" height="650"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="mnc-WF-J5S">
@@ -78,7 +77,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <webView id="93">
+                            <webView fixedFrame="YES" id="93">
                                 <rect key="frame" x="221" y="0.0" width="329" height="650"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="13" minimumFontSize="0" plugInsEnabled="NO" javaEnabled="NO" javaScriptEnabled="NO" javaScriptCanOpenWindowsAutomatically="NO">
@@ -97,6 +96,12 @@
                         </holdingPriorities>
                     </splitView>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Moe-MW-AhK" secondAttribute="bottom" id="8Uq-8w-4eg"/>
+                    <constraint firstAttribute="trailing" secondItem="Moe-MW-AhK" secondAttribute="trailing" id="VsK-n6-Nxv"/>
+                    <constraint firstItem="Moe-MW-AhK" firstAttribute="top" secondItem="25" secondAttribute="top" id="ZeE-nc-h50"/>
+                    <constraint firstItem="Moe-MW-AhK" firstAttribute="leading" secondItem="25" secondAttribute="leading" id="fyk-8B-Mm4"/>
+                </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="DB6CE4BA-A079-4B73-BD53-F853556C2B73" displayMode="iconAndLabel" sizeMode="regular" id="bkh-BJ-au8">
                 <allowedToolbarItems>
