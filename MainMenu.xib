@@ -2,7 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13038"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.2" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -12,7 +15,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="213" userLabel="Application Delegate" customClass="CHMApplication"/>
+        <customObject id="213" userLabel="Application Delegate" customClass="CHMApplication">
+            <connections>
+                <outlet property="touchBarObject" destination="gP6-Gc-Bkd" id="fZE-PC-Y66"/>
+            </connections>
+        </customObject>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="Chmox" id="56">
@@ -238,5 +245,30 @@
                 </menuItem>
             </items>
         </menu>
+        <touchBar id="gP6-Gc-Bkd">
+            <touchBarItems>
+                <touchBarSpacerItem identifier="NSTouchBarItemIdentifierFlexibleSpace" id="xaV-cF-RSN"/>
+                <touchBarItem id="bSr-JU-Q4N">
+                    <viewController key="viewController" id="k6L-q8-cpl">
+                        <button key="view" verticalHuggingPriority="750" id="L7v-Jt-Y90">
+                            <rect key="frame" x="0.0" y="0.0" width="144" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="push" title="Open new file..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XrN-N3-Eri">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" usesAppearanceFont="YES"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="openDocument:" target="-1" id="rRc-L9-2XL"/>
+                            </connections>
+                        </button>
+                    </viewController>
+                </touchBarItem>
+                <touchBarSpacerItem identifier="NSTouchBarItemIdentifierFlexibleSpace" id="N5X-3C-l3n"/>
+            </touchBarItems>
+            <connections>
+                <outlet property="delegate" destination="-2" id="4Ya-fD-bME"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="241"/>
+        </touchBar>
     </objects>
 </document>

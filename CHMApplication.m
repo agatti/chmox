@@ -21,7 +21,9 @@
 #import "CHMApplication.h"
 #import "CHMURLProtocol.h"
 
-@interface CHMApplication ()
+@interface CHMApplication () <NSTouchBarProvider>
+
+@property(weak) IBOutlet NSTouchBar *touchBarObject;
 
 @end
 
@@ -40,6 +42,10 @@
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
   [NSURLProtocol unregisterClass:CHMURLProtocol.class];
+}
+
+- (nullable NSTouchBar *)touchBar {
+  return self.touchBarObject;
 }
 
 @end

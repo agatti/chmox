@@ -27,7 +27,8 @@
 #import "CHMURLProtocol.h"
 
 @interface CHMWindowController () <NSOutlineViewDelegate, NSToolbarDelegate,
-                                   WebUIDelegate, WebPolicyDelegate>
+                                   WebUIDelegate, WebPolicyDelegate,
+                                   NSTouchBarProvider>
 
 @property(weak) IBOutlet NSOutlineView *tableOfContents;
 @property(weak) IBOutlet WebView *webView;
@@ -36,6 +37,9 @@
 @property(weak) IBOutlet NSToolbarItem *forwardToolbarItem;
 @property(weak) IBOutlet NSToolbarItem *smallerFontToolbarItem;
 @property(weak) IBOutlet NSToolbarItem *biggerFontToolbarItem;
+@property(strong) IBOutlet NSTouchBar *touchBarObject;
+@property(weak) IBOutlet NSButton *backTouchBarButton;
+@property(weak) IBOutlet NSButton *forwardTouchBarButton;
 
 - (IBAction)makeTextSmaller:(id)sender;
 - (IBAction)makeTextBigger:(id)sender;
@@ -45,6 +49,7 @@
 - (IBAction)changeTopicWithSelectedRow:(id)sender;
 
 - (void)updateToolTipRects;
+- (void)updateNavigationButtons;
 
 @end
 
@@ -53,6 +58,7 @@
 #pragma mark NSWindowController overridden method
 
 - (void)windowDidLoad {
+
   CHMDocument *document = (CHMDocument *)self.document;
   NSURLRequest *request =
       [NSURLRequest requestWithURL:document.currentLocation];
@@ -67,6 +73,8 @@
 
   self.backToolbarItem.enabled = NO;
   self.forwardToolbarItem.enabled = NO;
+  self.backTouchBarButton.enabled = NO;
+  self.forwardTouchBarButton.enabled = NO;
 
   self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
   self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
@@ -175,8 +183,7 @@
     }
   }
 
-  self.backToolbarItem.enabled = self.webView.canGoBack;
-  self.forwardToolbarItem.enabled = self.webView.canGoForward;
+  [self updateNavigationButtons];
 
   [super keyDown:theEvent];
 }
@@ -193,8 +200,7 @@
     if (location) {
       [self.webView.mainFrame
           loadRequest:[NSURLRequest requestWithURL:location]];
-      self.backToolbarItem.enabled = self.webView.canGoBack;
-      self.forwardToolbarItem.enabled = self.webView.canGoForward;
+      [self updateNavigationButtons];
     }
   }
 
@@ -215,14 +221,12 @@
 
 - (IBAction)changeTopicToPreviousInHistory:(id)sender {
   [self.webView goBack];
-  self.backToolbarItem.enabled = self.webView.canGoBack;
-  self.forwardToolbarItem.enabled = self.webView.canGoForward;
+  [self updateNavigationButtons];
 }
 
 - (IBAction)changeTopicToNextInHistory:(id)sender {
   [self.webView goForward];
-  self.backToolbarItem.enabled = self.webView.canGoBack;
-  self.forwardToolbarItem.enabled = self.webView.canGoForward;
+  [self updateNavigationButtons];
 }
 
 - (IBAction)printDocument:(id)sender {
@@ -240,6 +244,19 @@
                                delegate:nil
                          didRunSelector:NULL
                             contextInfo:NULL];
+}
+
+- (void)updateNavigationButtons {
+  self.backToolbarItem.enabled = self.webView.canGoBack;
+  self.backTouchBarButton.enabled = self.webView.canGoBack;
+  self.forwardToolbarItem.enabled = self.webView.canGoForward;
+  self.forwardTouchBarButton.enabled = self.webView.canGoForward;
+}
+
+#pragma mark NSTouchBar
+
+- (nullable NSTouchBar *)touchBar {
+  return self.touchBarObject;
 }
 
 @end

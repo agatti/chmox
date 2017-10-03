@@ -2,19 +2,24 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13038"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <plugIn identifier="com.apple.WebKitIBPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.2" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CHMWindowController">
             <connections>
                 <outlet property="backToolbarItem" destination="qsu-l6-s8J" id="94H-63-k1P"/>
+                <outlet property="backTouchBarButton" destination="HgD-X9-Fkw" id="L7Z-2D-HrW"/>
                 <outlet property="biggerFontToolbarItem" destination="VQq-UB-sjn" id="TdW-rZ-DFl"/>
                 <outlet property="forwardToolbarItem" destination="2or-Md-l89" id="1wb-ew-db2"/>
+                <outlet property="forwardTouchBarButton" destination="HL0-dg-JN5" id="qXZ-kw-JEW"/>
                 <outlet property="smallerFontToolbarItem" destination="p2V-Fv-TJP" id="ip9-Hf-M3L"/>
                 <outlet property="tableOfContents" destination="fCT-nf-hHB" id="Msx-bU-bvw"/>
                 <outlet property="toolbar" destination="bkh-BJ-au8" id="KWc-PL-mZ6"/>
+                <outlet property="touchBarObject" destination="NVp-Ev-MFm" id="Zwn-nS-q7D"/>
                 <outlet property="webView" destination="93" id="5Wx-vv-kQb"/>
                 <outlet property="window" destination="26" id="84"/>
             </connections>
@@ -132,6 +137,32 @@
                             <action selector="changeTopicToNextInHistory:" target="-2" id="rar-DY-tfX"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="5AD9FAB8-2354-4C50-B304-E22D684E27BB" label="Back" paletteLabel="Back" image="NSGoBackTemplate" id="iil-0r-Vhs">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="127" height="25"/>
+                        <size key="maxSize" width="127" height="25"/>
+                        <button key="view" verticalHuggingPriority="750" id="vid-zE-v32">
+                            <rect key="frame" x="0.0" y="14" width="127" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Textured Rounded" bezelStyle="texturedRounded" image="NSGoBackTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iGf-FS-WAD">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="CD364A4D-A0A0-465C-9553-519690AFCF0A" label="Forward" paletteLabel="Forward" image="NSGoForwardTemplate" id="4CA-Fk-UUQ">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="127" height="25"/>
+                        <size key="maxSize" width="127" height="25"/>
+                        <button key="view" verticalHuggingPriority="750" id="rQt-jN-3Zu">
+                            <rect key="frame" x="0.0" y="14" width="127" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" title="Textured Rounded" bezelStyle="texturedRounded" image="NSGoForwardTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gvG-c2-Rg1">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="qsu-l6-s8J"/>
@@ -151,6 +182,50 @@
                 <outlet property="initialFirstResponder" destination="-2" id="110"/>
             </connections>
         </window>
+        <touchBar id="NVp-Ev-MFm">
+            <touchBarItems>
+                <touchBarGroupItem id="TVS-UX-LFE">
+                    <touchBar key="groupTouchBar" id="iSm-g3-gji">
+                        <touchBarItems>
+                            <touchBarItem id="tKR-h9-jEk">
+                                <viewController key="viewController" id="kH6-dh-7pA">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HgD-X9-Fkw">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoBackTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jb0-z4-OuH">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="changeTopicToPreviousInHistory:" target="-2" id="hDd-vc-wSW"/>
+                                        </connections>
+                                    </button>
+                                </viewController>
+                                <size key="designTimeSize" width="72" height="30"/>
+                            </touchBarItem>
+                            <touchBarItem id="JZc-t8-nXI">
+                                <viewController key="viewController" id="1s8-ys-sDE">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HL0-dg-JN5">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoForwardTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dlE-yb-wTN">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="changeTopicToNextInHistory:" target="-2" id="yuA-OZ-Aap"/>
+                                        </connections>
+                                    </button>
+                                </viewController>
+                                <size key="designTimeSize" width="72" height="30"/>
+                            </touchBarItem>
+                        </touchBarItems>
+                    </touchBar>
+                </touchBarGroupItem>
+            </touchBarItems>
+            <connections>
+                <outlet property="delegate" destination="-2" id="ZeQ-d5-NiP"/>
+            </connections>
+            <point key="canvasLocation" x="140" y="908"/>
+        </touchBar>
     </objects>
     <resources>
         <image name="NSGoBackTemplate" width="9" height="12"/>
