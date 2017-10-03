@@ -22,6 +22,4 @@
 
 @interface CHMApplication : NSObject <NSApplicationDelegate>
 
-- (IBAction)checkForUpdates:(id)sender;
-
 @end

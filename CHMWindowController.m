@@ -26,9 +26,11 @@
 #import "CHMTopic.h"
 #import "CHMURLProtocol.h"
 
-@interface CHMWindowController ()
+@interface CHMWindowController () <NSOutlineViewDelegate, NSToolbarDelegate,
+                                   WebUIDelegate, WebPolicyDelegate>
 
 @property(weak) IBOutlet NSOutlineView *tableOfContents;
+@property(weak) IBOutlet WebView *webView;
 @property(weak) IBOutlet NSToolbar *toolbar;
 @property(weak) IBOutlet NSToolbarItem *backToolbarItem;
 @property(weak) IBOutlet NSToolbarItem *forwardToolbarItem;
@@ -54,7 +56,7 @@
   CHMDocument *document = (CHMDocument *)self.document;
   NSURLRequest *request =
       [NSURLRequest requestWithURL:document.currentLocation];
-  [_contentsView.mainFrame loadRequest:request];
+  [self.webView.mainFrame loadRequest:request];
 
   self.windowFrameAutosaveName = document.uniqueId;
   [self setShouldCloseDocument:YES];
@@ -66,8 +68,8 @@
   self.backToolbarItem.enabled = NO;
   self.forwardToolbarItem.enabled = NO;
 
-  self.biggerFontToolbarItem.enabled = _contentsView.canMakeTextLarger;
-  self.smallerFontToolbarItem.enabled = _contentsView.canMakeTextSmaller;
+  self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
+  self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
 
   [self updateToolTipRects];
 }
@@ -79,7 +81,6 @@
 
 #pragma mark WebPolicyDelegate
 
-// Open external URLs in external viewer
 - (void)webView:(WebView *)sender
     decidePolicyForNavigationAction:(NSDictionary *)actionInformation
                             request:(NSURLRequest *)request
@@ -88,8 +89,7 @@
   if ([CHMURLProtocol canHandleURL:request.URL]) {
     [listener use];
   } else {
-    NSLog(@"Opening external URL %@", request.URL);
-    [[NSWorkspace sharedWorkspace] openURL:request.URL];
+    [NSWorkspace.sharedWorkspace openURL:request.URL];
     [listener ignore];
   }
 }
@@ -100,15 +100,10 @@
                            request:(NSURLRequest *)request
                       newFrameName:(NSString *)frameName
                   decisionListener:(id<WebPolicyDecisionListener>)listener {
-  NSLog(@"WebPolicyDelegate: decidePolicyForNewWindowAction called %@",
-        request.URL);
-
   if ([CHMURLProtocol canHandleURL:request.URL]) {
-    // Need testing
     [listener use];
   } else {
-    NSLog(@"Opening external URL %@", request.URL);
-    [[NSWorkspace sharedWorkspace] openURL:request.URL];
+    [NSWorkspace.sharedWorkspace openURL:request.URL];
     [listener ignore];
   }
 }
@@ -118,21 +113,14 @@
 - (NSArray *)webView:(WebView *)sender
     contextMenuItemsForElement:(NSDictionary *)element
               defaultMenuItems:(NSArray *)defaultMenuItems {
-  NSLog(@"contextMenuItemsForElement: %@", element);
-
   NSURL *link = element[WebElementLinkURLKey];
 
-  if (link && [CHMURLProtocol canHandleURL:link]) {
-    // No context menu for internal links
-    return nil;
-  }
-
-  return defaultMenuItems;
+  return link && [CHMURLProtocol canHandleURL:link] ? nil : defaultMenuItems;
 }
 
 - (void)webView:(WebView *)sender
     mouseDidMoveOverElement:(NSDictionary *)elementInformation
-              modifierFlags:(unsigned int)modifierFlags {
+              modifierFlags:(NSUInteger)modifierFlags {
 }
 
 #pragma mark NSToolTipOwner
@@ -172,21 +160,23 @@
 
     switch ([keyString characterAtIndex:0]) {
     case NSLeftArrowFunctionKey:
-      if (_contentsView.canGoBack) {
-        [_contentsView goBack];
+      if (self.webView.canGoBack) {
+        [self.webView goBack];
       }
       break;
 
     case NSRightArrowFunctionKey:
-      if (_contentsView.canGoForward) {
-        [_contentsView goForward];
+      if (self.webView.canGoForward) {
+        [self.webView goForward];
       }
+      break;
+    default:
       break;
     }
   }
 
-  self.backToolbarItem.enabled = _contentsView.canGoBack;
-  self.forwardToolbarItem.enabled = _contentsView.canGoForward;
+  self.backToolbarItem.enabled = self.webView.canGoBack;
+  self.forwardToolbarItem.enabled = self.webView.canGoForward;
 
   [super keyDown:theEvent];
 }
@@ -201,10 +191,10 @@
     NSURL *location = topic.location;
 
     if (location) {
-      [_contentsView.mainFrame
+      [self.webView.mainFrame
           loadRequest:[NSURLRequest requestWithURL:location]];
-      self.backToolbarItem.enabled = _contentsView.canGoBack;
-      self.forwardToolbarItem.enabled = _contentsView.canGoForward;
+      self.backToolbarItem.enabled = self.webView.canGoBack;
+      self.forwardToolbarItem.enabled = self.webView.canGoForward;
     }
   }
 
@@ -212,32 +202,32 @@
 }
 
 - (IBAction)makeTextBigger:(id)sender {
-  [_contentsView makeTextLarger:sender];
-  self.biggerFontToolbarItem.enabled = _contentsView.canMakeTextLarger;
-  self.smallerFontToolbarItem.enabled = _contentsView.canMakeTextSmaller;
+  [self.webView makeTextLarger:sender];
+  self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
+  self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
 }
 
 - (IBAction)makeTextSmaller:(id)sender {
-  [_contentsView makeTextSmaller:sender];
-  self.biggerFontToolbarItem.enabled = _contentsView.canMakeTextLarger;
-  self.smallerFontToolbarItem.enabled = _contentsView.canMakeTextSmaller;
+  [self.webView makeTextSmaller:sender];
+  self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
+  self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
 }
 
 - (IBAction)changeTopicToPreviousInHistory:(id)sender {
-  [_contentsView goBack];
-  self.backToolbarItem.enabled = _contentsView.canGoBack;
-  self.forwardToolbarItem.enabled = _contentsView.canGoForward;
+  [self.webView goBack];
+  self.backToolbarItem.enabled = self.webView.canGoBack;
+  self.forwardToolbarItem.enabled = self.webView.canGoForward;
 }
 
 - (IBAction)changeTopicToNextInHistory:(id)sender {
-  [_contentsView goForward];
-  self.backToolbarItem.enabled = _contentsView.canGoBack;
-  self.forwardToolbarItem.enabled = _contentsView.canGoForward;
+  [self.webView goForward];
+  self.backToolbarItem.enabled = self.webView.canGoBack;
+  self.forwardToolbarItem.enabled = self.webView.canGoForward;
 }
 
 - (IBAction)printDocument:(id)sender {
   // Obtain a custom view that will be printed
-  NSView *docView = _contentsView.mainFrame.frameView.documentView;
+  NSView *docView = self.webView.mainFrame.frameView.documentView;
 
   // Construct the print operation and setup Print panel
   NSPrintOperation *operation =

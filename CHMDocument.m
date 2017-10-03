@@ -71,7 +71,6 @@
 }
 
 - (NSData *)dataRepresentationOfType:(NSString *)type {
-  // Viewer only
   return nil;
 }
 

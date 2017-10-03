@@ -42,9 +42,4 @@
   [NSURLProtocol unregisterClass:CHMURLProtocol.class];
 }
 
-#pragma mark Menu bar actions
-
-- (IBAction)checkForUpdates:(id)sender {
-}
-
 @end

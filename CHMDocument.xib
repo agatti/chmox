@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <plugIn identifier="com.apple.WebKitIBPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -8,13 +9,13 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CHMWindowController">
             <connections>
-                <outlet property="_contentsView" destination="93" id="99"/>
                 <outlet property="backToolbarItem" destination="qsu-l6-s8J" id="94H-63-k1P"/>
                 <outlet property="biggerFontToolbarItem" destination="VQq-UB-sjn" id="TdW-rZ-DFl"/>
                 <outlet property="forwardToolbarItem" destination="2or-Md-l89" id="1wb-ew-db2"/>
                 <outlet property="smallerFontToolbarItem" destination="p2V-Fv-TJP" id="ip9-Hf-M3L"/>
                 <outlet property="tableOfContents" destination="fCT-nf-hHB" id="Msx-bU-bvw"/>
                 <outlet property="toolbar" destination="bkh-BJ-au8" id="KWc-PL-mZ6"/>
+                <outlet property="webView" destination="93" id="5Wx-vv-kQb"/>
                 <outlet property="window" destination="26" id="84"/>
             </connections>
         </customObject>
@@ -39,7 +40,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="mnc-WF-J5S">
                                     <rect key="frame" x="1" y="1" width="209" height="648"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="ghe-i3-WPK" id="fCT-nf-hHB">
                                             <rect key="frame" x="0.0" y="0.0" width="209" height="648"/>

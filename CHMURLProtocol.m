@@ -21,6 +21,9 @@
 #import "CHMURLProtocol.h"
 #import "CHMContainer.h"
 
+static NSMutableDictionary *kContainers = nil;
+static NSMutableDictionary *kBaseURLs = nil;
+
 @implementation CHMURLProtocol
 
 #pragma mark Lifecycle
@@ -28,43 +31,40 @@
 - (instancetype)initWithRequest:(NSURLRequest *)request
                  cachedResponse:(NSCachedURLResponse *)cachedResponse
                          client:(id<NSURLProtocolClient>)client {
-  return [super initWithRequest:request
-                 cachedResponse:cachedResponse
-                         client:client];
+  return (CHMURLProtocol *)[super initWithRequest:request
+                                   cachedResponse:cachedResponse
+                                           client:client];
 }
 
 #pragma mark CHM URL utils
 
-static NSMutableDictionary *kContainers = nil;
-static NSMutableDictionary *kBaseURLs = nil;
-
-+ (void)registerContainer:(CHMContainer *)container {
-  NSString *key = container.uniqueId;
-
++ (void)registerContainer:(nonnull CHMContainer *)container {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     kContainers = [NSMutableDictionary new];
     kBaseURLs = [NSMutableDictionary new];
   });
 
+  NSString *key = container.uniqueId;
   NSURL *baseURL = [NSURL
       URLWithString:[NSString stringWithFormat:@"chmox-internal://%@/", key]];
   kContainers[key] = container;
   kBaseURLs[key] = baseURL;
 }
 
-+ (CHMContainer *)containerForUniqueId:(NSString *)uniqueId {
++ (nullable CHMContainer *)containerForUniqueId:(nonnull NSString *)uniqueId {
   return kContainers[uniqueId];
 }
 
-+ (void)unregisterContainer:(CHMContainer *)container {
++ (void)unregisterContainer:(nonnull CHMContainer *)container {
   NSString *key = container.uniqueId;
 
   [kContainers removeObjectForKey:key];
   [kBaseURLs removeObjectForKey:key];
 }
 
-+ (NSURL *)URLWithPath:(NSString *)path inContainer:(CHMContainer *)container {
++ (nullable NSURL *)URLWithPath:(nonnull NSString *)path
+                    inContainer:(nonnull CHMContainer *)container {
   NSURL *baseURL = kBaseURLs[container.uniqueId];
   NSURL *url = [NSURL URLWithString:path relativeToURL:baseURL];
 
@@ -83,7 +83,7 @@ static NSMutableDictionary *kBaseURLs = nil;
   return url;
 }
 
-+ (BOOL)canHandleURL:(NSURL *)anURL {
++ (BOOL)canHandleURL:(nonnull NSURL *)anURL {
   return [anURL.scheme isEqualToString:@"chmox-internal"];
 }
 
@@ -105,21 +105,6 @@ static NSMutableDictionary *kBaseURLs = nil;
   DEBUG_OUTPUT(@"CHMURLProtocol:startLoading %@", [self request]);
 
   NSURL *url = self.request.URL;
-
-  /*
-   NSString *rawPath = [[[self request] URL] path];
-   NSLog( @"rawPath: %@", rawPath );
-   NSRange separator = [rawPath rangeOfString:@"::/"];
-   NSString *containerPath = [rawPath substringToIndex:separator.location];
-   NSString *contentsPath = [rawPath substringFromIndex:( separator.location + 2
-   )];
-
-   NSLog( @"containerPath: %@", containerPath );
-   NSLog( @"contentsPath: %@", contentsPath );
-
-   CHMContainer *container = [CHMContainer
-   containerWithContentsOfFile:containerPath];
-   */
 
   CHMContainer *container = [CHMURLProtocol containerForUniqueId:url.host];
 

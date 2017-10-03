@@ -57,13 +57,4 @@
   [self.subTopics addObject:topic];
 }
 
-- (void)insertObject:(nonnull CHMTopic *)topic
-    inSubTopicsAtIndex:(NSUInteger)index {
-  [self.subTopics insertObject:topic atIndex:index];
-}
-
-- (void)removeObjectFromSubTopicsAtIndex:(NSUInteger)index {
-  [self.subTopics removeObjectAtIndex:index];
-}
-
 @end

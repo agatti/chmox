@@ -24,11 +24,12 @@
 
 @interface CHMURLProtocol : NSURLProtocol
 
-+ (void)registerContainer:(CHMContainer *)container;
-+ (void)unregisterContainer:(CHMContainer *)container;
++ (void)registerContainer:(nonnull CHMContainer *)container;
++ (void)unregisterContainer:(nonnull CHMContainer *)container;
 
-+ (BOOL)canHandleURL:(NSURL *)anURL;
-+ (CHMContainer *)containerForUniqueId:(NSString *)uniqueId;
-+ (NSURL *)URLWithPath:(NSString *)path inContainer:(CHMContainer *)container;
++ (BOOL)canHandleURL:(nonnull NSURL *)anURL;
++ (nullable CHMContainer *)containerForUniqueId:(nonnull NSString *)uniqueId;
++ (nullable NSURL *)URLWithPath:(nonnull NSString *)path
+                    inContainer:(nonnull CHMContainer *)container;
 
 @end

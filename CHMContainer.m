@@ -23,9 +23,28 @@
 #import "CHMContainer.h"
 #import "chm_lib.h"
 
+static inline NSString *_Nonnull readString(NSData *_Nonnull data,
+                                            unsigned long offset);
+static inline NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
+                                                   unsigned long offset);
+
+typedef NS_ENUM(uint16_t, CHMObject) {
+  CHMObjectTableOfContentsPath = 0,
+  CHMObjectIndexPath,
+  CHMObjectHomePagePath,
+  CHMObjectTitle,
+  CHMObjectSystem,
+  CHMObjectDefaultWindow,
+  CHMObjectCompiledFile,
+  CHMObjectCompiler = 9,
+  CHMObjectTimestamp,
+  CHMObjectInformationTypesCount = 12,
+  CHMObjectDefaultFont = 16
+};
+
 @interface CHMContainer ()
 
-- (instancetype)initWithContentsOfFile:(NSString *__nonnull)path
+- (instancetype)initWithContentsOfFile:(nonnull NSString *)path
     NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)loadMetadata;
@@ -36,22 +55,26 @@
 
 #pragma mark Factory
 
-+ (instancetype)containerWithContentsOfFile:(NSString *__nonnull)chmFilePath {
++ (nullable instancetype)containerWithContentsOfFile:
+    (nonnull NSString *)chmFilePath {
   return [[CHMContainer alloc] initWithContentsOfFile:chmFilePath];
 }
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithContentsOfFile:(NSString *__nonnull)chmFilePath {
+- (nullable instancetype)initWithContentsOfFile:(nonnull NSString *)path {
   if (self = [super init]) {
-    _handle = chm_open(chmFilePath.fileSystemRepresentation);
-    if (!_handle)
+    _handle = chm_open(path.fileSystemRepresentation);
+    if (!_handle) {
       return nil;
+    }
 
-    _path = chmFilePath;
+    _path = path;
 
-    // TODO: Throw if -[loadMetadata] fails.
-    [self loadMetadata];
+    if (![self loadMetadata]) {
+      chm_close(_handle);
+      return nil;
+    }
   }
 
   return self;
@@ -60,18 +83,19 @@
 - (void)dealloc {
   NSLog(@"deallocating %@", self);
 
-  if (_handle) {
-    chm_close(_handle);
+  if (self.handle) {
+    chm_close(self.handle);
   }
 }
 
 #pragma mark Basic CHM reading operations
 
-static inline NSString *readString(NSData *data, unsigned long offset) {
+NSString *_Nonnull readString(NSData *_Nonnull data, unsigned long offset) {
   return @((const char *)data.bytes + offset);
 }
 
-static inline NSString *readTrimmedString(NSData *data, unsigned long offset) {
+NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
+                                     unsigned long offset) {
   const char *stringData = data.bytes + offset;
   return [[NSMutableString stringWithUTF8String:stringData]
       stringByTrimmingCharactersInSet:[NSCharacterSet
@@ -80,14 +104,13 @@ static inline NSString *readTrimmedString(NSData *data, unsigned long offset) {
 
 #pragma mark CHM Object loading
 
-- (BOOL)hasObjectWithPath:(NSString *)path {
+- (BOOL)hasObjectWithPath:(nonnull NSString *)path {
   struct chmUnitInfo info;
   return chm_resolve_object(self.handle, path.UTF8String, &info) ==
          CHM_RESOLVE_SUCCESS;
 }
 
-- (NSData *)dataWithContentsOfObject:(NSString *)path {
-  // NSLog( @"dataWithContentsOfObject: %@", path );
+- (nullable NSData *)dataWithContentsOfObject:(nullable NSString *)path {
   if (!path) {
     return nil;
   }
@@ -127,17 +150,8 @@ static inline NSString *readTrimmedString(NSData *data, unsigned long offset) {
   return [NSData dataWithBytesNoCopy:buffer length:info.length];
 }
 
-- (NSString *)stringWithContentsOfObject:(NSString *)objectPath {
-  NSData *data = [self dataWithContentsOfObject:objectPath];
-  if (data) {
-    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  }
-
-  return nil;
-}
-
-- (NSData *)dataWithTableOfContents {
-  return [self dataWithContentsOfObject:_tocPath];
+- (nullable NSData *)dataWithTableOfContents {
+  return [self dataWithContentsOfObject:self.tocPath];
 }
 
 #pragma mark CHM setup
@@ -196,60 +210,42 @@ static inline NSString *readTrimmedString(NSData *data, unsigned long offset) {
   for (unsigned int offset = 0; offset < maxOffset;
        offset += OSReadLittleInt16(systemData.bytes, offset + 2) + 4) {
     switch (OSReadLittleInt16(systemData.bytes, offset)) {
-    // Table of contents file
-    case 0:
+    case CHMObjectTableOfContentsPath:
       if (self.tocPath.length == 0) {
         self.tocPath = readString(systemData, offset + 4);
         NSLog(@"SYSTEM Table of contents: %@", self.tocPath);
       }
       break;
 
-    // Index file
-    case 1:
-      if (!_indexPath || (_indexPath.length == 0)) {
-        _indexPath = readString(systemData, offset + 4);
-        NSLog(@"SYSTEM Index: %@", _indexPath);
+    case CHMObjectIndexPath:
+      if (self.indexPath.length == 0) {
+        self.indexPath = readString(systemData, offset + 4);
       }
       break;
 
-    // Home page
-    case 2:
-      if (!_homePath || (_homePath.length == 0)) {
-        _homePath = readString(systemData, offset + 4);
-        NSLog(@"SYSTEM Home: %@", _homePath);
+    case CHMObjectHomePagePath:
+      if (self.homePath.length == 0) {
+        self.homePath = readString(systemData, offset + 4);
       }
       break;
 
-    // Title
-    case 3:
-      if (!_title || (_title.length == 0)) {
-        _title = readTrimmedString(systemData, offset + 4);
-        NSLog(@"SYSTEM Title: %@", _title);
+    case CHMObjectTitle:
+      if (self.title.length == 0) {
+        self.title = readTrimmedString(systemData, offset + 4);
       }
       break;
 
-    // Compiled file
-    case 6:
-      NSLog(@"SYSTEM compiled file: %@", readString(systemData, offset + 4));
-      break;
-
-    // Compiler
-    case 9:
-      NSLog(@"SYSTEM Compiler: %@", readString(systemData, offset + 4));
-      break;
-
-    // Default font
-    case 16:
-      NSLog(@"SYSTEM Default font: %@", readString(systemData, offset + 4));
-      break;
-
-    // Other data not handled
+    case CHMObjectSystem:
+    case CHMObjectDefaultWindow:
+    case CHMObjectCompiledFile:
+    case CHMObjectCompiler:
+    case CHMObjectTimestamp:
+    case CHMObjectInformationTypesCount:
+    case CHMObjectDefaultFont:
     default:
       break;
     }
   }
-
-  //--- Compute unique id ---
 
   unsigned char digest[CC_SHA1_DIGEST_LENGTH];
   CC_SHA1(systemData.bytes, (CC_LONG)systemData.length, digest);
@@ -258,21 +254,18 @@ static inline NSString *readTrimmedString(NSData *data, unsigned long offset) {
       initWithFormat:@"%x%x%x%x%x", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4]];
   NSLog(@"UniqueId=%@", self.uniqueId);
 
-  // Check for empty string titles
   if (self.title.length == 0) {
     self.title = nil;
   }
 
-  // Check for lack of index page
   if (!self.homePath) {
     self.homePath = [self findHomeForPath:@"/"];
-    NSLog(@"Implicit home: %@", self.homePath);
   }
 
   return YES;
 }
 
-- (NSString *)findHomeForPath:(NSString *__nonnull)basePath {
+- (nonnull NSString *)findHomeForPath:(nonnull NSString *)basePath {
   NSString *testPath;
 
   NSString *separator = [basePath hasSuffix:@"/"] ? @"" : @"/";
@@ -294,10 +287,6 @@ static inline NSString *readTrimmedString(NSData *data, unsigned long offset) {
   }
 
   return [NSString stringWithFormat:@"%@%@index.html", basePath, separator];
-}
-
-- (BOOL)setupFromSystemObject {
-  return YES;
 }
 
 @end

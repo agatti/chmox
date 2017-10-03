@@ -24,26 +24,23 @@ struct chmFile;
 
 @interface CHMContainer : NSObject
 
-@property(assign, nonatomic) struct chmFile *handle;
-@property(strong, nonatomic) NSString *uniqueId;
+@property(assign, nonatomic, nullable) struct chmFile *handle;
+@property(strong, nonatomic, nonnull) NSString *uniqueId;
 @property(strong, nonatomic, nonnull) NSString *path;
-@property(strong, nonatomic) NSString *title;
-@property(strong, nonatomic) NSString *homePath;
-@property(strong, nonatomic) NSString *tocPath;
-@property(strong, nonatomic) NSString *indexPath;
+@property(strong, nonatomic, nullable) NSString *title;
+@property(strong, nonatomic, nonnull) NSString *homePath;
+@property(strong, nonatomic, nonnull) NSString *tocPath;
+@property(strong, nonatomic, nonnull) NSString *indexPath;
 
 - (nullable instancetype)init
     __attribute__((unavailable("You cannot create a foo instance through init "
                                "- please use initWithContentsOfFile:")));
 
-+ (instancetype)containerWithContentsOfFile:(NSString *__nonnull)path;
++ (nullable instancetype)containerWithContentsOfFile:(nonnull NSString *)path;
 
-- (BOOL)hasObjectWithPath:(NSString *)path;
-- (NSData *)dataWithContentsOfObject:(NSString *)objectPath;
-- (NSString *)stringWithContentsOfObject:(NSString *)objectPath;
-
-@property(NS_NONATOMIC_IOSONLY, readonly, copy) NSData *dataWithTableOfContents;
-
-- (NSString *)findHomeForPath:(NSString *__nonnull)basePath;
+- (BOOL)hasObjectWithPath:(nonnull NSString *)path;
+- (nullable NSData *)dataWithContentsOfObject:(nullable NSString *)objectPath;
+- (nullable NSData *)dataWithTableOfContents;
+- (nonnull NSString *)findHomeForPath:(nonnull NSString *)basePath;
 
 @end

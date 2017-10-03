@@ -20,11 +20,7 @@
 
 @import AppKit;
 
-@class WebView;
-
-@interface CHMWindowController
-    : NSWindowController <NSOutlineViewDelegate, NSToolbarDelegate> {
-  IBOutlet WebView *_contentsView;
+@interface CHMWindowController : NSWindowController {
 }
 
 @end
