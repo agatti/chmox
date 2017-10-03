@@ -89,12 +89,7 @@ static NSMutableDictionary *kBaseURLs = nil;
 
 #pragma mark NSURLProtocol overriding
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
-  if ([self canHandleURL:request.URL]) {
-    return YES;
-  }
-
-  NSLog(@"CHMURLProtocol cannot handle %@", request);
-  return NO;
+  return [self canHandleURL:request.URL];
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
@@ -102,8 +97,6 @@ static NSMutableDictionary *kBaseURLs = nil;
 }
 
 - (void)startLoading {
-  DEBUG_OUTPUT(@"CHMURLProtocol:startLoading %@", [self request]);
-
   NSURL *url = self.request.URL;
 
   CHMContainer *container = [CHMURLProtocol containerForUniqueId:url.host];

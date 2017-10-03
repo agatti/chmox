@@ -11,12 +11,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CHMWindowController">
             <connections>
-                <outlet property="backToolbarItem" destination="qsu-l6-s8J" id="94H-63-k1P"/>
                 <outlet property="backTouchBarButton" destination="HgD-X9-Fkw" id="L7Z-2D-HrW"/>
-                <outlet property="biggerFontToolbarItem" destination="VQq-UB-sjn" id="TdW-rZ-DFl"/>
-                <outlet property="forwardToolbarItem" destination="2or-Md-l89" id="1wb-ew-db2"/>
+                <outlet property="biggerFontTouchBarButton" destination="Eye-7Q-F5t" id="cW7-K6-Csc"/>
+                <outlet property="fontSizeSegmentedControl" destination="Wkg-GU-tQE" id="ALA-NI-IuX"/>
                 <outlet property="forwardTouchBarButton" destination="HL0-dg-JN5" id="qXZ-kw-JEW"/>
-                <outlet property="smallerFontToolbarItem" destination="p2V-Fv-TJP" id="ip9-Hf-M3L"/>
+                <outlet property="navigationSegmentedControl" destination="fgt-gW-wrb" id="q7H-4H-r0n"/>
+                <outlet property="smallerFontTouchBarButton" destination="doN-Du-37K" id="cnT-jX-PU9"/>
                 <outlet property="tableOfContents" destination="fCT-nf-hHB" id="Msx-bU-bvw"/>
                 <outlet property="toolbar" destination="bkh-BJ-au8" id="KWc-PL-mZ6"/>
                 <outlet property="touchBarObject" destination="NVp-Ev-MFm" id="Zwn-nS-q7D"/>
@@ -117,33 +117,49 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="TVA-uh-z33"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="AEU-J7-61B"/>
-                    <toolbarItem implicitItemIdentifier="B60AD9B8-C1CA-4C0F-9EF5-A9823F08589E" label="Smaller" paletteLabel="Smaller" tag="-1" image="NSRemoveTemplate" id="p2V-Fv-TJP">
-                        <connections>
-                            <action selector="makeTextSmaller:" target="-2" id="U4x-zV-QBj"/>
-                        </connections>
+                    <toolbarItem implicitItemIdentifier="68D9086A-D736-44C6-B060-549F923DBA4F" label="Navigation" paletteLabel="Navigation" id="kmQ-YE-Fko">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="71" height="24"/>
+                        <size key="maxSize" width="71" height="24"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="fgt-gW-wrb">
+                            <rect key="frame" x="0.0" y="14" width="71" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="capsule" trackingMode="momentary" id="PLU-0H-Qfw">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment image="NSGoBackTemplate" width="32" enabled="NO"/>
+                                    <segment image="NSGoForwardTemplate" width="32" enabled="NO" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                            <connections>
+                                <action selector="navigationRequest:" target="-2" id="JHF-1v-dnd"/>
+                            </connections>
+                        </segmentedControl>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F4B6F8F2-36F0-447D-9C0E-E46F3FA340B6" label="Bigger" paletteLabel="Bigger" tag="-1" image="NSAddTemplate" id="VQq-UB-sjn">
-                        <connections>
-                            <action selector="makeTextBigger:" target="-2" id="vlC-Rc-lfd"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2120440D-AAAE-4776-9E9C-84A19D0C46B6" label="Back" paletteLabel="Back" tag="-1" image="NSGoBackTemplate" autovalidates="NO" id="qsu-l6-s8J">
-                        <connections>
-                            <action selector="changeTopicToPreviousInHistory:" target="-2" id="gfc-dg-llD"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="41FE0C9B-234F-4929-B983-B272A5E37E2A" label="Forward" paletteLabel="Forward" tag="-1" image="NSGoForwardTemplate" autovalidates="NO" id="2or-Md-l89">
-                        <connections>
-                            <action selector="changeTopicToNextInHistory:" target="-2" id="rar-DY-tfX"/>
-                        </connections>
+                    <toolbarItem implicitItemIdentifier="50D0E7DF-7F60-4C42-A123-343DC647460E" label="Font Size" paletteLabel="Font Size" id="SK1-CT-ezF">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="71" height="24"/>
+                        <size key="maxSize" width="71" height="24"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="Wkg-GU-tQE">
+                            <rect key="frame" x="0.0" y="14" width="71" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="capsule" trackingMode="momentary" id="Qjp-zB-OZA">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment image="NSAddTemplate" width="32"/>
+                                    <segment image="NSRemoveTemplate" width="32" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                            <connections>
+                                <action selector="fontSizeChangeRequest:" target="-2" id="gjb-14-Xon"/>
+                            </connections>
+                        </segmentedControl>
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="qsu-l6-s8J"/>
-                    <toolbarItem reference="2or-Md-l89"/>
+                    <toolbarItem reference="kmQ-YE-Fko"/>
                     <toolbarItem reference="AEU-J7-61B"/>
-                    <toolbarItem reference="VQq-UB-sjn"/>
-                    <toolbarItem reference="p2V-Fv-TJP"/>
+                    <toolbarItem reference="SK1-CT-ezF"/>
                     <toolbarItem reference="AEU-J7-61B"/>
                     <toolbarItem reference="ATL-8A-crO"/>
                 </defaultToolbarItems>
@@ -163,9 +179,8 @@
                         <touchBarItems>
                             <touchBarItem id="tKR-h9-jEk">
                                 <viewController key="viewController" id="kH6-dh-7pA">
-                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HgD-X9-Fkw">
-                                        <rect key="frame" x="0.0" y="0.0" width="84" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HgD-X9-Fkw">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoBackTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jb0-z4-OuH">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -179,9 +194,8 @@
                             </touchBarItem>
                             <touchBarItem id="JZc-t8-nXI">
                                 <viewController key="viewController" id="1s8-ys-sDE">
-                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HL0-dg-JN5">
-                                        <rect key="frame" x="0.0" y="0.0" width="84" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HL0-dg-JN5">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoForwardTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dlE-yb-wTN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -202,9 +216,8 @@
                         <touchBarItems>
                             <touchBarItem id="E3X-86-FPR">
                                 <viewController key="viewController" id="hzN-D8-PrM">
-                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eye-7Q-F5t">
-                                        <rect key="frame" x="0.0" y="0.0" width="84" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eye-7Q-F5t">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="t2N-O2-bnW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -218,9 +231,8 @@
                             </touchBarItem>
                             <touchBarItem id="Awf-zd-ey8">
                                 <viewController key="viewController" id="zfX-Az-a39">
-                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="doN-Du-37K">
-                                        <rect key="frame" x="0.0" y="0.0" width="84" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="doN-Du-37K">
+                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="er9-j8-saN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" usesAppearanceFont="YES"/>

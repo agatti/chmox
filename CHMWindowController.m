@@ -26,6 +26,16 @@
 #import "CHMTopic.h"
 #import "CHMURLProtocol.h"
 
+typedef NS_ENUM(NSUInteger, CHMFontSizeSegmentIndex) {
+  CHMFontSizeSegmentIndexBigger = 0,
+  CHMFontSizeSegmentIndexSmaller
+};
+
+typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
+  CHMNavigationSegmentIndexBack = 0,
+  CHMNavigationSegmentIndexForward
+};
+
 @interface CHMWindowController () <NSOutlineViewDelegate, NSToolbarDelegate,
                                    WebUIDelegate, WebPolicyDelegate,
                                    NSTouchBarProvider>
@@ -33,15 +43,16 @@
 @property(weak) IBOutlet NSOutlineView *tableOfContents;
 @property(weak) IBOutlet WebView *webView;
 @property(weak) IBOutlet NSToolbar *toolbar;
-@property(weak) IBOutlet NSToolbarItem *backToolbarItem;
-@property(weak) IBOutlet NSToolbarItem *forwardToolbarItem;
-@property(weak) IBOutlet NSToolbarItem *smallerFontToolbarItem;
-@property(weak) IBOutlet NSToolbarItem *biggerFontToolbarItem;
-@property(strong) IBOutlet NSTouchBar *touchBarObject;
 @property(weak) IBOutlet NSButton *backTouchBarButton;
 @property(weak) IBOutlet NSButton *forwardTouchBarButton;
-@property (weak) IBOutlet NSButton *smallerFontTouchBarButton;
-@property (weak) IBOutlet NSButton *biggerFontTouchBarButton;
+@property(weak) IBOutlet NSButton *smallerFontTouchBarButton;
+@property(weak) IBOutlet NSButton *biggerFontTouchBarButton;
+@property(weak) IBOutlet NSSegmentedControl *fontSizeSegmentedControl;
+@property(weak) IBOutlet NSSegmentedControl *navigationSegmentedControl;
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
+@property(strong) IBOutlet NSTouchBar *touchBarObject;
+#pragma clang diagnostic pop
 
 - (IBAction)makeTextSmaller:(id)sender;
 - (IBAction)makeTextBigger:(id)sender;
@@ -49,6 +60,8 @@
 - (IBAction)changeTopicToNextInHistory:(id)sender;
 - (IBAction)printDocument:(id)sender;
 - (IBAction)changeTopicWithSelectedRow:(id)sender;
+- (IBAction)fontSizeChangeRequest:(id)sender;
+- (IBAction)navigationRequest:(id)sender;
 
 - (void)updateToolTipRects;
 - (void)updateNavigationButtons;
@@ -74,12 +87,10 @@
   self.tableOfContents.dataSource = document.tableOfContents;
   self.tableOfContents.autoresizesOutlineColumn = NO;
 
-  self.backToolbarItem.enabled = NO;
-  self.forwardToolbarItem.enabled = NO;
   self.backTouchBarButton.enabled = NO;
   self.forwardTouchBarButton.enabled = NO;
 
-    [self updateFontSizeButtons];
+  [self updateFontSizeButtons];
 
   [self updateToolTipRects];
 }
@@ -209,14 +220,48 @@
   [self.window makeFirstResponder:self];
 }
 
+- (IBAction)fontSizeChangeRequest:(id)sender {
+  switch (self.fontSizeSegmentedControl.selectedSegment) {
+  case CHMFontSizeSegmentIndexSmaller:
+    [self makeTextSmaller:self];
+    break;
+
+  case CHMFontSizeSegmentIndexBigger:
+    [self makeTextBigger:self];
+    break;
+
+  default:
+    break;
+  }
+
+  [self updateFontSizeButtons];
+}
+
+- (IBAction)navigationRequest:(id)sender {
+  switch (self.navigationSegmentedControl.selectedSegment) {
+  case CHMNavigationSegmentIndexBack:
+    [self changeTopicToPreviousInHistory:self];
+    break;
+
+  case CHMNavigationSegmentIndexForward:
+    [self changeTopicToNextInHistory:self];
+    break;
+
+  default:
+    break;
+  }
+
+  [self updateNavigationButtons];
+}
+
 - (IBAction)makeTextBigger:(id)sender {
   [self.webView makeTextLarger:sender];
-    [self updateFontSizeButtons];
+  [self updateFontSizeButtons];
 }
 
 - (IBAction)makeTextSmaller:(id)sender {
   [self.webView makeTextSmaller:sender];
-    [self updateFontSizeButtons];
+  [self updateFontSizeButtons];
 }
 
 - (IBAction)changeTopicToPreviousInHistory:(id)sender {
@@ -230,16 +275,11 @@
 }
 
 - (IBAction)printDocument:(id)sender {
-  // Obtain a custom view that will be printed
   NSView *docView = self.webView.mainFrame.frameView.documentView;
-
-  // Construct the print operation and setup Print panel
   NSPrintOperation *operation =
       [NSPrintOperation printOperationWithView:docView
                                      printInfo:[self.document printInfo]];
   operation.showsPrintPanel = YES;
-
-  // Run operation, which shows the Print panel if showPanels was YES
   [self.document runModalPrintOperation:operation
                                delegate:nil
                          didRunSelector:NULL
@@ -247,23 +287,32 @@
 }
 
 - (void)updateNavigationButtons {
-  self.backToolbarItem.enabled = self.webView.canGoBack;
+  [self.navigationSegmentedControl setEnabled:self.webView.canGoBack
+                                   forSegment:CHMNavigationSegmentIndexBack];
+  [self.navigationSegmentedControl setEnabled:self.webView.canGoForward
+                                   forSegment:CHMNavigationSegmentIndexForward];
   self.backTouchBarButton.enabled = self.webView.canGoBack;
-  self.forwardToolbarItem.enabled = self.webView.canGoForward;
   self.forwardTouchBarButton.enabled = self.webView.canGoForward;
 }
 
 - (void)updateFontSizeButtons {
-    self.biggerFontToolbarItem.enabled = self.webView.canMakeTextLarger;
-    self.biggerFontTouchBarButton.enabled = self.webView.canMakeTextLarger;
-    self.smallerFontToolbarItem.enabled = self.webView.canMakeTextSmaller;
-    self.smallerFontTouchBarButton.enabled = self.webView.canMakeTextSmaller;
+  [self.fontSizeSegmentedControl setEnabled:self.webView.canMakeTextLarger
+                                 forSegment:CHMFontSizeSegmentIndexBigger];
+  [self.fontSizeSegmentedControl setEnabled:self.webView.canMakeTextSmaller
+                                 forSegment:CHMFontSizeSegmentIndexSmaller];
+
+  self.biggerFontTouchBarButton.enabled = self.webView.canMakeTextLarger;
+  self.smallerFontTouchBarButton.enabled = self.webView.canMakeTextSmaller;
 }
 
 #pragma mark NSTouchBar
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
+
 - (nullable NSTouchBar *)touchBar {
   return self.touchBarObject;
 }
+#pragma clang diagnostic pop
 
 @end

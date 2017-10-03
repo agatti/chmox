@@ -7,6 +7,7 @@
 - Removed MacPAD code
 - Cleaned up code
 - Added back/forward/print toolbar buttons
+- Added TouchBar support
 
 ### Version 0.4&beta;
 - Italian translation by Fabrizio

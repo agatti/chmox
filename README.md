@@ -23,10 +23,10 @@ repository.
 - Removed MacPAD code.
 - Cleaned up code.
 - Added back/forward/print toolbar buttons.
+- Added TouchBar support.
 
 ## Further developments
 
 - (Re-)Inclusion of Chmox in the Homebrew/MacPorts package distributions.
-- TouchBar support.
 - Search functionality.
 - Bookmarks and favourites.

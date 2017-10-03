@@ -21,6 +21,9 @@
 #import "CHMApplication.h"
 #import "CHMURLProtocol.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
+
 @interface CHMApplication () <NSTouchBarProvider>
 
 @property(weak) IBOutlet NSTouchBar *touchBarObject;
@@ -49,3 +52,5 @@
 }
 
 @end
+
+#pragma clang diagnostic pop

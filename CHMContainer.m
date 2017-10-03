@@ -81,8 +81,6 @@ typedef NS_ENUM(uint16_t, CHMObject) {
 }
 
 - (void)dealloc {
-  NSLog(@"deallocating %@", self);
-
   if (self.handle) {
     chm_close(self.handle);
   }
@@ -127,22 +125,15 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
   struct chmUnitInfo info;
   if (chm_resolve_object(_handle, path.UTF8String, &info) !=
       CHM_RESOLVE_SUCCESS) {
-    NSLog(@"Unable to find %@", path);
     return nil;
   }
 
-  DEBUG_OUTPUT(@"Found object %@ (%qu bytes)", path, (long long)info.length);
-
   void *buffer = malloc(info.length);
-
   if (!buffer) {
-    // Allocation failed
-    NSLog(@"Failed to allocate %qu bytes for %@", (long long)info.length, path);
     return nil;
   }
 
   if (!chm_retrieve_object(_handle, &info, buffer, 0, info.length)) {
-    NSLog(@"Failed to load %qu bytes for %@", (long long)info.length, path);
     free(buffer);
     return nil;
   }
@@ -157,15 +148,12 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
 #pragma mark CHM setup
 
 - (BOOL)loadMetadata {
-
-  //--- Start with WINDOWS object ---
   NSData *windowsData = [self dataWithContentsOfObject:@"/#WINDOWS"];
   NSData *stringsData = [self dataWithContentsOfObject:@"/#STRINGS"];
 
   if (windowsData && stringsData) {
     const uint32_t entryCount = OSReadLittleInt32(windowsData.bytes, 0);
     const uint32_t entrySize = OSReadLittleInt32(windowsData.bytes, 4);
-    NSLog(@"Entries: %u x %u bytes", entryCount, entrySize);
 
     for (int entryIndex = 0; entryIndex < entryCount; ++entryIndex) {
       unsigned long entryOffset = 8 + (entryIndex * entrySize);
@@ -174,28 +162,24 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
         self.title = readTrimmedString(
             stringsData,
             OSReadLittleInt32(windowsData.bytes, entryOffset + 0x14));
-        NSLog(@"Title: %@", self.title);
       }
 
       if (self.tocPath.length == 0) {
         self.tocPath =
             readString(stringsData, OSReadLittleInt32(windowsData.bytes,
                                                       entryOffset + 0x60));
-        NSLog(@"Table of contents: %@", self.tocPath);
       }
 
       if (self.indexPath.length == 0) {
         self.indexPath =
             readString(stringsData, OSReadLittleInt32(windowsData.bytes,
                                                       entryOffset + 0x64));
-        NSLog(@"Index: %@", self.indexPath);
       }
 
       if (self.homePath.length == 0) {
         self.homePath =
             readString(stringsData, OSReadLittleInt32(windowsData.bytes,
                                                       entryOffset + 0x68));
-        NSLog(@"Home: %@", self.homePath);
       }
     }
   }

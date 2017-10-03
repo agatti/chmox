@@ -56,8 +56,6 @@
 }
 
 - (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)docType {
-  NSLog(@"CHMDocument:readFromFile:%@", fileName);
-
   self.container = [CHMContainer containerWithContentsOfFile:fileName];
   if (self.container == nil) {
     return NO;
