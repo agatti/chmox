@@ -26,8 +26,6 @@ static NSMutableDictionary *kBaseURLs = nil;
 
 @implementation CHMURLProtocol
 
-#pragma mark Lifecycle
-
 - (instancetype)initWithRequest:(NSURLRequest *)request
                  cachedResponse:(NSCachedURLResponse *)cachedResponse
                          client:(id<NSURLProtocolClient>)client {
@@ -35,8 +33,6 @@ static NSMutableDictionary *kBaseURLs = nil;
                                    cachedResponse:cachedResponse
                                            client:client];
 }
-
-#pragma mark CHM URL utils
 
 + (void)registerContainer:(nonnull CHMContainer *)container {
   static dispatch_once_t onceToken;
@@ -87,7 +83,6 @@ static NSMutableDictionary *kBaseURLs = nil;
   return [anURL.scheme isEqualToString:@"chmox-internal"];
 }
 
-#pragma mark NSURLProtocol overriding
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
   return [self canHandleURL:request.URL];
 }

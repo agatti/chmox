@@ -32,8 +32,6 @@
 
 @implementation CHMDocument
 
-#pragma mark NSObject
-
 - (instancetype)init {
   if (self = [super init]) {
     _container = nil;
@@ -47,8 +45,6 @@
     [CHMURLProtocol unregisterContainer:self.container];
   }
 }
-
-#pragma mark NSDocument
 
 - (void)makeWindowControllers {
   [self addWindowController:[[CHMWindowController alloc]
@@ -71,8 +67,6 @@
 - (NSData *)dataRepresentationOfType:(NSString *)type {
   return nil;
 }
-
-#pragma mark Accessors
 
 - (NSString *)title {
   return self.container.title;

@@ -77,8 +77,6 @@ static htmlSAXHandler saxHandler = {
     NULL,                                   /* getParameterEntity */
 };
 
-#pragma mark Lifecycle
-
 - (nonnull instancetype)initWithContainer:(nonnull CHMContainer *)container {
   if (self = [super init]) {
     _rootTopics = [NSMutableArray new];
@@ -105,19 +103,15 @@ static htmlSAXHandler saxHandler = {
   return self;
 }
 
-#pragma mark Mutators
-
 - (void)addRootTopic:(nonnull CHMTopic *)topic {
   [self.rootTopics addObject:topic];
 }
 
-#pragma mark libxml SAX handler implementation
+void documentDidStart(void __unused *context) {}
 
-static void documentDidStart(void __unused *context) {}
+void documentDidEnd(void __unused *context) {}
 
-static void documentDidEnd(void __unused *context) {}
-
-static void elementDidStart(void *context, const xmlChar *name,
+void elementDidStart(void *context, const xmlChar *name,
                             const xmlChar **atts) {
   CHMTableOfContents *toc = (__bridge CHMTableOfContents *)context;
 
@@ -164,7 +158,7 @@ static void elementDidStart(void *context, const xmlChar *name,
   }
 }
 
-static void elementDidEnd(void *context, const xmlChar *name) {
+void elementDidEnd(void *context, const xmlChar *name) {
   CHMTableOfContents *toc = (__bridge CHMTableOfContents *)context;
 
   if (!strcasecmp("li", (const char *)name) && toc.name) {
@@ -183,7 +177,7 @@ static void elementDidEnd(void *context, const xmlChar *name) {
   }
 }
 
-static void createNewTopic(void *context) {
+void createNewTopic(void *context) {
   NSURL *location = nil;
   CHMTableOfContents *toc = (__bridge CHMTableOfContents *)context;
 
@@ -209,8 +203,6 @@ static void createNewTopic(void *context) {
 
   [toc addRootTopic:toc.lastTopic];
 }
-
-#pragma mark NSOutlineViewDataSource implementation
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView
     numberOfChildrenOfItem:(id)item {

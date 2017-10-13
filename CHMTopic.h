@@ -24,18 +24,15 @@
 
 @property(nonnull, strong, nonatomic) NSString *name;
 @property(nonnull, strong, nonatomic) NSURL *location;
+@property(nonatomic, readonly) NSUInteger countOfSubTopics;
 
 - (nullable instancetype)init
     __attribute__((unavailable("You cannot create a foo instance through init "
                                "- please use initWithName:location:")));
-
 - (nonnull instancetype)initWithName:(nonnull NSString *)topicName
                          andLocation:(nonnull NSURL *)topicLocation
     NS_DESIGNATED_INITIALIZER;
-
-@property(nonatomic, readonly) NSUInteger countOfSubTopics;
 - (nonnull CHMTopic *)objectInSubTopicsAtIndex:(NSUInteger)index;
-
 - (void)addObject:(nonnull CHMTopic *)topic;
 
 @end

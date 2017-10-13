@@ -71,8 +71,6 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
 
 @implementation CHMWindowController
 
-#pragma mark NSWindowController overridden method
-
 - (void)windowDidLoad {
 
   CHMDocument *document = (CHMDocument *)self.document;
@@ -100,8 +98,6 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
   return windowTitle ? windowTitle : displayName;
 }
 
-#pragma mark WebPolicyDelegate
-
 - (void)webView:(WebView *)sender
     decidePolicyForNavigationAction:(NSDictionary *)actionInformation
                             request:(NSURLRequest *)request
@@ -115,7 +111,6 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
   }
 }
 
-// Open external URLs in new window in external viewer
 - (void)webView:(WebView *)sender
     decidePolicyForNewWindowAction:(NSDictionary *)actionInformation
                            request:(NSURLRequest *)request
@@ -129,8 +124,6 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
   }
 }
 
-#pragma mark WebUIDelegate
-
 - (NSArray *)webView:(WebView *)sender
     contextMenuItemsForElement:(NSDictionary *)element
               defaultMenuItems:(NSArray *)defaultMenuItems {
@@ -143,8 +136,6 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
     mouseDidMoveOverElement:(NSDictionary *)elementInformation
               modifierFlags:(NSUInteger)modifierFlags {
 }
-
-#pragma mark NSToolTipOwner
 
 - (NSString *)view:(NSView *)view
     stringForToolTip:(NSToolTipTag)tag
@@ -173,8 +164,6 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
   }
 }
 
-#pragma mark NSResponder
-
 - (void)keyDown:(NSEvent *)theEvent {
   if (theEvent.modifierFlags & NSCommandKeyMask) {
     NSString *keyString = theEvent.charactersIgnoringModifiers;
@@ -200,8 +189,6 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
 
   [super keyDown:theEvent];
 }
-
-#pragma mark Actions
 
 - (IBAction)changeTopicWithSelectedRow:(id)sender {
   NSInteger selectedRow = self.tableOfContents.selectedRow;
@@ -305,14 +292,13 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
   self.smallerFontTouchBarButton.enabled = self.webView.canMakeTextSmaller;
 }
 
-#pragma mark NSTouchBar
-
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
 
 - (nullable NSTouchBar *)touchBar {
   return self.touchBarObject;
 }
+
 #pragma clang diagnostic pop
 
 @end

@@ -53,14 +53,10 @@ typedef NS_ENUM(uint16_t, CHMObject) {
 
 @implementation CHMContainer
 
-#pragma mark Factory
-
 + (nullable instancetype)containerWithContentsOfFile:
     (nonnull NSString *)chmFilePath {
   return [[CHMContainer alloc] initWithContentsOfFile:chmFilePath];
 }
-
-#pragma mark Lifecycle
 
 - (nullable instancetype)initWithContentsOfFile:(nonnull NSString *)path {
   if (self = [super init]) {
@@ -86,8 +82,6 @@ typedef NS_ENUM(uint16_t, CHMObject) {
   }
 }
 
-#pragma mark Basic CHM reading operations
-
 NSString *_Nonnull readString(NSData *_Nonnull data, unsigned long offset) {
   return @((const char *)data.bytes + offset);
 }
@@ -99,8 +93,6 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
       stringByTrimmingCharactersInSet:[NSCharacterSet
                                           whitespaceAndNewlineCharacterSet]];
 }
-
-#pragma mark CHM Object loading
 
 - (BOOL)hasObjectWithPath:(nonnull NSString *)path {
   struct chmUnitInfo info;
@@ -114,7 +106,6 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
   }
 
   if ([path hasPrefix:@"/"]) {
-    // Quick fix
     if ([path hasPrefix:@"///"]) {
       path = [path substringFromIndex:2];
     }
@@ -144,8 +135,6 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
 - (nullable NSData *)dataWithTableOfContents {
   return [self dataWithContentsOfObject:self.tocPath];
 }
-
-#pragma mark CHM setup
 
 - (BOOL)loadMetadata {
   NSData *windowsData = [self dataWithContentsOfObject:@"/#WINDOWS"];
@@ -184,7 +173,6 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
     }
   }
 
-  //--- Use SYSTEM object ---
   NSData *systemData = [self dataWithContentsOfObject:@"/#SYSTEM"];
   if (systemData == nil) {
     return NO;
@@ -197,7 +185,6 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
     case CHMObjectTableOfContentsPath:
       if (self.tocPath.length == 0) {
         self.tocPath = readString(systemData, offset + 4);
-        NSLog(@"SYSTEM Table of contents: %@", self.tocPath);
       }
       break;
 
@@ -236,7 +223,6 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
   unsigned int *ptr = (unsigned int *)digest;
   self.uniqueId = [[NSString alloc]
       initWithFormat:@"%x%x%x%x%x", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4]];
-  NSLog(@"UniqueId=%@", self.uniqueId);
 
   if (self.title.length == 0) {
     self.title = nil;

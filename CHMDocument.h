@@ -26,7 +26,6 @@
 @interface CHMDocument : NSDocument
 
 @property(strong, nonatomic) CHMTableOfContents *tableOfContents;
-
 @property(nonatomic, readonly, copy) NSString *title;
 @property(nonatomic, readonly, copy) NSURL *currentLocation;
 @property(nonatomic, readonly, copy) NSString *uniqueId;

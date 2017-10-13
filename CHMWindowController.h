@@ -20,7 +20,6 @@
 
 @import AppKit;
 
-@interface CHMWindowController : NSWindowController {
-}
+@interface CHMWindowController : NSWindowController
 
 @end

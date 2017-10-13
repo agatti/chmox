@@ -32,12 +32,10 @@ struct chmFile;
 @property(strong, nonatomic, nonnull) NSString *tocPath;
 @property(strong, nonatomic, nonnull) NSString *indexPath;
 
++ (nullable instancetype)containerWithContentsOfFile:(nonnull NSString *)path;
 - (nullable instancetype)init
     __attribute__((unavailable("You cannot create a foo instance through init "
                                "- please use initWithContentsOfFile:")));
-
-+ (nullable instancetype)containerWithContentsOfFile:(nonnull NSString *)path;
-
 - (BOOL)hasObjectWithPath:(nonnull NSString *)path;
 - (nullable NSData *)dataWithContentsOfObject:(nullable NSString *)objectPath;
 - (nullable NSData *)dataWithTableOfContents;

@@ -63,7 +63,6 @@
 		44923A78072C57E90070AA26 /* CHMApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMApplication.h; sourceTree = "<group>"; };
 		44923A79072C57E90070AA26 /* CHMApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMApplication.m; sourceTree = "<group>"; };
 		44B7AED10675301E00B51920 /* chmdoc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = chmdoc.icns; sourceTree = SOURCE_ROOT; };
-		44D7FFF0065A9C7B00D2B23E /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
 		44DA07230694985300777FAE /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		44F984BD06576CA60076336E /* CHMTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMTopic.h; sourceTree = "<group>"; };
 		44F984BE06576CA60076336E /* CHMTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMTopic.m; sourceTree = "<group>"; };
@@ -155,7 +154,6 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				44D7FFF0065A9C7B00D2B23E /* prefix.pch */,
 				448AF6EF064AFCD900FA37BD /* chmlib */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 			);
@@ -338,8 +336,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = prefix.pch;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CHM_USE_PREAD,
 					CHM_MT,
@@ -380,8 +377,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_TRIGRAPHS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = prefix.pch;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CHM_USE_PREAD,
 					CHM_MT,
@@ -420,8 +416,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_TRIGRAPHS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = prefix.pch;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CHM_USE_PREAD,
 					CHM_MT,

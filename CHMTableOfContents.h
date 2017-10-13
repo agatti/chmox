@@ -18,6 +18,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+@import AppKit;
 @import Foundation;
 
 @class CHMTopic;
@@ -30,7 +31,6 @@
 - (nullable instancetype)init
     __attribute__((unavailable("You cannot create a foo instance through init "
                                "- please use initWithContainer:")));
-
 - (nonnull instancetype)initWithContainer:(nonnull CHMContainer *)container
     NS_DESIGNATED_INITIALIZER;
 - (void)addRootTopic:(nonnull CHMTopic *)topic;

@@ -28,8 +28,6 @@
 
 @implementation CHMTopic
 
-#pragma mark Lifecycle
-
 - (nonnull instancetype)initWithName:(nonnull NSString *)name
                          andLocation:(nonnull NSURL *)location {
   if (self = [super init]) {
@@ -41,8 +39,6 @@
   return self;
 }
 
-#pragma mark Accessors
-
 - (NSUInteger)countOfSubTopics {
   return self.subTopics.count;
 }
@@ -50,8 +46,6 @@
 - (nonnull CHMTopic *)objectInSubTopicsAtIndex:(NSUInteger)index {
   return self.subTopics[index];
 }
-
-#pragma mark Mutators
 
 - (void)addObject:(nonnull CHMTopic *)topic {
   [self.subTopics addObject:topic];

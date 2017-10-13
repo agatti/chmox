@@ -35,7 +35,6 @@
 - (void)awakeFromNib {
 }
 
-#pragma mark Startup and Shutdown
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
   [NSURLProtocol registerClass:CHMURLProtocol.class];
 }
