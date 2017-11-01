@@ -16,7 +16,7 @@ repository.
 
 - Chmox has a new home now.
 - Code now builds again.
-- Minimum version requirement has been bumped up to macOS 10.10.
+- Minimum version requirement has been bumped up to macOS 10.12.
 - Migrated code to modern Objective-C syntax and ARC.
 - Removed potentially stale translations.
 - Removed TOC drawer in favour of an in-window list.
@@ -24,7 +24,6 @@ repository.
 - Cleaned up code.
 - Added back/forward/print toolbar buttons.
 - Added TouchBar support.
-- macOS 10.12 or later is now required.
 
 ## Further developments
 
