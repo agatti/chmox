@@ -75,6 +75,13 @@ static htmlSAXHandler saxHandler = {
     NULL,                                   /* xmlParserError */
     NULL,                                   /* xmlParserError */
     NULL,                                   /* getParameterEntity */
+    NULL,                                   /* cdataBlock */
+    NULL,                                   /* externalSubset */
+    0,                                      /* initialized */
+    NULL,                                   /* _private */
+    NULL,                                   /* startElementNs */
+    NULL,                                   /* endElementNs */
+    NULL                                    /* serror */
 };
 
 - (nonnull instancetype)initWithContainer:(nonnull CHMContainer *)container {
@@ -111,8 +118,7 @@ void documentDidStart(void __unused *context) {}
 
 void documentDidEnd(void __unused *context) {}
 
-void elementDidStart(void *context, const xmlChar *name,
-                            const xmlChar **atts) {
+void elementDidStart(void *context, const xmlChar *name, const xmlChar **atts) {
   CHMTableOfContents *toc = (__bridge CHMTableOfContents *)context;
 
   if (!strcasecmp("ul", (const char *)name)) {

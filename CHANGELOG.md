@@ -8,6 +8,7 @@
 - Cleaned up code
 - Added back/forward/print toolbar buttons
 - Added TouchBar support
+- macOS 10.12 or later is now required
 
 ### Version 0.4&beta;
 - Italian translation by Fabrizio

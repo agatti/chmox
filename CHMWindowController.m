@@ -149,7 +149,7 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
     }
   }
 
-  return nil;
+  return NSString.string;
 }
 
 - (void)updateToolTipRects {
@@ -165,7 +165,7 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
-  if (theEvent.modifierFlags & NSCommandKeyMask) {
+  if (theEvent.modifierFlags & NSEventModifierFlagCommand) {
     NSString *keyString = theEvent.charactersIgnoringModifiers;
 
     switch ([keyString characterAtIndex:0]) {
@@ -180,6 +180,7 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
         [self.webView goForward];
       }
       break;
+
     default:
       break;
     }

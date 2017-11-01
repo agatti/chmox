@@ -18,21 +18,21 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface CHMTopic : NSObject
 
-@property(nonnull, strong, nonatomic) NSString *name;
-@property(nonnull, strong, nonatomic) NSURL *location;
-@property(nonatomic, readonly) NSUInteger countOfSubTopics;
+@property(nonnull, strong, nonatomic, readonly) NSString *name;
+@property(nullable, strong, nonatomic, readonly) NSURL *location;
 
 - (nullable instancetype)init
     __attribute__((unavailable("You cannot create a foo instance through init "
                                "- please use initWithName:location:")));
 - (nonnull instancetype)initWithName:(nonnull NSString *)topicName
-                         andLocation:(nonnull NSURL *)topicLocation
+                         andLocation:(nullable NSURL *)topicLocation
     NS_DESIGNATED_INITIALIZER;
 - (nonnull CHMTopic *)objectInSubTopicsAtIndex:(NSUInteger)index;
 - (void)addObject:(nonnull CHMTopic *)topic;
+- (NSUInteger)countOfSubTopics;
 
 @end

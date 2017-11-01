@@ -51,8 +51,10 @@
                                 initWithWindowNibName:@"CHMDocument"]];
 }
 
-- (BOOL)readFromFile:(NSString *)fileName ofType:(NSString *)docType {
-  self.container = [CHMContainer containerWithContentsOfFile:fileName];
+- (BOOL)readFromURL:(NSURL *)url
+             ofType:(NSString *)typeName
+              error:(NSError *_Nullable __autoreleasing *)outError {
+  self.container = [CHMContainer containerWithContentsOfURL:url];
   if (self.container == nil) {
     return NO;
   }
@@ -64,7 +66,8 @@
   return YES;
 }
 
-- (NSData *)dataRepresentationOfType:(NSString *)type {
+- (NSData *)dataOfType:(NSString *)typeName
+                 error:(NSError *_Nullable __autoreleasing *)outError {
   return nil;
 }
 

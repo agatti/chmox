@@ -44,7 +44,7 @@ typedef NS_ENUM(uint16_t, CHMObject) {
 
 @interface CHMContainer ()
 
-- (instancetype)initWithContentsOfFile:(nonnull NSString *)path
+- (instancetype)initWithContentsOfURL:(nonnull NSURL *)url
     NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)loadMetadata;
@@ -53,19 +53,16 @@ typedef NS_ENUM(uint16_t, CHMObject) {
 
 @implementation CHMContainer
 
-+ (nullable instancetype)containerWithContentsOfFile:
-    (nonnull NSString *)chmFilePath {
-  return [[CHMContainer alloc] initWithContentsOfFile:chmFilePath];
++ (nullable instancetype)containerWithContentsOfURL:(nonnull NSURL *)url {
+  return [[CHMContainer alloc] initWithContentsOfURL:url];
 }
 
-- (nullable instancetype)initWithContentsOfFile:(nonnull NSString *)path {
+- (nullable instancetype)initWithContentsOfURL:(nonnull NSURL *)url {
   if (self = [super init]) {
-    _handle = chm_open(path.fileSystemRepresentation);
+    _handle = chm_open(url.fileSystemRepresentation);
     if (!_handle) {
       return nil;
     }
-
-    _path = path;
 
     if (![self loadMetadata]) {
       chm_close(_handle);
@@ -88,7 +85,7 @@ NSString *_Nonnull readString(NSData *_Nonnull data, unsigned long offset) {
 
 NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
                                      unsigned long offset) {
-  const char *stringData = data.bytes + offset;
+  const char *stringData = (const char *)data.bytes + offset;
   return [[NSMutableString stringWithUTF8String:stringData]
       stringByTrimmingCharactersInSet:[NSCharacterSet
                                           whitespaceAndNewlineCharacterSet]];

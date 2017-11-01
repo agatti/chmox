@@ -104,16 +104,12 @@ static NSMutableDictionary *kBaseURLs = nil;
     return;
   }
 
-  NSData *data;
-
-  if (url.parameterString) {
-    data = [container
-        dataWithContentsOfObject:[NSString
-                                     stringWithFormat:@"%@;%@", url.path,
-                                                      url.parameterString]];
-  } else {
-    data = [container dataWithContentsOfObject:url.path];
-  }
+  NSData *data = [container
+      dataWithContentsOfObject:url.parameterString
+                                   ? [NSString
+                                         stringWithFormat:@"%@;%@", url.path,
+                                                          url.parameterString]
+                                   : url.path];
 
   if (!data) {
     [self.client URLProtocol:self

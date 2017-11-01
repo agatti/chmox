@@ -32,9 +32,6 @@
 
 @implementation CHMApplication
 
-- (void)awakeFromNib {
-}
-
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
   [NSURLProtocol registerClass:CHMURLProtocol.class];
 }

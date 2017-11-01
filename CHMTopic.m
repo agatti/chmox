@@ -23,13 +23,15 @@
 @interface CHMTopic ()
 
 @property(nonnull, strong, nonatomic) NSMutableArray *subTopics;
+@property(nonnull, strong, nonatomic, readwrite) NSString *name;
+@property(nullable, strong, nonatomic, readwrite) NSURL *location;
 
 @end
 
 @implementation CHMTopic
 
 - (nonnull instancetype)initWithName:(nonnull NSString *)name
-                         andLocation:(nonnull NSURL *)location {
+                         andLocation:(nullable NSURL *)location {
   if (self = [super init]) {
     _name = name;
     _location = location;

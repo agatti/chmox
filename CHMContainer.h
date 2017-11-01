@@ -26,13 +26,12 @@ struct chmFile;
 
 @property(assign, nonatomic, nullable) struct chmFile *handle;
 @property(strong, nonatomic, nonnull) NSString *uniqueId;
-@property(strong, nonatomic, nonnull) NSString *path;
 @property(strong, nonatomic, nullable) NSString *title;
 @property(strong, nonatomic, nonnull) NSString *homePath;
 @property(strong, nonatomic, nonnull) NSString *tocPath;
 @property(strong, nonatomic, nonnull) NSString *indexPath;
 
-+ (nullable instancetype)containerWithContentsOfFile:(nonnull NSString *)path;
++ (nullable instancetype)containerWithContentsOfURL:(nonnull NSURL *)url;
 - (nullable instancetype)init
     __attribute__((unavailable("You cannot create a foo instance through init "
                                "- please use initWithContentsOfFile:")));
