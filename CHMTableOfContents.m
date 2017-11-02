@@ -223,7 +223,7 @@ void createNewTopic(void *context) {
             child:(NSInteger)theIndex
            ofItem:(id)item {
   return item ? [item objectInSubTopicsAtIndex:(NSUInteger)theIndex]
-              : _rootTopics[(NSUInteger)theIndex];
+              : self.rootTopics[(NSUInteger)theIndex];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView

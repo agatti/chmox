@@ -21,6 +21,9 @@
 @import AppKit;
 @import Foundation;
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
 @class CHMTableOfContents;
 
 @interface CHMDocument : NSDocument
@@ -31,3 +34,5 @@
 @property(nonatomic, readonly, copy) NSString *uniqueId;
 
 @end
+
+#pragma clang diagnostic pop

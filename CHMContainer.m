@@ -233,27 +233,21 @@ NSString *_Nonnull readTrimmedString(NSData *_Nonnull data,
 }
 
 - (nonnull NSString *)findHomeForPath:(nonnull NSString *)basePath {
-  NSString *testPath;
+  NSString *base = [basePath hasSuffix:@"/"]
+                       ? basePath
+                       : [basePath stringByAppendingString:@"/"];
 
-  NSString *separator = [basePath hasSuffix:@"/"] ? @"" : @"/";
-  testPath = [NSString stringWithFormat:@"%@%@index.htm", basePath, separator];
-  if ([self hasObjectWithPath:testPath]) {
-    return testPath;
+  NSString *indexPath = [NSString stringWithFormat:@"%@index.htm", base];
+  if ([self hasObjectWithPath:indexPath]) {
+    return indexPath;
   }
 
-  testPath =
-      [NSString stringWithFormat:@"%@%@default.html", basePath, separator];
-  if ([self hasObjectWithPath:testPath]) {
-    return testPath;
+  NSString *defaultPath = [NSString stringWithFormat:@"%@default.html", base];
+  if ([self hasObjectWithPath:defaultPath]) {
+    return defaultPath;
   }
 
-  testPath =
-      [NSString stringWithFormat:@"%@%@default.htm", basePath, separator];
-  if ([self hasObjectWithPath:testPath]) {
-    return testPath;
-  }
-
-  return [NSString stringWithFormat:@"%@%@index.html", basePath, separator];
+  return indexPath;
 }
 
 @end

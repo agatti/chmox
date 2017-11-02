@@ -18,6 +18,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
+@import Foundation;
 @import WebKit;
 
 #import "CHMWindowController.h"
@@ -72,24 +73,17 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
 @implementation CHMWindowController
 
 - (void)windowDidLoad {
-
-  CHMDocument *document = (CHMDocument *)self.document;
   NSURLRequest *request =
-      [NSURLRequest requestWithURL:document.currentLocation];
+      [NSURLRequest requestWithURL:[self.document currentLocation]];
   [self.webView.mainFrame loadRequest:request];
-
-  self.windowFrameAutosaveName = document.uniqueId;
+  self.windowFrameAutosaveName = [self.document uniqueId];
   [self setShouldCloseDocument:YES];
-
   self.tableOfContents.delegate = self;
-  self.tableOfContents.dataSource = document.tableOfContents;
+  self.tableOfContents.dataSource = [self.document tableOfContents];
   self.tableOfContents.autoresizesOutlineColumn = NO;
-
   self.backTouchBarButton.enabled = NO;
   self.forwardTouchBarButton.enabled = NO;
-
   [self updateFontSizeButtons];
-
   [self updateToolTipRects];
 }
 
@@ -157,8 +151,8 @@ typedef NS_ENUM(NSUInteger, CHMNavigationSegmentIndex) {
   NSRange range =
       [self.tableOfContents rowsInRect:self.tableOfContents.visibleRect];
 
-  for (NSInteger i = range.location; i < NSMaxRange(range); ++i) {
-    [self.tableOfContents addToolTipRect:[self.tableOfContents rectOfRow:i]
+  for (NSInteger row = range.location; row < NSMaxRange(range); ++row) {
+    [self.tableOfContents addToolTipRect:[self.tableOfContents rectOfRow:row]
                                    owner:self
                                 userData:NULL];
   }

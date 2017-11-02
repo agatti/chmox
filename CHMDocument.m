@@ -24,6 +24,9 @@
 #import "CHMURLProtocol.h"
 #import "CHMWindowController.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
 @interface CHMDocument ()
 
 @property(strong, nonatomic) CHMContainer *container;
@@ -85,3 +88,5 @@
 }
 
 @end
+
+#pragma clang diagnostic pop
